@@ -1,0 +1,7 @@
+.idea
+*.iml
+target
+node_modules
+**/generated-sources
+**/npm-debug.log
+venv
