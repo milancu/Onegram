@@ -5,4 +5,4 @@ node_modules
 **/generated-sources
 **/npm-debug.log
 venv
-target
+.DS_Store
