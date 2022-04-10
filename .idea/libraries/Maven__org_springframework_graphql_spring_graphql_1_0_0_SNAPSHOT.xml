@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springframework.graphql:spring-graphql:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/graphql/spring-graphql/1.0.0-SNAPSHOT/spring-graphql-1.0.0-20220404.125639-197.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/graphql/spring-graphql/1.0.0-SNAPSHOT/spring-graphql-1.0.0-20220404.125639-197-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/graphql/spring-graphql/1.0.0-SNAPSHOT/spring-graphql-1.0.0-20220404.125639-197-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
