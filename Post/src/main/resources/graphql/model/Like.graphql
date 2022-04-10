@@ -1,0 +1,3 @@
+type Like {
+    authorId : Int!
+}

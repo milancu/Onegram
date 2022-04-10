@@ -5,8 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,8 +21,6 @@ public class Post {
     @NotNull
     private Integer authorId; // TODO probably change later
     @NotNull
-    private LocalDate dateCreated;
-    @NotNull
-    private LocalTime timeCreated;
+    private LocalDateTime createdAt;
     // TODO images
 }

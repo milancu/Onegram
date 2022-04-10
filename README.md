@@ -11,4 +11,5 @@
   - localhost:8081
   - username: admin
   - password: password
-
+5. GraphQL playground
+  - localhost:8080/playground

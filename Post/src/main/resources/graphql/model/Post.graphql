@@ -1,0 +1,11 @@
+scalar DateTime
+
+type Post {
+    id : Int!
+    description : String!
+    tags : [Tag!]!
+    likes : [Like!]!
+    comments : [Comment!]!
+    authorId : Int!
+    createdAt : DateTime
+}

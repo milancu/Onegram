@@ -1,0 +1,4 @@
+type SubComment {
+    content : String!
+    authorId : Int!
+}
