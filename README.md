@@ -12,4 +12,4 @@
   - username: admin
   - password: password
 5. GraphQL playground
-  - localhost:8080/playground
+  - localhost:9090/playground anebo localhost:1010/playground
