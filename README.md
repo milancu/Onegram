@@ -2,7 +2,7 @@
 # Lokální vývoj
 
 1. Stáhni si [Docker](https://docs.docker.com/desktop/windows/install/)
-2. Běž do projektové složky v terminálu a napiš `docker compose -d`
+2. Běž do projektové složky (složky ve které je docker-compose.yml) v terminálu a napiš `docker compose up`
 3. pgadmin
   -  localhost:5050
   -  username: admin
