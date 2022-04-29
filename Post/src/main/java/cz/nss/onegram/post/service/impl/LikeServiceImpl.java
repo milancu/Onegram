@@ -2,6 +2,7 @@ package cz.nss.onegram.post.service.impl;
 
 import cz.nss.onegram.post.model.Like;
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.model.interfaces.Likeable;
 import cz.nss.onegram.post.repository.PostRepository;
 import cz.nss.onegram.post.service.interfaces.LikeService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ public class LikeServiceImpl implements LikeService {
     private final PostRepository postRepository;
 
     @Override
-    public void persist(Like like, Post post) {
-        List<Like> likes = post.getLikes();
+    public void persist(Like like, Likeable likeable, Post post) {
+        List<Like> likes = likeable.getLikes();
 
         boolean alreadyLiked = likes.stream()
                 .map(Like::getAuthorId)
@@ -26,7 +27,7 @@ public class LikeServiceImpl implements LikeService {
                 .size() >= 1;
 
         if (!alreadyLiked){
-            post.getLikes().add(like);
+            likeable.getLikes().add(like);
             postRepository.save(post);
         }
     }
