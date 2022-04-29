@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PostService {
-    public Post findById(Integer id);
+    public Post findById(String id);
 
     public List<Post> findByAuthorId(Integer authorId);
 

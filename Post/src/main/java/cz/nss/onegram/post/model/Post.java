@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class Post implements Likeable {
     @Id
-    private Integer id;
+    private String id;
 
     @NotNull
     private String description;

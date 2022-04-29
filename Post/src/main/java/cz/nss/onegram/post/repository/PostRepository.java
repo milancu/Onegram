@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface PostRepository extends MongoRepository<Post, Integer> {
+public interface PostRepository extends MongoRepository<Post, String> {
     List<Post> findAllByCreatedAtBetween(LocalDateTime fromDateTime, LocalDateTime toDateTime);
 
     List<Post> findAllByAuthorId(Integer authorId);

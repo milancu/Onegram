@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 
 @Service
@@ -15,7 +16,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    public Post findById(Integer id) {
+    public Post findById(String id) {
         return postRepository.findById(id).get();
     }
 
@@ -26,7 +27,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findByAuthorId(Integer authorId, LocalDate fromDate, LocalDate toDate) {
-        return postRepository.findAllByAuthorIdAndCreatedAtBetween(authorId, fromDate.atStartOfDay(), toDate.atStartOfDay());
+        if (fromDate.isAfter(toDate)){
+            throw new InputMismatchException("FromDate is after toDate.");
+        }
+
+        return postRepository.findAllByAuthorIdAndCreatedAtBetween(authorId, fromDate.atStartOfDay(), toDate.atTime(23, 59));
     }
 
     @Override
