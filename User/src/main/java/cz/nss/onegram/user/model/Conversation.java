@@ -17,7 +17,6 @@ public class Conversation extends AbstractEntity {
     @ManyToMany(mappedBy = "conversations")
     private List<User> members;
 
-
     @OneToMany
     @JoinTable(
             name = "conversation_message",

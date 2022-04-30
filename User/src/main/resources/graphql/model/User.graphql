@@ -1,0 +1,13 @@
+scalar LocalDateTime
+
+type User{
+    id: Int!
+    username: String!
+    email:String!
+    password:String!
+    created:LocalDateTime!
+    bio:String!
+    link:String!
+    image:String!
+    isPublic:Boolean!
+}

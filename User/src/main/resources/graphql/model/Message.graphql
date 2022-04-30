@@ -1,0 +1,7 @@
+type Message{
+    id: Int!
+    message: String!
+    date: LocalDateTime!
+    isRead: Boolean!
+    isDeleted: Boolean!
+}
