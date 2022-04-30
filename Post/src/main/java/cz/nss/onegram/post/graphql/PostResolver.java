@@ -1,4 +1,4 @@
-package cz.nss.onegram.post.graphql.resolver;
+package cz.nss.onegram.post.graphql;
 
 import cz.nss.onegram.post.model.Post;
 import cz.nss.onegram.post.service.interfaces.PostService;

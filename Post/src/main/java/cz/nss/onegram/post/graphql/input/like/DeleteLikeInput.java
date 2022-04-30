@@ -1,9 +1,9 @@
-package cz.nss.onegram.post.graphql.resolver.input.like;
+package cz.nss.onegram.post.graphql.input.like;
 
 import lombok.Data;
 
 @Data
-public class CreateLikeInput {
+public class DeleteLikeInput {
     private String postId;
 
     private String likeableId;

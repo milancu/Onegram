@@ -1,7 +1,7 @@
-package cz.nss.onegram.post.graphql.resolver.mutation;
+package cz.nss.onegram.post.graphql.mutation;
 
-import cz.nss.onegram.post.graphql.resolver.input.post.CreatePostInput;
-import cz.nss.onegram.post.graphql.resolver.input.post.DeletePostInput;
+import cz.nss.onegram.post.graphql.input.post.CreatePostInput;
+import cz.nss.onegram.post.graphql.input.post.DeletePostInput;
 import cz.nss.onegram.post.model.Post;
 import cz.nss.onegram.post.service.interfaces.PostService;
 import cz.nss.onegram.post.util.InputMapper;

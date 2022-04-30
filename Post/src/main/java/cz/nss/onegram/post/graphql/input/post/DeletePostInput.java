@@ -1,4 +1,4 @@
-package cz.nss.onegram.post.graphql.resolver.input.post;
+package cz.nss.onegram.post.graphql.input.post;
 
 import lombok.Data;
 

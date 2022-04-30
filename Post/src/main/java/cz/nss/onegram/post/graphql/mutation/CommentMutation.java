@@ -1,9 +1,9 @@
-package cz.nss.onegram.post.graphql.resolver.mutation;
+package cz.nss.onegram.post.graphql.mutation;
 
-import cz.nss.onegram.post.graphql.resolver.input.comment.CreateCommentInput;
-import cz.nss.onegram.post.graphql.resolver.input.comment.CreateSubcommentInput;
-import cz.nss.onegram.post.graphql.resolver.input.comment.DeleteCommentInput;
-import cz.nss.onegram.post.graphql.resolver.input.comment.DeleteSubcommentInput;
+import cz.nss.onegram.post.graphql.input.comment.CreateCommentInput;
+import cz.nss.onegram.post.graphql.input.comment.CreateSubcommentInput;
+import cz.nss.onegram.post.graphql.input.comment.DeleteCommentInput;
+import cz.nss.onegram.post.graphql.input.comment.DeleteSubcommentInput;
 import cz.nss.onegram.post.model.Comment;
 import cz.nss.onegram.post.model.SubComment;
 import cz.nss.onegram.post.util.InputMapper;

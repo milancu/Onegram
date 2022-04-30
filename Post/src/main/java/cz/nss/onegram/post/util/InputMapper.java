@@ -1,6 +1,6 @@
 package cz.nss.onegram.post.util;
 
-import cz.nss.onegram.post.graphql.resolver.input.post.CreatePostInput;
+import cz.nss.onegram.post.graphql.input.post.CreatePostInput;
 import cz.nss.onegram.post.model.Post;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
