@@ -1,5 +1,10 @@
 package cz.nss.onegram.post.graphql.input.comment;
 
-public class CreateCommentInput {
+import lombok.Data;
 
+@Data
+public class CreateCommentInput {
+    private String postId;
+
+    private String content;
 }
