@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user_conversation")
+@Table(name = "conversation")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class Conversation extends AbstractEntity {
 
     @OneToMany
     @JoinTable(
-            name = "conversation_messages",
+            name = "conversation_message",
             joinColumns = @JoinColumn(name = "conversation_id"),
             inverseJoinColumns = @JoinColumn(name = "message_id")
     )

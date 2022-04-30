@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "onegram_system_user") //TODO probably to bude jinak
+@Table(name = "system_user") //TODO probably to bude jinak
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,26 +41,25 @@ public class User extends AbstractEntity {
     private boolean isPublic;
 
     @ManyToMany
+    @JoinTable(
+            name = "system_user_conversation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id")
+    )
     public List<Conversation> conversations;
 
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
 
-
     @ManyToMany
     @JoinTable(
-            name = "user_follower",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "follower_id")
-    )
-    private List<User> followers;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_follower",
+            name = "system_user_following",
             joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            inverseJoinColumns = @JoinColumn(name = "following_id")
     )
-    private List<User> followerOf;
+    private List<User> following;
+
+    @ManyToMany(mappedBy = "following")
+    private List<User> follower;
 
 }
