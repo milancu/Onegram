@@ -70,10 +70,10 @@ public class PostServiceTest {
         post3.setCreatedAt(LocalDateTime.of(2022, 10, 10, 10,10, 10));
         Post post4 = Generator.generateRandomPost(1);
         post4.setCreatedAt(LocalDateTime.of(2022, 9, 9, 9,9, 9));
-        postService.persist(post1);
-        postService.persist(post2);
-        postService.persist(post3);
-        postService.persist(post4);
+        postRepository.save(post1);
+        postRepository.save(post2);
+        postRepository.save(post3);
+        postRepository.save(post4);
 
         List<Post> result = postService.findByAuthorId(1, LocalDate.of(2022, 9, 9), LocalDate.of(2022, 10, 10));
 

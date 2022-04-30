@@ -16,15 +16,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void persist(Comment comment, Post post) {
-        comment.setObjectId(new ObjectId().toString());
+        comment.setId(new ObjectId().toString());
         post.getComments().add(comment);
         postRepository.save(post);
     }
 
     @Override
     public void persistSubComment(SubComment subComment, Comment comment, Post post) {
+        subComment.setId(new ObjectId().toString());
         for (Comment c : post.getComments()){
-            if (c.getObjectId().equals(comment.getObjectId())){
+            if (c.getId().equals(comment.getId())){
                 c.getSubComments().add(subComment);
                 postRepository.save(post);
                 break;

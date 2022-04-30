@@ -1,0 +1,7 @@
+input CreateLikeInput {
+    likeableId : String!
+}
+
+input DeleteLikeInput {
+    likeableId : String!
+}

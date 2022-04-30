@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void persist(Post post) {
+        post.setCreatedAt(LocalDateTime.now());
         postRepository.save(post);
     }
 

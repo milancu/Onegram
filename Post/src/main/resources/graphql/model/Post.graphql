@@ -1,7 +1,7 @@
 scalar DateTime
 
 type Post {
-    id : Int!
+    id : String!
     description : String!
     tags : [Tag!]!
     likes : [Like!]!
