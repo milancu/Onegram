@@ -11,3 +11,11 @@ type User{
     image:String!
     isPublic:Boolean!
 }
+
+type Query {
+    findAllUsers: [User]!
+}
+
+#type Mutation {
+#    newUser(firstName: String!, lastName: String!) : User!
+#}
