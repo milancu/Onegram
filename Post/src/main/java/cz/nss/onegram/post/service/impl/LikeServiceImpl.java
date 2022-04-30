@@ -38,4 +38,13 @@ public class LikeServiceImpl implements LikeService {
             postRepository.save(post);
         }
     }
+
+    @Override
+    public Likeable findById(String id, Post post) {
+        return post.getLikeables()
+                .stream()
+                .filter(l -> l.getId().equals(id))
+                .findFirst()
+                .get();
+    }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,4 +29,9 @@ public class Comment implements Likeable {
 
     @NotNull
     private List<Like> likes;
+
+    public List<Likeable> getLikeables(){
+        List<Likeable> likeables = new ArrayList<>(subComments);
+        return likeables;
+    }
 }

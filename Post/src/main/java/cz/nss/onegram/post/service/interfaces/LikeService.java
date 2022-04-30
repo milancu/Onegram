@@ -10,4 +10,6 @@ public interface LikeService {
     public void persist(Like like, Likeable likeable, Post post);
 
     public void delete(Like like, Post post);
+
+    public Likeable findById(String id, Post post);
 }

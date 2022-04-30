@@ -4,6 +4,7 @@ input CreateCommentInput {
 }
 
 input DeleteCommentInput {
+    postId: String!
     id : String!
 }
 
@@ -14,5 +15,6 @@ input CreateSubcommentInput {
 }
 
 input DeleteSubcommentInput {
+    postId: String!
     id : String!
 }

@@ -4,5 +4,5 @@ input CreatePostInput {
 }
 
 input DeletePostInput {
-    id: Int!
+    id: String!
 }
