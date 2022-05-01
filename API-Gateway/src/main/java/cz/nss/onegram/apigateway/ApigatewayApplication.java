@@ -20,7 +20,7 @@ public class ApigatewayApplication {
                         .filters(f -> f.setPath("/graphql"))
                         .uri("http://localhost:9090"))
                 .route(p -> p
-                        .path("/post/graphql")
+                        .path("/user/graphql")
                         .filters(f -> f.setPath("/graphql"))
                         .uri("http://localhost:1010"))
                 .build();
