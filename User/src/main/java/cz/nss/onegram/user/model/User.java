@@ -11,6 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class User extends AbstractEntity {
 
     @Column(name = "username", nullable = false, unique = true)
@@ -18,9 +20,6 @@ public class User extends AbstractEntity {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-
-    @Column(name = "password", nullable = false)
-    private String password;
 
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
@@ -59,4 +58,14 @@ public class User extends AbstractEntity {
     @ManyToMany(mappedBy = "following")
     private List<User> follower;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", created=" + created +
+                ", bio='" + bio + '\'' +
+                ", isPublic=" + isPublic +
+                '}';
+    }
 }
