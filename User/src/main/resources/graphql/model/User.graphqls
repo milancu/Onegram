@@ -11,7 +11,3 @@ type User{
     image:String!
     isPublic:Boolean!
 }
-
-#type Mutation {
-#    newUser(firstName: String!, lastName: String!) : User!
-#}
