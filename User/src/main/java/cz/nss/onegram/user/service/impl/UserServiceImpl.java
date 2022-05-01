@@ -39,4 +39,13 @@ public class UserServiceImpl implements UserService {
     public void persist(User user) {
         userRepository.save(user);
     }
+
+    @Override
+    public void unFollowUser(User user) {
+
+    }
+    @Override
+    public void sendFollowRequest(User user) {
+
+    }
 }

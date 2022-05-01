@@ -15,4 +15,8 @@ public interface UserService {
     public void deleteAll(List<User> users);
 
     public void persist(User user);
+
+    public void unFollowUser(User user);
+
+    public void sendFollowRequest(User user);
 }

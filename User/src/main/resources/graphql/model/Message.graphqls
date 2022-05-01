@@ -1,0 +1,10 @@
+scalar DateTime
+
+type Message{
+    id:Int!
+    message:String!
+    date:DateTime!
+    hasRead:Boolean!
+    isDeleted:Boolean!
+    sender:User!
+}
