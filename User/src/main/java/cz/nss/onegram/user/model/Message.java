@@ -20,8 +20,8 @@ public class Message extends AbstractEntity {
     @Column(name = "date", nullable = false) //TODO probably neco jineho nez name date
     private LocalDateTime date;
 
-    @Column(name = "is_read", nullable = false)
-    private boolean isRead;
+    @Column(name = "has_read", nullable = false)
+    private boolean hasRead;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;

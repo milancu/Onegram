@@ -1,0 +1,7 @@
+input SendMessage{
+    message: String!
+}
+
+input DeleteMessage{
+    id: Int!
+}
