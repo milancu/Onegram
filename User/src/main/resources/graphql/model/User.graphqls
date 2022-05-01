@@ -4,7 +4,6 @@ type User{
     id: Int!
     username: String!
     email:String!
-    password:String!
     created:DateTime!
     bio:String!
     link:String!
