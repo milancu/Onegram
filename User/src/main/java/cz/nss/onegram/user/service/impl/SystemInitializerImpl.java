@@ -42,7 +42,6 @@ public class SystemInitializerImpl implements SystemInitializer {
             String bio = username.equals("cuphuon3") ? "jsem nejhezci" : "ahoj";
             user.setBio(bio);
             user.setEmail(username + "@cvut.fel.cz");
-            user.setPassword("123456"); //TODO encoding
             user.setCreated(LocalDateTime.now());
             userService.persist(user);
         }
