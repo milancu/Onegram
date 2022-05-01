@@ -1,0 +1,8 @@
+input CreatePostInput {
+    description: String!
+    # TODO images
+}
+
+input DeletePostInput {
+    id: String!
+}

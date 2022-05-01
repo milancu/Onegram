@@ -1,0 +1,21 @@
+input CreateCommentInput {
+    postId : String!
+    content : String!
+}
+
+input DeleteCommentInput {
+    postId: String!
+    id : String!
+}
+
+input CreateSubcommentInput {
+    postId : String!
+    mainCommentId : String!
+    content : String!
+}
+
+input DeleteSubcommentInput {
+    postId: String!
+    commentId : String!
+    id : String!
+}

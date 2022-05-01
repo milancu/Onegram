@@ -1,0 +1,17 @@
+scalar DateTime
+
+type User{
+    id: Int!
+    username: String!
+    email:String!
+    password:String!
+    created:DateTime!
+    bio:String!
+    link:String!
+    image:String!
+    isPublic:Boolean!
+}
+
+#type Mutation {
+#    newUser(firstName: String!, lastName: String!) : User!
+#}

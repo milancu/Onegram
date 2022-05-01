@@ -1,4 +1,5 @@
 type Comment {
+    id : String!
     content : String!
     authorId : Int!
     subComments : [SubComment!]!
