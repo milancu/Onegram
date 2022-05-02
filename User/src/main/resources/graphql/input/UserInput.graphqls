@@ -1,0 +1,7 @@
+input FollowUserInput{
+    userId:Int!
+}
+
+input UnFollowUserInput{
+    userId:Int!
+}

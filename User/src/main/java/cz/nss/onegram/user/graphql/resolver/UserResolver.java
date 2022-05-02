@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -20,14 +19,4 @@ public class UserResolver implements GraphQLQueryResolver {
         log.info("Getting all users.");
         return userService.getAllUsers();
     }
-
-//    public void createUser(String username, String password) {
-//        User user = new User();
-//        user.setUsername(username);
-//        user.setEmail(username + "@cvut.fel.cz");
-//        user.setPassword("123456");
-//        user.setCreated(LocalDateTime.now());
-//
-//        userService.persist(user);
-//    }
 }

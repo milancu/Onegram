@@ -4,5 +4,5 @@ import cz.nss.onegram.user.model.User;
 
 public interface FollowRequestService {
 
-    public void sendFollowRequest(User user);
+    public void sendFollowRequest(User formUser, User userToFollow);
 }

@@ -1,0 +1,15 @@
+input CreateRequestInput{
+    toUserId:Int!
+}
+
+input CancelRequestInput{
+    id:Int!
+}
+
+input AcceptRequestInput{
+    id:Int!
+}
+
+input RejectRequestInput{
+    id:Int!
+}
