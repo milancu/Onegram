@@ -1,13 +1,13 @@
 package cz.nss.onegram.user.security;
 
 import cz.nss.onegram.user.model.User;
+import cz.nss.onegram.user.security.jwt.JwtUtils;
 import cz.nss.onegram.user.service.interfaces.UserService;
-import cz.nss.onegram.user.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -29,6 +29,12 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
 
     private final OAuth2AuthorizedClientService authorizedClientService;
 
+    @Autowired(required = false) // Required = false because of tests
+    private AuthenticationManager authenticationManager;
+    @Autowired(required = false) // Required = false because of tests
+    private JwtUtils jwtUtils;
+
+
     private String homeUrl = "http://localhost:1010/";
 
     @Override
@@ -39,16 +45,17 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
         String email = client.getAttribute("email");
         User savedUser = userService.findByEmail(email);
 
-        if (savedUser == null){
+        if (savedUser == null) {
             userService.persist(client);
             log.info("Registrating new user: {}", email);
         }
-
+        String jwt = jwtUtils.generateJwtToken(email);
         String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
-                .queryParam("auth_token", JwtTokenUtil.generateToken(userService.findByEmail(email)))
+                .queryParam("Authorization", jwt)
                 .build().toUriString();
+        response.setHeader("Authorization", jwt);
+        log.info("Created new jwtToken: {}", jwt);
         getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
-
     }
 
 }
