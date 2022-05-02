@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -49,6 +50,7 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
             userService.persist(client);
             log.info("Registrating new user: {}", email);
         }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(email);
         String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
                 .queryParam("Authorization", jwt)
