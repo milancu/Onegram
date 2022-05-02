@@ -57,8 +57,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String headerParam = request.getQueryString();
         if (StringUtils.hasText(headerParam) && headerParam.startsWith("Authorization=")) {
             return headerParam.substring(14, headerParam.length());
-        } else if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Authorization=")){
-            return headerAuth.substring(14, headerAuth.length());
+        } else if(StringUtils.hasText(headerAuth)){
+            return headerAuth;
         }
         return null;
     }

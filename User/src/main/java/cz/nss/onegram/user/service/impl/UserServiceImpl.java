@@ -58,16 +58,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void persist(OAuth2User user) {
         String email = user.getAttribute("email");
-        User newUser = User.builder()
-                .created(LocalDateTime.now())
-                .email(email)
-                .username(email) // TODO
-                .follower(new ArrayList<>())
-                .messages(new ArrayList<>())
-                .conversations(new ArrayList<>())
-                .following(new ArrayList<>())
-                .isPublic(true)
-                .build();
+        User newUser = User.builder().created(LocalDateTime.now()).email(email).username(email) // TODO
+                .follower(new ArrayList<>()).messages(new ArrayList<>()).conversations(new ArrayList<>()).following(new ArrayList<>()).isPublic(true).build();
 
         userRepository.save(newUser);
         log.info("New user created {}", newUser);
@@ -75,20 +67,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) return null;
-
-        if(authentication instanceof OAuth2AuthenticationToken){
-            OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
-            OAuth2User client = token.getPrincipal();
-            String email = client.getAttribute("email");
-            return this.findByEmail(email);
-        }
-
         else {
-            return null;
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            return userRepository.findByEmail(email);
         }
     }
 }
