@@ -1,18 +1,7 @@
-input Login{
-    username:String!
-    password:String!
-}
-
-input Register{
-    username:String!
-    email: String!
-    password:String!
-}
-
-input FollowUser{
+input FollowUserInput{
     userId:Int!
 }
 
-input UnFollowUser{
+input UnFollowUserInput{
     userId:Int!
 }

@@ -1,7 +1,7 @@
-input SendMessage{
+input SendMessageInput{
     message: String!
 }
 
-input DeleteMessage{
+input DeleteMessageInput{
     id: Int!
 }

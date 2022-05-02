@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(String id) {
-        return null;
+    public User findById(int id) {
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteAll(List<User> users) {
-
     }
 
     @Override
@@ -79,14 +78,12 @@ public class UserServiceImpl implements UserService {
 
         if (authentication == null) return null;
 
-        if(authentication instanceof OAuth2AuthenticationToken){
+        if (authentication instanceof OAuth2AuthenticationToken) {
             OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
             OAuth2User client = token.getPrincipal();
             String email = client.getAttribute("email");
             return this.findByEmail(email);
-        }
-
-        else {
+        } else {
             return null;
         }
     }

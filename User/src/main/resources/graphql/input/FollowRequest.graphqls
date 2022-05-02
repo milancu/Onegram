@@ -1,7 +1,15 @@
-input CreateRequest{
+input CreateRequestInput{
     toUserId:Int!
 }
 
-input cancelRequest{
+input CancelRequestInput{
+    id:Int!
+}
+
+input AcceptRequestInput{
+    id:Int!
+}
+
+input RejectRequestInput{
     id:Int!
 }

@@ -68,4 +68,20 @@ public class User extends AbstractEntity {
                 ", isPublic=" + isPublic +
                 '}';
     }
+
+    public void addFollower(User user) {
+        this.follower.add(user);
+    }
+
+    public void addFollowing(User user) {
+        this.following.add(user);
+    }
+
+    public void removeFollowing(User user) {
+        this.following.remove(user);
+    }
+
+    public void removeFollower(User user) {
+        this.follower.remove(user);
+    }
 }
