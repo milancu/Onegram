@@ -1,7 +1,0 @@
-input CreateRequest{
-    toUserId:Int!
-}
-
-input cancelRequest{
-    id:Int!
-}
