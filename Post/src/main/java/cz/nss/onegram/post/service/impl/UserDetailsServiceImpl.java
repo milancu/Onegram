@@ -1,9 +1,12 @@
 package cz.nss.onegram.post.service.impl;
 
-import cz.nss.onegram.post.model.UserDetails;
-import cz.nss.onegram.post.service.interfaces.UserDetailsService;
+import cz.nss.onegram.post.security.model.User;
+import cz.nss.onegram.post.security.model.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,24 +16,30 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    private HttpServletRequest request;
-
-    private RestTemplate restTemplate = new RestTemplate();
-
-    private String reqUrl = "http://seznam.cz"; // TODO remove hardcoded value
+    private final String reqUrl = "http://localhost:1010/auth/current"; // TODO remove hardcoded value, might be problem because of protocol when deployed
 
     @Override
-    public String getCurrentUser() { // Return UserDetails
-        ResponseEntity<String> response
-                = restTemplate.exchange(reqUrl, HttpMethod.GET, extractToken(), String.class);
-        String body = response.getBody();
-        return body;
+    public UserDetails loadUserByUsername(String jwt) throws UsernameNotFoundException {
+        User user = this.fetchUserFromUserMicroservice(jwt);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found.");
+        }
+        return UserDetailsImpl.build(user);
     }
 
-    private HttpEntity<String> extractToken(){
+    private User fetchUserFromUserMicroservice(String jwt){
+        HttpEntity<String> request = getRequest(jwt);
+        User user
+                = restTemplate.exchange(reqUrl, HttpMethod.GET, request, User.class).getBody();
+
+        return user;
+    }
+
+    private HttpEntity<String> getRequest(String jwt){
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(request.getHeader("Authorization"));
+        headers.setBearerAuth(jwt.split(" ")[1]); // TODO might cause problems
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
         return entity;
