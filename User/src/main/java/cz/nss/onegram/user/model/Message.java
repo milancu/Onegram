@@ -26,7 +26,7 @@ public class Message extends AbstractEntity {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @ManyToOne //TODO prodiskutovat tohle reseni
-    @JoinColumn(name="sender_id")
-    private User sender;
+    @ManyToOne
+    @JoinColumn(name="RECEIVER_ID")
+    private User receiver;
 }

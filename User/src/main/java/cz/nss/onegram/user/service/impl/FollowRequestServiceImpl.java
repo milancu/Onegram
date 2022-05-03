@@ -17,9 +17,7 @@ public class FollowRequestServiceImpl implements FollowRequestService {
     @Override
     public void sendFollowRequest(User fromUser, User userToFollow) {
         FollowRequest followRequest = new FollowRequest();
-        followRequest.setFromUser(fromUser);
-        followRequest.setToUser(userToFollow);
+        followRequest.setReceiver(userToFollow);
         followRequest.setDate(LocalDate.now());
-        followRequest.setFollowState(FollowState.PENDING);
     }
 }

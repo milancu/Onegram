@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(String id) {
-        return null;
+    public User findById(int id) {
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public void persist(OAuth2User user) {
         String email = user.getAttribute("email");
         User newUser = User.builder().created(LocalDateTime.now()).email(email).username(email) // TODO
-                .follower(new ArrayList<>()).messages(new ArrayList<>()).conversations(new ArrayList<>()).following(new ArrayList<>()).isPublic(true).build();
+                .follower(new ArrayList<>()).sentMessages(new ArrayList<>()).following(new ArrayList<>()).isPublic(true).build();
 
         userRepository.save(newUser);
         log.info("New user created {}", newUser);

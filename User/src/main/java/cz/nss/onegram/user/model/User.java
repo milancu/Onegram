@@ -36,16 +36,27 @@ public class User extends AbstractEntity {
     @Column(name = "isPublic")
     private boolean isPublic;
 
-    @ManyToMany
-    @JoinTable(
-            name = "system_user_conversation",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "conversation_id")
-    )
-    public List<Conversation> conversations;
+    @OneToMany
+    @JoinTable(name = "SENDER_REQUEST",
+            joinColumns =
+            @JoinColumn(name = "SENDER_ID"),
+            inverseJoinColumns =
+            @JoinColumn(name = "REQUEST_ID"))
+    private List<FollowRequest> sentRequests;
 
-    @OneToMany(mappedBy = "sender")
-    private List<Message> messages;
+    @OneToMany(mappedBy = "receiver")
+    private List<FollowRequest> receivedRequests;
+
+    @OneToMany
+    @JoinTable(name = "SENDER_MESSAGE",
+            joinColumns =
+            @JoinColumn(name = "SENDER_ID"),
+            inverseJoinColumns =
+            @JoinColumn(name = "MESSAGE_ID"))
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> receivedMessages;
 
     @ManyToMany
     @JoinTable(

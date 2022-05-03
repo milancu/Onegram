@@ -6,5 +6,5 @@ type Message{
     date:DateTime!
     hasRead:Boolean!
     isDeleted:Boolean!
-    sender:User!
+    receiver:User!
 }

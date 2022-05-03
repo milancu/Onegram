@@ -1,9 +1,7 @@
 scalar DateTime
 
 type FollowRequest{
-    id: Int!
-    formUser: User!
-    toUser: User!
+    id:Int!
+    receiver:User!
     date: DateTime!
-    followState: FollowState!
 }

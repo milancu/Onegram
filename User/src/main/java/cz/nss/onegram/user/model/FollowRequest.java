@@ -13,20 +13,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FollowRequest extends AbstractEntity {//TODO prodiskutovat zadatele a druhou stranu
+public class FollowRequest extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "from_user")
-    private User fromUser;
-
-    @ManyToOne
-    @JoinColumn(name="to_user")
-    private User toUser;
+    @JoinColumn(name="RECEIVER_ID")
+    private User receiver;
 
     @Column(name = "request_date", nullable = false)
     private LocalDate date;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "request_state", nullable = false)
-    private FollowState followState;
 }

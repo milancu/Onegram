@@ -1,5 +1,0 @@
-enum FollowState{
-    PENDING
-    ACCEPTED
-    REJECTED
-}
