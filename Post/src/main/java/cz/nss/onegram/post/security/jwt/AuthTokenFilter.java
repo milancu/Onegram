@@ -1,6 +1,6 @@
-package cz.nss.onegram.user.security.jwt;
+package cz.nss.onegram.post.security.jwt;
 
-import cz.nss.onegram.user.security.services.UserDetailsServiceImpl;
+import cz.nss.onegram.post.service.impl.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +32,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
 
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
-
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (jwt != null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(jwt);
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
@@ -57,10 +55,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String headerParam = request.getQueryString();
         if (StringUtils.hasText(headerParam) && headerParam.startsWith("Authorization=")) {
             return headerParam.substring(14, headerParam.length());
-        } else if (StringUtils.hasText(headerAuth)) {
-            if (headerAuth.startsWith("Bearer ")) {
-                return headerAuth.substring(7, headerAuth.length());
-            }
+        } else if(StringUtils.hasText(headerAuth)){
             return headerAuth;
         }
         return null;
