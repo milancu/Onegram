@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FollowRequestRepository extends JpaRepository<FollowRequest, Integer> {
+
+    public FollowRequest findById(int id);
 }

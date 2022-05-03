@@ -18,15 +18,26 @@ public class Message extends AbstractEntity {
     private String message;
 
     @Column(name = "date", nullable = false) //TODO probably neco jineho nez name date
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 
     @Column(name = "has_read", nullable = false)
-    private boolean hasRead;
+    private boolean hasRead = false;
 
     @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
+    private boolean isDeleted = false;
 
     @ManyToOne
     @JoinColumn(name="RECEIVER_ID")
     private User receiver;
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "message='" + message + '\'' +
+                ", date=" + date +
+                ", hasRead=" + hasRead +
+                ", isDeleted=" + isDeleted +
+                ", receiver=" + receiver +
+                '}';
+    }
 }

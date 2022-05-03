@@ -20,8 +20,6 @@ public class SystemInitializerImpl implements SystemInitializer {
 
     private final UserServiceImpl userService;
     private final MessageServiceImpl messageService;
-    private final FollowRequestServiceImpl followRequestService;
-    private final ConversationServiceImpl conversationService;
     private final Random random = new Random();
 
     private final Environment environment;
@@ -40,9 +38,9 @@ public class SystemInitializerImpl implements SystemInitializer {
             User user = new User();
             user.setUsername(username);
             String bio = username.equals("cuphuon3") ? "jsem nejhezci" : "ahoj";
+            if (username.equals("cuphuon3")) user.setPublic(true);
             user.setBio(bio);
             user.setEmail(username + "@cvut.fel.cz");
-            user.setCreated(LocalDateTime.now());
             userService.persist(user);
         }
     }

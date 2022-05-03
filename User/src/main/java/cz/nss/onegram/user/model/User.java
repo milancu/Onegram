@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "system_user") //TODO probably to bude jinak
@@ -22,7 +22,7 @@ public class User extends AbstractEntity {
     private String email;
 
     @Column(name = "created", nullable = false)
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
     @Column(name = "bio")
     private String bio;
@@ -42,10 +42,10 @@ public class User extends AbstractEntity {
             @JoinColumn(name = "SENDER_ID"),
             inverseJoinColumns =
             @JoinColumn(name = "REQUEST_ID"))
-    private List<FollowRequest> sentRequests;
+    private Collection<FollowRequest> sentRequests;
 
     @OneToMany(mappedBy = "receiver")
-    private List<FollowRequest> receivedRequests;
+    private Collection<FollowRequest> receivedRequests;
 
     @OneToMany
     @JoinTable(name = "SENDER_MESSAGE",
@@ -53,10 +53,10 @@ public class User extends AbstractEntity {
             @JoinColumn(name = "SENDER_ID"),
             inverseJoinColumns =
             @JoinColumn(name = "MESSAGE_ID"))
-    private List<Message> sentMessages;
+    private Collection<Message> sentMessages;
 
     @OneToMany(mappedBy = "receiver")
-    private List<Message> receivedMessages;
+    private Collection<Message> receivedMessages;
 
     @ManyToMany
     @JoinTable(
@@ -64,10 +64,10 @@ public class User extends AbstractEntity {
             joinColumns = @JoinColumn(name = "follower_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id")
     )
-    private List<User> following;
+    private Collection<User> following;
 
     @ManyToMany(mappedBy = "following")
-    private List<User> follower;
+    private Collection<User> follower;
 
     @Override
     public String toString() {
@@ -81,18 +81,26 @@ public class User extends AbstractEntity {
     }
 
     public void addFollower(User user) {
-        this.follower.add(user);
-    }
-
-    public void addFollowing(User user) {
-        this.following.add(user);
-    }
-
-    public void removeFollowing(User user) {
-        this.following.remove(user);
+        follower.add(user);
     }
 
     public void removeFollower(User user) {
-        this.follower.remove(user);
+        follower.remove(user);
+    }
+
+    public void addFollowing(User user) {
+        following.add(user);
+    }
+
+    public void removeFollowing(User user) {
+        following.remove(user);
+    }
+
+    public void sendMessage(Message message) {
+        sentMessages.add(message);
+    }
+
+    public void receivedMessage(Message message) {
+        receivedMessages.add(message);
     }
 }

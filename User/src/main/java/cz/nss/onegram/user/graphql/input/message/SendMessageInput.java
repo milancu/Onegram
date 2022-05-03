@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class SendMessageInput {
     private String message;
+    private int receiver_id;
 }

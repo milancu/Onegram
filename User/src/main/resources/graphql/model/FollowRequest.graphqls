@@ -1,7 +1,7 @@
-scalar DateTime
+scalar LocalDateTime
 
 type FollowRequest{
     id:Int!
     receiver:User!
-    date: DateTime!
+    date: LocalDateTime!
 }

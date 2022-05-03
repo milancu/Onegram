@@ -1,3 +1,6 @@
 type Mutation {
     sendMessage(input: SendMessageInput!): Message!
+    deleteMessage(input: DeleteMessageInput!): Int!
+    followUser(input: FollowUserInput!):User!
+    unFollowUser(input: UnFollowUserInput!):User!
 }

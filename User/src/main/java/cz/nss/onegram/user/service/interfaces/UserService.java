@@ -22,4 +22,7 @@ public interface UserService {
     public void persist(OAuth2User user);
 
     public User getCurrentUser();
+
+    public void followUser(int userToFollow_id);
+    public void unFollowUser(int userToUnFollow_id);
 }
