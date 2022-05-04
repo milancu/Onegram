@@ -1,6 +1,9 @@
 type Mutation {
     sendMessage(input: SendMessageInput!): Message!
     deleteMessage(input: DeleteMessageInput!): Int!
+    makeMessageRead(input: MakeMessageReadInput): Message!
+    makeMessageUnread(input: MakeMessageUnreadInput): Message!
+
     followUser(input: FollowUserInput!):User!
     unFollowUser(input: UnFollowUserInput!):User!
 }

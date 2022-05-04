@@ -103,4 +103,8 @@ public class User extends AbstractEntity {
     public void receivedMessage(Message message) {
         receivedMessages.add(message);
     }
+
+    public void removeMessage(Message message) {
+        sentMessages.remove(message);
+    }
 }

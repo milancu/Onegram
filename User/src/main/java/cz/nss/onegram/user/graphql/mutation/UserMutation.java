@@ -17,8 +17,7 @@ public class UserMutation implements GraphQLMutationResolver {
     private final UserService userService;
 
     public User followUser(FollowUserInput input) {
-        userService.followUser(input.getUserId());
-        return userService.findById(input.getUserId());
+        return userService.followUser(input.getUserId());
     }
 
     public User unFollowUser(UnFollowUserInput input) {

@@ -78,18 +78,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void followUser(int userToFollow_id) {
+    public User followUser(int userToFollow_id) {
         User currUser = getCurrentUser();
         User userToFollow = findById(userToFollow_id);
 
-        if (userToFollow == null){
+        if (userToFollow == null) {
             log.error("cannot find user");
-            return;
+            return null;
         }
 
-        //TODO validace
-
-        if(currUser.equals(userToFollow)) log.error("cannot follow yourself");
+        if (currUser.equals(userToFollow)) {
+            log.warn("cannot follow yourself");
+            return userToFollow;
+        }
 
         if (userToFollow.isPublic()) {
             userToFollow.addFollower(currUser);
@@ -101,6 +102,7 @@ public class UserServiceImpl implements UserService {
             followRequestRepository.save(followRequest);
             log.info("create request: {}", followRequest);
         }
+        return userToFollow;
     }
 
     @Override

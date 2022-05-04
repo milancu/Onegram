@@ -1,6 +1,8 @@
 package cz.nss.onegram.user.graphql.mutation;
 
 import cz.nss.onegram.user.graphql.input.message.DeleteMessageInput;
+import cz.nss.onegram.user.graphql.input.message.MakeMessageReadInput;
+import cz.nss.onegram.user.graphql.input.message.MakeMessageUnreadInput;
 import cz.nss.onegram.user.graphql.input.message.SendMessageInput;
 import cz.nss.onegram.user.model.Message;
 import cz.nss.onegram.user.service.interfaces.MessageService;
@@ -21,6 +23,14 @@ public class MessageMutation implements GraphQLMutationResolver {
     }
 
     public Integer deleteMessage(DeleteMessageInput input) {
-        return 1;
+        return messageService.removeMessage(input.getId());
+    }
+
+    public Message makeMessageRead(MakeMessageReadInput input) {
+        return messageService.makeMessageRead(input.getId());
+    }
+
+    public Message makeMessageUnread(MakeMessageUnreadInput input) {
+        return messageService.makeMessageUnread(input.getId());
     }
 }
