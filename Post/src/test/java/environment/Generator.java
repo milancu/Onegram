@@ -3,7 +3,10 @@ package environment;
 import cz.nss.onegram.post.model.Comment;
 import cz.nss.onegram.post.model.Post;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.*;
 
 public class Generator {
@@ -14,7 +17,8 @@ public class Generator {
         Post post = Post.builder()
                 .authorId(authorId)
                 .comments(new ArrayList<>())
-                .createdAt(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .description("Random post" + random.nextInt(1, 1000))
                 .likes(new ArrayList<>())
                 .tags(new ArrayList<>())

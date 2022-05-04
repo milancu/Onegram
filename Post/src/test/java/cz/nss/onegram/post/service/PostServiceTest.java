@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.List;
 
 @SpringBootTest
@@ -63,13 +62,18 @@ public class PostServiceTest {
     @Test
     public void findByAuthorIdWithDate_4postsCreated_2PostsFound() {
         Post post1 = Generator.generateRandomPost(1);
-        post1.setCreatedAt(LocalDateTime.of(1990, 10, 10, 0, 0, 0));
+        post1.setCreatedAtTime(LocalTime.of(0, 0, 0));
+        post1.setCreatedAtDate(LocalDate.of(1990, 10, 10));
         Post post2 = Generator.generateRandomPost(1);
-        post2.setCreatedAt(LocalDateTime.of(2050, 10, 10, 0, 0, 0));
+        post2.setCreatedAtTime(LocalTime.of(0, 0, 0));
+        post2.setCreatedAtDate(LocalDate.of(2050, 10, 10));
         Post post3 = Generator.generateRandomPost(1);
-        post3.setCreatedAt(LocalDateTime.of(2022, 10, 10, 10,10, 10));
+        post3.setCreatedAtTime(LocalTime.of(0, 0, 0));
+        post3.setCreatedAtDate(LocalDate.of(2022, 10, 10));
         Post post4 = Generator.generateRandomPost(1);
-        post4.setCreatedAt(LocalDateTime.of(2022, 9, 9, 9,9, 9));
+        post4.setCreatedAtTime(LocalTime.of(0, 0, 0));
+        post4.setCreatedAtDate(LocalDate.of(2022, 9, 9));
+
         postRepository.save(post1);
         postRepository.save(post2);
         postRepository.save(post3);
