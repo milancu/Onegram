@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -26,18 +27,29 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAllByAuthorId(authorId);
     }
 
+    /**
+     * @param authorId
+     * @param fromDate
+     * @param toDate
+     * @return All posts made by an author. The dates are inclusive.
+     */
     @Override
     public List<Post> findByAuthorId(Integer authorId, LocalDate fromDate, LocalDate toDate) {
         if (fromDate.isAfter(toDate)){
             throw new InputMismatchException("FromDate is after toDate.");
         }
 
-        return postRepository.findAllByAuthorIdAndCreatedAtBetween(authorId, fromDate.atStartOfDay(), toDate.atTime(23, 59));
+        return postRepository.findAllByAuthorIdAndCreatedAtDateBetween(authorId, fromDate.minusDays(1), toDate.plusDays(1));
     }
 
+    /**
+     * @param fromDate
+     * @param toDate
+     * @return All posts created. The dates are inclusive.
+     */
     @Override
     public List<Post> findAll(LocalDate fromDate, LocalDate toDate) {
-        return postRepository.findAllByCreatedAtBetween(fromDate.atStartOfDay(), toDate.atStartOfDay());
+        return postRepository.findAllByCreatedAtDateBetween(fromDate.minusDays(1), toDate.plusDays(1));
     }
 
     @Override
@@ -47,7 +59,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void persist(Post post) {
-        post.setCreatedAt(LocalDateTime.now());
+        post.setCreatedAtDate(LocalDate.now());
+        post.setCreatedAtTime(LocalTime.now());
         postRepository.save(post);
     }
 

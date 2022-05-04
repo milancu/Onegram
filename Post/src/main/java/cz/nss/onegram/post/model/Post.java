@@ -11,7 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +43,10 @@ public class Post implements Likeable {
     private Integer authorId; // TODO probably change later
 
     @NotNull
-    private LocalDateTime createdAt;
+    private LocalDate createdAtDate;
+
+    @NotNull
+    private LocalTime createdAtTime;
     // TODO images
 
     public List<Likeable> getLikeables() {
