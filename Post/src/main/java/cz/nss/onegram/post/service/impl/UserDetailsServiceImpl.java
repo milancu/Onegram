@@ -1,6 +1,5 @@
 package cz.nss.onegram.post.service.impl;
 
-import cz.nss.onegram.post.security.model.User;
 import cz.nss.onegram.post.security.model.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -22,17 +21,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String jwt) throws UsernameNotFoundException {
-        User user = this.fetchUserFromUserMicroservice(jwt);
+        UserDetails user = this.fetchUserFromUserMicroservice(jwt);
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
-        return UserDetailsImpl.build(user);
+        return user;
     }
 
-    private User fetchUserFromUserMicroservice(String jwt){
+    private UserDetails fetchUserFromUserMicroservice(String jwt){
         HttpEntity<String> request = getRequest(jwt);
-        User user
-                = restTemplate.exchange(reqUrl, HttpMethod.GET, request, User.class).getBody();
+        UserDetailsImpl user
+                = restTemplate.exchange(reqUrl, HttpMethod.GET, request, UserDetailsImpl.class).getBody();
 
         return user;
     }

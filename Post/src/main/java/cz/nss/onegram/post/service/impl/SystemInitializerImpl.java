@@ -39,18 +39,22 @@ public class SystemInitializerImpl implements SystemInitializer {
             return;
         }
 
+        createPost("Přeji krásně pondělí!", 1);
+        createPost("Přeji krásnou něděli!", 5);
+    }
+
+    private void createPost(String description, Integer authorId){
         Post post = Post.builder()
-                .authorId(1)
+                .authorId(authorId)
                 .comments(List.of())
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
-                .description("Přeji krásné pondělí!")
+                .description(description)
                 .likes(List.of())
                 .tags(List.of())
                 .build();
 
         postRepository.save(post);
-
         log.info("Generated post: {}", post);
     }
 }

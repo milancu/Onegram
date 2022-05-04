@@ -1,10 +1,11 @@
 package cz.nss.onegram.post.service.interfaces;
 
 import cz.nss.onegram.post.model.Post;
-import cz.nss.onegram.post.security.model.User;
+import cz.nss.onegram.post.security.model.UserDetailsImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserService {
-    public User getCurrentUser();
+    public UserDetailsImpl getCurrentUser();
 
-    public boolean userCreatedPost(Post post, User user);
+    public boolean userCreatedPost(String postId, UserDetailsImpl user);
 }
