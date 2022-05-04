@@ -3,11 +3,15 @@ package cz.nss.onegram.post.graphql.mutation;
 import cz.nss.onegram.post.graphql.input.post.CreatePostInput;
 import cz.nss.onegram.post.graphql.input.post.DeletePostInput;
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.security.model.User;
 import cz.nss.onegram.post.service.interfaces.PostService;
+import cz.nss.onegram.post.service.interfaces.UserService;
 import cz.nss.onegram.post.util.InputMapper;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,12 +23,14 @@ public class PostMutation implements GraphQLMutationResolver {
 
     private final PostService postService;
 
+    private final UserService userService;
+
     public Post createPost(CreatePostInput input){
         Post post = mapper.convertToEntity(input);
-        log.warn("Changing author id because of nonexsiting security");
-        post.setAuthorId(100); // TODO remove
+        User user = userService.getCurrentUser();
+        post.setAuthorId(user.getId());
         postService.persist(post);
-        log.info("Post created: {}", post);
+        log.info("Post created: {} By user: {}", post, user);
         return post;
     }
 
