@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "system_user") //TODO probably to bude jinak
@@ -33,30 +33,8 @@ public class User extends AbstractEntity {
     @Column(name = "image")
     private String image; //TODO predelat na filestystem path
 
-    @Column(name = "isPublic")
+    @Column(name = "is_public")
     private boolean isPublic;
-
-    @OneToMany
-    @JoinTable(name = "SENDER_REQUEST",
-            joinColumns =
-            @JoinColumn(name = "SENDER_ID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "REQUEST_ID"))
-    private Collection<FollowRequest> sentRequests;
-
-    @OneToMany(mappedBy = "receiver")
-    private Collection<FollowRequest> receivedRequests;
-
-    @OneToMany
-    @JoinTable(name = "SENDER_MESSAGE",
-            joinColumns =
-            @JoinColumn(name = "SENDER_ID"),
-            inverseJoinColumns =
-            @JoinColumn(name = "MESSAGE_ID"))
-    private Collection<Message> sentMessages;
-
-    @OneToMany(mappedBy = "receiver")
-    private Collection<Message> receivedMessages;
 
     @ManyToMany
     @JoinTable(
@@ -64,10 +42,10 @@ public class User extends AbstractEntity {
             joinColumns = @JoinColumn(name = "follower_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id")
     )
-    private Collection<User> following;
+    private List<User> following;
 
     @ManyToMany(mappedBy = "following")
-    private Collection<User> follower;
+    private List<User> follower;
 
     @Override
     public String toString() {
@@ -94,17 +72,5 @@ public class User extends AbstractEntity {
 
     public void removeFollowing(User user) {
         following.remove(user);
-    }
-
-    public void sendMessage(Message message) {
-        sentMessages.add(message);
-    }
-
-    public void receivedMessage(Message message) {
-        receivedMessages.add(message);
-    }
-
-    public void removeMessage(Message message) {
-        sentMessages.remove(message);
     }
 }

@@ -5,3 +5,11 @@ input FollowUserInput{
 input UnFollowUserInput{
     userId:Int!
 }
+
+input AcceptRequestInput{
+    requestId:Int!
+}
+
+input RejectRequestInput{
+    requestId:Int!
+}

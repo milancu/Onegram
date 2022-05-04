@@ -6,4 +6,6 @@ type Mutation {
 
     followUser(input: FollowUserInput!):User!
     unFollowUser(input: UnFollowUserInput!):User!
+    acceptRequest(input: AcceptRequestInput!):Int!
+    rejectRequest(input: RejectRequestInput!):Int!
 }

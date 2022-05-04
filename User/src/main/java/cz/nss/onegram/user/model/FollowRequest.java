@@ -18,6 +18,10 @@ public class FollowRequest extends AbstractEntity {
     @JoinColumn(name = "RECEIVER_ID")
     private User receiver;
 
+    @ManyToOne
+    @JoinColumn(name="SENDER_ID")
+    private User sender;
+
     @Column(name = "request_date", nullable = false)
     private LocalDateTime date = LocalDateTime.now();
 
@@ -25,6 +29,7 @@ public class FollowRequest extends AbstractEntity {
     public String toString() {
         return "FollowRequest{" +
                 "receiver=" + receiver +
+                ", sender=" + sender +
                 ", date=" + date +
                 '}';
     }

@@ -3,5 +3,6 @@ scalar DateTime
 type FollowRequest{
     id:Int!
     receiver:User!
+    sender:User!
     date: DateTime!
 }

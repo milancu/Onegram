@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -39,12 +41,6 @@ public class MessageServiceImpl implements MessageService {
 
         messageRepository.save(newMessage);
 
-        currentUser.sendMessage(newMessage);
-        receiver.receivedMessage(newMessage);
-
-        userRepository.save(currentUser);
-        userRepository.save(receiver);
-
         log.info("sent message: {}", newMessage);
 
         return newMessage;
@@ -61,16 +57,16 @@ public class MessageServiceImpl implements MessageService {
             return 0;
         }
 
-        if (currentUser.getSentMessages().contains(messageToDelete) && !messageToDelete.isDeleted()) {
-            messageToDelete.setDeleted(true); //Nebude tim padem potreba kdyz odebiram z listu
-            messageRepository.save(messageToDelete); //Muzu i rovnou delete, ale pry se to tak nerobi
-
-            currentUser.removeMessage(messageToDelete);
-            userRepository.save(currentUser);
-
-            log.info("deleted message: {}", messageToDelete);
-            return 1;
-        }
+//        if (currentUser.getSentMessages().contains(messageToDelete) && !messageToDelete.isDeleted()) {
+//            messageToDelete.setDeleted(true); //Nebude tim padem potreba kdyz odebiram z listu
+//            messageRepository.save(messageToDelete); //Muzu i rovnou delete, ale pry se to tak nerobi
+//
+//            currentUser.removeMessage(messageToDelete);
+//            userRepository.save(currentUser);
+//
+//            log.info("deleted message: {}", messageToDelete);
+//            return 1;
+//        }
         return 0;
     }
 
@@ -84,11 +80,11 @@ public class MessageServiceImpl implements MessageService {
             return null;
         };
 
-        if (current.getReceivedMessages().contains(message) && !message.isDeleted()) {
-            message.setHasRead(true);
-            messageRepository.save(message);
-            return message;
-        }
+//        if (current.getReceivedMessages().contains(message) && !message.isDeleted()) {
+//            message.setHasRead(true);
+//            messageRepository.save(message);
+//            return message;
+//        }
 
         return null;
     }
@@ -103,12 +99,17 @@ public class MessageServiceImpl implements MessageService {
             return null;
         };
 
-        if (current.getReceivedMessages().contains(message) && !message.isDeleted()) {
-            message.setHasRead(false);
-            messageRepository.save(message);
-            return message;
-        }
+//        if (current.getReceivedMessages().contains(message) && !message.isDeleted()) {
+//            message.setHasRead(false);
+//            messageRepository.save(message);
+//            return message;
+//        }
 
         return null;
+    }
+
+    @Override
+    public List<Message> getAllMessageInConversation(int id) {
+        return messageRepository.getAllMessageInConversation(id);
     }
 }
