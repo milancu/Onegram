@@ -16,9 +16,9 @@ import java.util.List;
 public class UserResolver implements GraphQLQueryResolver {
     private final UserService userService;
 
-    public List<User> getUsers() {
+    public User getUser(int userId) {
         log.info("Getting all users.");
-        return userService.getAllUsers();
+        return userService.findById(userId);
     }
 
     public List<FollowRequest> getFollowRequests() {
