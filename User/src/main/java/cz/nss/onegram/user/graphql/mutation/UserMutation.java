@@ -48,4 +48,9 @@ public class UserMutation implements GraphQLMutationResolver {
         userService.makeProfilePrivate();
         return userService.findById(input.getUserId());
     }
+
+    public User editBio(EditBioInput input){
+        userService.editBio(input.getBio());
+        return userService.getCurrentUser(); //TODO return
+    }
 }

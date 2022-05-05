@@ -197,4 +197,11 @@ public class UserServiceImpl implements UserService {
     public List<FollowRequest> getAllReceivedFollowRequests() {
         return followRequestRepository.getAllReceivedRequestOfUser(getCurrentUser().getId());
     }
+
+    @Override
+    public void editBio(String bio) {
+        getCurrentUser().setBio(bio);
+        userRepository.save(getCurrentUser());
+        log.info("Change bio: {}", getCurrentUser());
+    }
 }

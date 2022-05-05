@@ -10,5 +10,6 @@ type Mutation {
     acceptRequest(input: AcceptRequestInput!):Int!
     rejectRequest(input: RejectRequestInput!):Int!
     makeProfilePublic(input: MakeProfilePublicInput!):User!
-    makeProfilePrivate(input: MakeProfilePrivatePublic!):User!
+    makeProfilePrivate(input: MakeProfilePrivateInput!):User!
+    editBio(input: EditBioInput!):User!
 }

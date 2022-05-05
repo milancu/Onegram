@@ -40,4 +40,6 @@ public interface UserService {
 
     public List<FollowRequest> getAllReceivedFollowRequests();
 
+    public void editBio(String bio);
+
 }

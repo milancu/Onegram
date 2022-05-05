@@ -22,6 +22,10 @@ input MakeProfilePublicInput{
     userId:Int!
 }
 
-input MakeProfilePrivatePublic{
+input MakeProfilePrivateInput{
     userId:Int!
+}
+
+input EditBioInput{
+    bio:String!
 }
