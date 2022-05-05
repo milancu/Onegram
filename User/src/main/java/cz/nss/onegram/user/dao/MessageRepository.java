@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 
-    @Query(value = "SELECT message FROM Message message where message.receiver = :receiver_id")
+    @Query(value = "SELECT message FROM Message message WHERE message.receiver = :receiver_id AND message.isDeleted = false")
     public List<Message> getAllMessageInConversation(@Param("receiver_id") int receiverID);
 }

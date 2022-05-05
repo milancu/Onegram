@@ -56,17 +56,6 @@ public class MessageServiceImpl implements MessageService {
             log.error("message does not exists");
             return 0;
         }
-
-//        if (currentUser.getSentMessages().contains(messageToDelete) && !messageToDelete.isDeleted()) {
-//            messageToDelete.setDeleted(true); //Nebude tim padem potreba kdyz odebiram z listu
-//            messageRepository.save(messageToDelete); //Muzu i rovnou delete, ale pry se to tak nerobi
-//
-//            currentUser.removeMessage(messageToDelete);
-//            userRepository.save(currentUser);
-//
-//            log.info("deleted message: {}", messageToDelete);
-//            return 1;
-//        }
         return 0;
     }
 
@@ -80,12 +69,6 @@ public class MessageServiceImpl implements MessageService {
             return null;
         };
 
-//        if (current.getReceivedMessages().contains(message) && !message.isDeleted()) {
-//            message.setHasRead(true);
-//            messageRepository.save(message);
-//            return message;
-//        }
-
         return null;
     }
 
@@ -98,12 +81,6 @@ public class MessageServiceImpl implements MessageService {
             log.error("message does not exists");
             return null;
         };
-
-//        if (current.getReceivedMessages().contains(message) && !message.isDeleted()) {
-//            message.setHasRead(false);
-//            messageRepository.save(message);
-//            return message;
-//        }
 
         return null;
     }

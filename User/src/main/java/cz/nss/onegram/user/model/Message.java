@@ -1,8 +1,6 @@
 package cz.nss.onegram.user.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,12 +10,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Message extends AbstractEntity {
 
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "date", nullable = false) //TODO probably neco jineho nez name date
+    @Column(name = "date", nullable = false)
     private LocalDateTime date = LocalDateTime.now();
 
     @Column(name = "has_read", nullable = false)
@@ -27,8 +27,12 @@ public class Message extends AbstractEntity {
     private boolean isDeleted = false;
 
     @ManyToOne
-    @JoinColumn(name="RECEIVER_ID")
+    @JoinColumn(name = "RECEIVER_ID")
     private User receiver;
+
+    @ManyToOne
+    @JoinColumn(name = "SENDER_ID")
+    private User sender;
 
     @Override
     public String toString() {
@@ -38,6 +42,7 @@ public class Message extends AbstractEntity {
                 ", hasRead=" + hasRead +
                 ", isDeleted=" + isDeleted +
                 ", receiver=" + receiver +
+                ", sender=" + sender +
                 '}';
     }
 }

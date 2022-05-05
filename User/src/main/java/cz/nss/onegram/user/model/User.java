@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,10 +43,10 @@ public class User extends AbstractEntity {
             joinColumns = @JoinColumn(name = "follower_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id")
     )
-    private List<User> following;
+    private List<User> following = new ArrayList<>();
 
     @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
-    private List<User> follower;
+    private List<User> follower = new ArrayList<>();
 
     @Override
     public String toString() {
