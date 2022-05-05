@@ -1,4 +1,6 @@
 type Query {
     users : [User]
     followRequests : [FollowRequest]
+    followers: [User]
+    following: [User]
 }

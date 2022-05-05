@@ -36,7 +36,7 @@ public class User extends AbstractEntity {
     @Column(name = "is_public")
     private boolean isPublic;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "system_user_following",
             joinColumns = @JoinColumn(name = "follower_id"),
@@ -44,7 +44,7 @@ public class User extends AbstractEntity {
     )
     private List<User> following;
 
-    @ManyToMany(mappedBy = "following")
+    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
     private List<User> follower;
 
     @Override
