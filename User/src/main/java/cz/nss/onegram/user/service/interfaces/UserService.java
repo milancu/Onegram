@@ -24,6 +24,8 @@ public interface UserService {
 
     public void unFollowUser(int userToUnFollowId);
 
+    public void removeFollower(int userId);
+
     public void acceptRequest(int requestId);
 
     public void rejectRequest(int requestId);

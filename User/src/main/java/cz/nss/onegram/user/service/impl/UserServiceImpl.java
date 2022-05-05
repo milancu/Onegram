@@ -133,6 +133,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void removeFollower(int userId) { //TODO execption
+        User follower = findById(userId);
+        if (follower == null) {
+//            throw new ("user does not exists");
+            log.error("User does not exists");
+        } else {
+            getCurrentUser().removeFollower(follower);
+            userRepository.save(getCurrentUser());
+
+            follower.removeFollowing(getCurrentUser());
+            userRepository.save(follower);
+
+            log.info("Remove follower: {}", follower);
+        }
+    }
+
+    @Override
     public void acceptRequest(int requestId) {
         User currentUser = getCurrentUser();
 

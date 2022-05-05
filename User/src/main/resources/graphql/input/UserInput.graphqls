@@ -6,6 +6,10 @@ input UnFollowUserInput{
     userId:Int!
 }
 
+input RemoveFollowerInput{
+    userId:Int!
+}
+
 input AcceptRequestInput{
     requestId:Int!
 }

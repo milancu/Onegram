@@ -6,6 +6,7 @@ type Mutation {
 
     followUser(input: FollowUserInput!):User!
     unFollowUser(input: UnFollowUserInput!):User!
+    removeFollower(input: RemoveFollowerInput!):Int!
     acceptRequest(input: AcceptRequestInput!):Int!
     rejectRequest(input: RejectRequestInput!):Int!
     makeProfilePublic(input: MakeProfilePublicInput!):User!
