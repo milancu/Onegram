@@ -165,4 +165,19 @@ public class UserServiceImpl implements UserService {
     public List<User> getFollowers() {
         return getCurrentUser().getFollower();
     }
+
+    @Override
+    public void makeProfilePrivate() {
+        getCurrentUser().setPublic(false);
+    }
+
+    @Override
+    public void makeProfilePublic() {
+        getCurrentUser().setPublic(true);
+    }
+
+    @Override
+    public List<FollowRequest> getAllReceivedFollowRequests() {
+        return followRequestRepository.getAllReceivedRequestOfUser(getCurrentUser().getId());
+    }
 }

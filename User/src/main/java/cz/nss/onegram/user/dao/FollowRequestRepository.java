@@ -17,8 +17,8 @@ public interface FollowRequestRepository extends JpaRepository<FollowRequest, In
     @Query(value = "SELECT f FROM  FollowRequest f WHERE f.sender.id = :sender_id")
     public List<FollowRequest> getAllSentRequestFromUser(@Param("sender_id") int id);
 
-    @Query(value = "SELECT f FROM  FollowRequest f WHERE f.receiver.id = :sender_id")
-    public List<FollowRequest> getAllReceivedRequestFromUser(@Param("sender_id") int id);
+    @Query(value = "SELECT f FROM  FollowRequest f WHERE f.receiver.id = :receiver_id")
+    public List<FollowRequest> getAllReceivedRequestOfUser(@Param("receiver_id") int id);
 
     @Query(value = "SELECT f FROM  FollowRequest f WHERE f.receiver.id = :sender_id AND f.sender.id = :receiver_id")
     public FollowRequest getRequestToUser(@Param("sender_id") int senderId, @Param("receiver_id") int receiverId);

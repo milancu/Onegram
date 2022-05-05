@@ -1,9 +1,6 @@
 package cz.nss.onegram.user.graphql.mutation;
 
-import cz.nss.onegram.user.graphql.input.user.AcceptRequestInput;
-import cz.nss.onegram.user.graphql.input.user.FollowUserInput;
-import cz.nss.onegram.user.graphql.input.user.RejectRequestInput;
-import cz.nss.onegram.user.graphql.input.user.UnFollowUserInput;
+import cz.nss.onegram.user.graphql.input.user.*;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.UserService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
@@ -35,5 +32,15 @@ public class UserMutation implements GraphQLMutationResolver {
     public Integer rejectRequest(RejectRequestInput input) {
         userService.rejectRequest(input.getRequestId());
         return 1;
+    }
+
+    public User makeProfilePublic(MakeProfilePublicInput input){
+        userService.makeProfilePublic();
+        return userService.findById(input.getUserId());
+    }
+
+    public User makeProfilePrivate(MakeProfilePrivateInput input){
+        userService.makeProfilePrivate();
+        return userService.findById(input.getUserId());
     }
 }

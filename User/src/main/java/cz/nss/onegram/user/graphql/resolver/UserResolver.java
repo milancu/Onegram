@@ -1,5 +1,6 @@
 package cz.nss.onegram.user.graphql.resolver;
 
+import cz.nss.onegram.user.model.FollowRequest;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -18,5 +19,10 @@ public class UserResolver implements GraphQLQueryResolver {
     public List<User> getUsers() {
         log.info("Getting all users.");
         return userService.getAllUsers();
+    }
+
+    public List<FollowRequest> getFollowRequests(){
+        log.info("Getting all follow request");
+        return userService.getAllReceivedFollowRequests();
     }
 }

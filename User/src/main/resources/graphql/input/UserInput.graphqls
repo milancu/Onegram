@@ -13,3 +13,11 @@ input AcceptRequestInput{
 input RejectRequestInput{
     requestId:Int!
 }
+
+input MakeProfilePublicInput{
+    userId:Int!
+}
+
+input MakeProfilePrivatePublic{
+    userId:Int!
+}
