@@ -9,10 +9,38 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import javax.management.InstanceAlreadyExistsException;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final PostRepository postRepository;
+
+    @Override
+    public Comment findById(String id, Post post) {
+        return post.getComments().stream()
+                .filter(comment -> comment.getId().equals(id))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    @Override
+    public SubComment findSubCommentById(String id, Post post) {
+        for (Comment comment : post.getComments()){
+            Optional<SubComment> optional = comment.getSubComments()
+                    .stream()
+                    .filter(subComment -> subComment.getId().equals(id))
+                    .findFirst();
+
+            if (optional.isPresent()){
+                return optional.get();
+            }
+        }
+
+        throw new NoSuchElementException("No value present");
+    }
 
     @Override
     public void persist(Comment comment, Post post) {
@@ -37,6 +65,27 @@ public class CommentServiceImpl implements CommentService {
     public void delete(Comment comment, Post post) {
         if (post.getComments().remove(comment)){
             postRepository.save(post);
+        }
+
+        else {
+            throw new NoSuchElementException("No value present");
+        }
+    }
+
+    @Override
+    public void delete(SubComment subComment, Post post) {
+        Optional<Comment> optional = post.getComments().stream()
+                .filter(comment -> comment.getSubComments().contains(subComment))
+                .findFirst();
+
+        if (optional.isPresent()){
+            Comment comment = optional.get();
+            comment.getSubComments().remove(subComment);
+            postRepository.save(post);
+        }
+
+        else{
+            throw new NoSuchElementException("No value present");
         }
     }
 }

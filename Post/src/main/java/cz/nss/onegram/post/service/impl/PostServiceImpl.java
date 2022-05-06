@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.time.OffsetTime;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(String id) {
-        return postRepository.findById(id).get();
+        return postRepository.findById(id).orElseThrow();
     }
 
     @Override

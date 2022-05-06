@@ -1,6 +1,7 @@
 package cz.nss.onegram.post.repository;
 
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.model.SubComment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

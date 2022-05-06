@@ -1,4 +1,13 @@
 type Mutation {
     createPost(input: CreatePostInput!) : Post!
     deletePost(input: DeletePostInput!) : Int!
+
+    createComment(input: CreateCommentInput!) : Comment!
+    deleteComment(input: DeleteCommentInput!) : Int!
+
+    createSubComment(input: CreateSubcommentInput!) : SubComment!
+    deleteSubComment(input: DeleteSubcommentInput!) : Int!
+
+    createLike(input: CreateLikeInput!) : Like!
+    deleteLike(input: DeleteLikeInput!) : Int!
 }

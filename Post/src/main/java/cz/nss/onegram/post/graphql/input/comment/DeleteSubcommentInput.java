@@ -6,7 +6,5 @@ import lombok.Data;
 public class DeleteSubcommentInput {
     private String postId;
 
-    private String commentId;
-
-    private String id;
+    private String subCommentId;
 }
