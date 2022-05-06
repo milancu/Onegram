@@ -21,9 +21,4 @@ public class SubComment implements Likeable {
     private Integer authorId;
 
     private List<Like> likes;
-
-    @Override
-    public void accept(LikeService likeService, Like like, Post post) {
-        likeService.delete(like, this, post);
-    }
 }

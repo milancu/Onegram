@@ -14,11 +14,5 @@ public interface LikeService {
 
     public void delete(Like like, Likeable likeable, Post post);
 
-    public void delete(Like like, Comment comment, Post post);
-
-    public void delete(Like like, SubComment subComment, Post post);
-
-    public void delete(Like like, Post post);
-
     public Likeable findLikeableById(String id, Post post);
 }

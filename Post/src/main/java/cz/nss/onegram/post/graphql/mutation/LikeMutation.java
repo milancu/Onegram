@@ -34,7 +34,6 @@ public class LikeMutation implements GraphQLMutationResolver {
         Like like = mapper.convertToEntity(input, userService.getCurrentUser().getId());
         likeService.persist(like, likeable, post);
         log.info("Like created: " + input);
-
         return like;
     }
 

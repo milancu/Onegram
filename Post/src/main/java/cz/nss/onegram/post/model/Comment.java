@@ -35,9 +35,4 @@ public class Comment implements Likeable {
         List<Likeable> likeables = new ArrayList<>(subComments);
         return likeables;
     }
-
-    @Override
-    public void accept(LikeService likeService, Like like, Post post) {
-        likeService.delete(like, this, post);
-    }
 }

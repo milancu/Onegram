@@ -57,9 +57,4 @@ public class Post implements Likeable {
 
         return likeables;
     }
-
-    @Override
-    public void accept(LikeService likeService, Like like, Post post) {
-        likeService.delete(like, this);
-    }
 }

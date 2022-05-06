@@ -61,26 +61,9 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void delete(Like like, Post post) { // TODO does not work
-        if (!post.getLikes().remove(like)){
-            throw new NoSuchElementException("No like found on post: " + post.getId() + ". By user id: " + like.getAuthorId());
-        }
-        postRepository.save(post);
-    }
-
-    @Override
     public void delete(Like like, Likeable likeable, Post post) {
-        likeable.accept(this, like, post);
-    }
-
-    @Override
-    public void delete(Like like, Comment comment, Post post) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void delete(Like like, SubComment subComment, Post post) {
-        throw new UnsupportedOperationException();
+        likeable.getLikes().remove(like);
+        postRepository.save(post);
     }
 
     @Override

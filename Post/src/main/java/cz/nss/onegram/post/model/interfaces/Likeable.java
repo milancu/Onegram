@@ -10,13 +10,4 @@ public interface Likeable {
     public String getId();
 
     public List<Like> getLikes();
-
-    /**
-     * Visitor pattern for deleting likes.
-     *
-     * @param likeService
-     * @param like
-     * @param post
-     */
-    public void accept(LikeService likeService, Like like, Post post);
 }
