@@ -1,6 +1,7 @@
 package cz.nss.onegram.post.model;
 
 import cz.nss.onegram.post.model.interfaces.Likeable;
+import cz.nss.onegram.post.service.interfaces.LikeService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,9 @@ public class SubComment implements Likeable {
     private Integer authorId;
 
     private List<Like> likes;
+
+    @Override
+    public void accept(LikeService likeService, Like like, Post post) {
+        likeService.delete(like, this, post);
+    }
 }

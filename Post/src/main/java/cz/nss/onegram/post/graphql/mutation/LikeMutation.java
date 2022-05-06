@@ -42,7 +42,7 @@ public class LikeMutation implements GraphQLMutationResolver {
         Post post = postService.findById(input.getPostId());
         Likeable likeable = likeService.findLikeableById(input.getLikeableId(), post);
         Like like = likeService.findLikeByUser(likeable, userService.getCurrentUser());
-        likeService.delete(like, post);
+        likeService.delete(like, likeable, post);
         log.info("Like deleted: " + input);
         return 1;
     }

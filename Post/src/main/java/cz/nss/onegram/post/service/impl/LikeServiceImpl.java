@@ -1,8 +1,10 @@
 package cz.nss.onegram.post.service.impl;
 
 import cz.nss.onegram.post.exception.PostserviceException;
+import cz.nss.onegram.post.model.Comment;
 import cz.nss.onegram.post.model.Like;
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.model.SubComment;
 import cz.nss.onegram.post.model.interfaces.Likeable;
 import cz.nss.onegram.post.repository.PostRepository;
 import cz.nss.onegram.post.security.model.UserDetailsImpl;
@@ -25,7 +27,7 @@ public class LikeServiceImpl implements LikeService {
     public void persist(Like like, Likeable likeable, Post post) {
         if (!postContainsLikeable(post, likeable)) throw new PostserviceException("Post: " + post.getId() + " Does not contain likeable: " + likeable.getId());
 
-        if (likeableAlreadyLiked(likeable, like)) throw new PostserviceException("User id:" + like.getAuthorId() +  "has already liked this: " + likeable.getId());
+        if (likeableAlreadyLiked(likeable, like)) throw new PostserviceException("User id:" + like.getAuthorId() +  " has already liked this: " + likeable.getId());
 
         likeable.getLikes().add(like);
         postRepository.save(post);
@@ -59,10 +61,26 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void delete(Like like, Post post) {
-        if (post.getLikes().remove(like)){
-            postRepository.save(post);
+    public void delete(Like like, Post post) { // TODO does not work
+        if (!post.getLikes().remove(like)){
+            throw new NoSuchElementException("No like found on post: " + post.getId() + ". By user id: " + like.getAuthorId());
         }
+        postRepository.save(post);
+    }
+
+    @Override
+    public void delete(Like like, Likeable likeable, Post post) {
+        likeable.accept(this, like, post);
+    }
+
+    @Override
+    public void delete(Like like, Comment comment, Post post) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(Like like, SubComment subComment, Post post) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
