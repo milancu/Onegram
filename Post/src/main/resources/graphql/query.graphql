@@ -2,5 +2,6 @@ type Query {
     post(id : String) : Post
     userPosts(author : Int) : [Post]
     userPostsTime(author : Int, fromDate: Date, toDate: Date) : [Post]
+    #todo followersPosts() provolam milana, ktery mi vrati followery a ja pro ne najdu secky posty
 }
 

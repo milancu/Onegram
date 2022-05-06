@@ -67,7 +67,7 @@ public class CommentMutation implements GraphQLMutationResolver {
             " || @userServiceImpl.userCreatedPost(#input.postId, @userServiceImpl.getCurrentUser())")
     public Integer deleteSubcomment(DeleteSubcommentInput input){
         Post post = postService.findById(input.getPostId());
-        SubComment subComment = commentService.findSubCommentById(input.getSubCommentId(), post);
+        SubComment subComment = commentService.findSubCommentById(input.getSubcommentId(), post);
         commentService.delete(subComment, post);
         log.info("Subcomment deleted: " + input);
         return 1;

@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userCreatedSubcomment(String postId, String commentId, String subCommentId, UserDetailsImpl user) {
+    public boolean userCreatedSubcomment(String postId, String subCommentId, UserDetailsImpl user) {
         log.debug("Checking if user created a subcomment.");
         Post post = postService.findById(postId);
         SubComment subComment = commentService.findSubCommentById(subCommentId, post);
@@ -71,6 +71,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userCreatedSubcomment(DeleteSubcommentInput input, UserDetailsImpl user) {
-        return userCreatedSubcomment(input.getPostId(), input.getSubCommentId(), input.getSubCommentId(), user);
+        return userCreatedSubcomment(input.getPostId(), input.getSubcommentId(), user);
     }
 }

@@ -15,7 +15,7 @@ public interface UserService {
 
     public boolean userCreatedComment(String postId, String commentId, UserDetailsImpl user);
 
-    public boolean userCreatedSubcomment(String postId, String commentId, String subCommentId, UserDetailsImpl user);
+    public boolean userCreatedSubcomment(String postId, String subCommentId, UserDetailsImpl user);
 
     public boolean userCreatedComment(DeleteCommentInput input, UserDetailsImpl user);
 

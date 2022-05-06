@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
             }
         }
 
-        throw new NoSuchElementException("Subcomment for post not found. Comment id: " + id
+        throw new NoSuchElementException("Subcomment for post not found. Subcomment id: " + id
                 + " . Post id: " + post.getId());
     }
 
@@ -70,7 +70,7 @@ public class CommentServiceImpl implements CommentService {
         }
 
         else {
-            throw new NoSuchElementException("No value present");
+            throw new NoSuchElementException("Comment id: " + comment.getId() + " not found on post id: " +  post.getId());
         }
     }
 
@@ -87,7 +87,7 @@ public class CommentServiceImpl implements CommentService {
         }
 
         else{
-            throw new NoSuchElementException("No value present");
+            throw new NoSuchElementException("Subcomment id: " + subComment.getId() + " not found on post id: " + post.getId());
         }
     }
 }
