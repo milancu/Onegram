@@ -23,7 +23,8 @@ public class CommentServiceImpl implements CommentService {
         return post.getComments().stream()
                 .filter(comment -> comment.getId().equals(id))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException("Comment for post not found. Comment id: " + id
+                        + " . Post id: " + post.getId()));
     }
 
     @Override
@@ -39,7 +40,8 @@ public class CommentServiceImpl implements CommentService {
             }
         }
 
-        throw new NoSuchElementException("No value present");
+        throw new NoSuchElementException("Subcomment for post not found. Comment id: " + id
+                + " . Post id: " + post.getId());
     }
 
     @Override

@@ -39,21 +39,10 @@ public class PostMutation implements GraphQLMutationResolver {
 
     @PreAuthorize("@userServiceImpl.userCreatedPost(#input.id, @userServiceImpl.getCurrentUser())")
     public Integer deletePost(DeletePostInput input){
-        // TODO Sebek, zeptej se ho. Jak to idealne handlovat, kdyz nenajdu element?
-        // Mam to ifovat, anebo mam chytat exception tady a pak na to reagovat? Anebo mam nechytat exception a nadefinovat
-        // specialni exception handler?
-        try{
-            Post post = postService.findById(input.getId());
-            log.info("Deleting post: {}", post);
-            postService.delete(post);
-            log.info("Post id {} deleted", input.getId());
-            return 1;
-        }
-
-        catch (NoSuchElementException e){
-            log.debug("Not found" + e.getStackTrace());
-            return 0;
-        }
-
+        Post post = postService.findById(input.getId());
+        log.info("Deleting post: {}", post);
+        postService.delete(post);
+        log.info("Post id {} deleted", input.getId());
+        return 1;
     }
 }

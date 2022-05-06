@@ -39,18 +39,11 @@ public class LikeMutation implements GraphQLMutationResolver {
     }
 
     public Integer deleteLike(DeleteLikeInput input){
-        try{
-            Post post = postService.findById(input.getPostId());
-            Likeable likeable = likeService.findLikeableById(input.getLikeableId(), post);
-            Like like = likeService.findLikeByUser(likeable, userService.getCurrentUser());
-            likeService.delete(like, post);
-            log.info("Like deleted: " + input);
-            return 1;
-        }
-
-        catch (NoSuchElementException e){
-            log.debug("Not found" + e.getStackTrace());
-            return 0;
-        }
+        Post post = postService.findById(input.getPostId());
+        Likeable likeable = likeService.findLikeableById(input.getLikeableId(), post);
+        Like like = likeService.findLikeByUser(likeable, userService.getCurrentUser());
+        likeService.delete(like, post);
+        log.info("Like deleted: " + input);
+        return 1;
     }
 }

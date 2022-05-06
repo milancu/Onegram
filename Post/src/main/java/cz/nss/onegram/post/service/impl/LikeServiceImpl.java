@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,9 +23,9 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void persist(Like like, Likeable likeable, Post post) {
-        if (!postContainsLikeable(post, likeable)) throw new PostserviceException("Post: " + post + "Does not contain likeable: " + likeable);
+        if (!postContainsLikeable(post, likeable)) throw new PostserviceException("Post: " + post.getId() + " Does not contain likeable: " + likeable.getId());
 
-        if (likeableAlreadyLiked(likeable, like)) throw new PostserviceException("User id:" + like.getAuthorId() +  "has already liked this: " + likeable);
+        if (likeableAlreadyLiked(likeable, like)) throw new PostserviceException("User id:" + like.getAuthorId() +  "has already liked this: " + likeable.getId());
 
         likeable.getLikes().add(like);
         postRepository.save(post);
@@ -54,7 +55,7 @@ public class LikeServiceImpl implements LikeService {
         return likeable.getLikes().stream()
                 .filter(like -> like.getAuthorId().equals(user.getId()))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException("No like made by user: " + user.getUsername()  + " found for likeable id: " + likeable.getId() + ""));
     }
 
     @Override

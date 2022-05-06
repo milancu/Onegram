@@ -56,34 +56,20 @@ public class CommentMutation implements GraphQLMutationResolver {
     @PreAuthorize("@userServiceImpl.userCreatedComment(#input, @userServiceImpl.getCurrentUser())" +
             " || @userServiceImpl.userCreatedPost(#input.postId, @userServiceImpl.getCurrentUser())")
     public Integer deleteComment(DeleteCommentInput input){
-        try{
-            Post post = postService.findById(input.getPostId());
-            Comment comment = commentService.findById(input.getId(), post);
-            commentService.delete(comment, post);
-            log.info("Comment deleted: " + input);
-            return 1;
-        }
-
-        catch (NoSuchElementException e){
-            log.debug("Not found" + e.getStackTrace());
-            return 0;
-        }
+        Post post = postService.findById(input.getPostId());
+        Comment comment = commentService.findById(input.getId(), post);
+        commentService.delete(comment, post);
+        log.info("Comment deleted: " + input);
+        return 1;
     }
 
     @PreAuthorize("@userServiceImpl.userCreatedSubcomment(#input, @userServiceImpl.getCurrentUser())" +
             " || @userServiceImpl.userCreatedPost(#input.postId, @userServiceImpl.getCurrentUser())")
     public Integer deleteSubcomment(DeleteSubcommentInput input){
-        try {
-            Post post = postService.findById(input.getPostId());
-            SubComment subComment = commentService.findSubCommentById(input.getSubCommentId(), post);
-            commentService.delete(subComment, post);
-            log.info("Subcomment deleted: " + input);
-            return 1;
-        }
-
-        catch (NoSuchElementException e){
-            log.debug("Not found" + e.getStackTrace());
-            return 0;
-        }
+        Post post = postService.findById(input.getPostId());
+        SubComment subComment = commentService.findSubCommentById(input.getSubCommentId(), post);
+        commentService.delete(subComment, post);
+        log.info("Subcomment deleted: " + input);
+        return 1;
     }
 }

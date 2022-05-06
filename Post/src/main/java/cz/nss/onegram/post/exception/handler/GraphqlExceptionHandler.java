@@ -14,7 +14,7 @@ public class GraphqlExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ThrowableGraphQLError handle(NoSuchElementException e){
-        return new ThrowableGraphQLError(new Throwable("One of the entities specified in input could not be found in the DB."));
+        return new ThrowableGraphQLError(e);
     }
 
     @ExceptionHandler(InputMismatchException.class)

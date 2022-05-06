@@ -3,4 +3,5 @@ type Comment {
     content : String!
     authorId : Int!
     subComments : [SubComment!]!
+    likes: [Like!]
 }
