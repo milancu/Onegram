@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -19,9 +20,21 @@ import java.util.List;
 public class PostResolver implements GraphQLQueryResolver {
     private final PostService postService;
 
-    public List<Post> getPosts() {
-        log.info("Getting all posts.");
+    public Post getPost(String id) {
+        log.info("Getting post with id: {}", id);
 
-        return postService.findAll();
+        return postService.findById(id);
+    }
+
+    public List<Post> getUserPosts(Integer authorId) {
+        log.info("Getting user's post with id: {}", authorId);
+
+        return postService.findByAuthorId(authorId);
+    }
+
+    public List<Post> getUserPostsTime(Integer authorId, LocalDate from, LocalDate to) {
+        log.info("Getting user's post with id: {}. Date range is <{}, {}>", authorId, from, to);
+
+        return postService.findByAuthorId(authorId, from, to);
     }
 }

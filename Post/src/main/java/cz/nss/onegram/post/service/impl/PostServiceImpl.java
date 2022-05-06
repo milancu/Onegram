@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.OffsetTime;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +23,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findByAuthorId(Integer authorId) {
-        return postRepository.findAllByAuthorId(authorId);
+        return postRepository.findAllByAuthorIdOrderByCreatedAtDateDescCreatedAtTimeDesc(authorId);
     }
 
     /**
@@ -40,7 +38,7 @@ public class PostServiceImpl implements PostService {
             throw new InputMismatchException("FromDate is after toDate.");
         }
 
-        return postRepository.findAllByAuthorIdAndCreatedAtDateBetween(authorId, fromDate.minusDays(1), toDate.plusDays(1));
+        return postRepository.findAllByAuthorIdAndCreatedAtDateBetweenOrderByCreatedAtDateDescCreatedAtTimeDesc(authorId, fromDate.minusDays(1), toDate.plusDays(1));
     }
 
     /**
@@ -50,7 +48,7 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public List<Post> findAll(LocalDate fromDate, LocalDate toDate) {
-        return postRepository.findAllByCreatedAtDateBetween(fromDate.minusDays(1), toDate.plusDays(1));
+        return postRepository.findAllByCreatedAtDateBetweenOrderByCreatedAtDateDescCreatedAtTimeDesc(fromDate.minusDays(1), toDate.plusDays(1));
     }
 
     @Override

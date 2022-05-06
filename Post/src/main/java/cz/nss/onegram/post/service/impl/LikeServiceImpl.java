@@ -22,18 +22,31 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void persist(Like like, Likeable likeable, Post post) {
-        List<Like> likes = likeable.getLikes();
+        if (!postContainsLikeable(post, likeable)) throw new PostserviceException("Post: " + post + "Does not contain likeable: " + likeable);
 
-        boolean alreadyLiked = likes.stream()
-                .map(Like::getAuthorId)
-                .filter(authorId -> (authorId == like.getAuthorId()))
-                .collect(Collectors.toList())
-                .size() >= 1;
-
-        if (alreadyLiked) throw new PostserviceException("User id:" + like.getAuthorId() +  "has already liked this: " + likeable.toString());
+        if (likeableAlreadyLiked(likeable, like)) throw new PostserviceException("User id:" + like.getAuthorId() +  "has already liked this: " + likeable);
 
         likeable.getLikes().add(like);
         postRepository.save(post);
+    }
+
+    /**
+     * @return true if user has already liked a likeable
+     */
+    private boolean likeableAlreadyLiked(Likeable likeable, Like newLike){
+        return likeable.getLikes().stream()
+                .map(Like::getAuthorId)
+                .filter(authorId -> (authorId == newLike.getAuthorId()))
+                .collect(Collectors.toList())
+                .size() >= 1;
+    }
+
+    private boolean postContainsLikeable(Post post, Likeable likeable){
+        return post.getLikeables()
+                .stream()
+                .filter(l -> l.getId().equals(likeable.getId()))
+                .collect(Collectors.toList())
+                .size() >= 1;
     }
 
     @Override

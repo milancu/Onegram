@@ -53,7 +53,8 @@ public class CommentMutation implements GraphQLMutationResolver {
         return subComment;
     }
 
-    @PreAuthorize("@userServiceImpl.userCreatedComment(#input, @userServiceImpl.getCurrentUser())")
+    @PreAuthorize("@userServiceImpl.userCreatedComment(#input, @userServiceImpl.getCurrentUser())" +
+            " || @userServiceImpl.userCreatedPost(#input.postId, @userServiceImpl.getCurrentUser())")
     public Integer deleteComment(DeleteCommentInput input){
         try{
             Post post = postService.findById(input.getPostId());
@@ -69,7 +70,8 @@ public class CommentMutation implements GraphQLMutationResolver {
         }
     }
 
-    @PreAuthorize("@userServiceImpl.userCreatedSubcomment(#input, @userServiceImpl.getCurrentUser())")
+    @PreAuthorize("@userServiceImpl.userCreatedSubcomment(#input, @userServiceImpl.getCurrentUser())" +
+            " || @userServiceImpl.userCreatedPost(#input.postId, @userServiceImpl.getCurrentUser())")
     public Integer deleteSubcomment(DeleteSubcommentInput input){
         try {
             Post post = postService.findById(input.getPostId());
