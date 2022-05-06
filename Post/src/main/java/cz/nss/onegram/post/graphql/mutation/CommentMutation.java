@@ -15,6 +15,7 @@ import cz.nss.onegram.post.util.InputMapper;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.util.NoSuchElementException;
@@ -52,6 +53,7 @@ public class CommentMutation implements GraphQLMutationResolver {
         return subComment;
     }
 
+    @PreAuthorize("@userServiceImpl.userCreatedComment(#input, @userServiceImpl.getCurrentUser())")
     public Integer deleteComment(DeleteCommentInput input){
         try{
             Post post = postService.findById(input.getPostId());
@@ -67,6 +69,7 @@ public class CommentMutation implements GraphQLMutationResolver {
         }
     }
 
+    @PreAuthorize("@userServiceImpl.userCreatedSubcomment(#input, @userServiceImpl.getCurrentUser())")
     public Integer deleteSubcomment(DeleteSubcommentInput input){
         try {
             Post post = postService.findById(input.getPostId());

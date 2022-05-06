@@ -1,5 +1,6 @@
 package cz.nss.onegram.post.service;
 
+import cz.nss.onegram.post.exception.PostserviceException;
 import cz.nss.onegram.post.model.Like;
 import cz.nss.onegram.post.model.Post;
 import cz.nss.onegram.post.repository.PostRepository;
@@ -31,15 +32,12 @@ public class LikeServiceTest {
     }
 
     @Test
-    public void persists_twoLikesFromSameUser_OnlyOneLikePersisted(){
+    public void persists_twoLikesFromSameUser_exceptionThrown(){
         Post post = Generator.generateRandomPost(2);
         Like like1 = Like.builder().authorId(5).build();
         Like like2 = Like.builder().authorId(5).build();
 
         likeService.persist(like1, post, post);
-        likeService.persist(like2, post, post);
-
-        Integer result = postService.findById(post.getId()).getLikes().size();
-        Assertions.assertEquals(1, result);
+        Assertions.assertThrows(PostserviceException.class, () -> likeService.persist(like2, post, post));
     }
 }

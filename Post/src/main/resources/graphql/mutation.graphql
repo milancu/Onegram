@@ -5,8 +5,8 @@ type Mutation {
     createComment(input: CreateCommentInput!) : Comment!
     deleteComment(input: DeleteCommentInput!) : Int!
 
-    createSubComment(input: CreateSubcommentInput!) : SubComment!
-    deleteSubComment(input: DeleteSubcommentInput!) : Int!
+    createSubcomment(input: CreateSubcommentInput!) : SubComment!
+    deleteSubcomment(input: DeleteSubcommentInput!) : Int!
 
     createLike(input: CreateLikeInput!) : Like!
     deleteLike(input: DeleteLikeInput!) : Int!

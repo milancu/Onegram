@@ -1,8 +1,15 @@
 package cz.nss.onegram.post.service.impl;
 
+import cz.nss.onegram.post.graphql.input.comment.CreateCommentInput;
+import cz.nss.onegram.post.graphql.input.comment.CreateSubcommentInput;
+import cz.nss.onegram.post.graphql.input.comment.DeleteCommentInput;
+import cz.nss.onegram.post.graphql.input.comment.DeleteSubcommentInput;
+import cz.nss.onegram.post.model.Comment;
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.model.SubComment;
 import cz.nss.onegram.post.repository.PostRepository;
 import cz.nss.onegram.post.security.model.UserDetailsImpl;
+import cz.nss.onegram.post.service.interfaces.CommentService;
 import cz.nss.onegram.post.service.interfaces.PostService;
 import cz.nss.onegram.post.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     private final PostService postService;
 
+    private final CommentService commentService;
+
     public UserDetailsImpl getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.isAuthenticated()){
@@ -34,14 +43,34 @@ public class UserServiceImpl implements UserService {
      * @return boolean true if user created the post
      */
     public boolean userCreatedPost(String postId, UserDetailsImpl user){
-        log.info("Checking if user created a post.");
+        log.debug("Checking if user created a post.");
         Post post = postService.findById(postId);
+        return post.getAuthorId().equals(user.getId());
+    }
 
-        if (user == null){
-            log.info("User is null.");
-            return false;
-        }
+    @Override
+    public boolean userCreatedComment(String postId, String commentId, UserDetailsImpl user) {
+        log.debug("Checking if user created a comment.");
+        Post post = postService.findById(postId);
+        Comment comment = commentService.findById(commentId, post);
+        return comment.getAuthorId().equals(user.getId());
+    }
 
-        return post == null || post.getAuthorId().equals(user.getId());
+    @Override
+    public boolean userCreatedSubcomment(String postId, String commentId, String subCommentId, UserDetailsImpl user) {
+        log.debug("Checking if user created a subcomment.");
+        Post post = postService.findById(postId);
+        SubComment subComment = commentService.findSubCommentById(subCommentId, post);
+        return subComment.getAuthorId().equals(user.getId());
+    }
+
+    @Override
+    public boolean userCreatedComment(DeleteCommentInput input, UserDetailsImpl user) {
+        return userCreatedComment(input.getPostId(), input.getId(), user);
+    }
+
+    @Override
+    public boolean userCreatedSubcomment(DeleteSubcommentInput input, UserDetailsImpl user) {
+        return userCreatedSubcomment(input.getPostId(), input.getSubCommentId(), input.getSubCommentId(), user);
     }
 }
