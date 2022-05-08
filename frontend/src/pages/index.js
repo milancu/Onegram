@@ -1,5 +1,4 @@
 
-export * from './feed/feed.js'
 export * from './follow_requests/follow_requests.js'
 export * from './followers/followers.js'
 export * from './following/following.js'
@@ -12,4 +11,5 @@ export * from './Profile_dashboard'
 export * from './registration/registration.js'
 export * from './search/search.js'
 export * from './settings/settings.js'
+export * from './Profile_dashboard/index.js'
 

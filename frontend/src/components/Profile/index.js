@@ -3,28 +3,23 @@
 import React from "react";
 import "./profile.css";
 
-class Profile extends React.Component {
+export const Profile = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
+    const nickname = this.props.nickname;
+    const profilepicture = this.props.profilepicture;
+    const description = this.props.description;
 
-    render() {
-        const nickname = this.props.nickname;
-        const profilepicture = this.props.profilepicture;
-        const description = this.props.description;
+    console.log("cauky mnauky")
 
-        console.log("cauky mnauky")
+    return (
+        <section className="profile-description">
+            <div className="Post-user-profilepicture">
+                <img src={profilepicture} alt={nickname} className="Post-user-profilepicture"/>
+            </div>
+            {/*    TODO */}
+        </section>
+    )
 
-        return (
-                <section className="profile-description">
-                    <div className="Post-user-profilepicture">
-                        <img src={profilepicture} alt={nickname} className="Post-user-profilepicture"/>
-                    </div>
-                {/*    TODO */}
-                </section>
-        );
-    }
 }
 
 export default Profile

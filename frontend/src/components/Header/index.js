@@ -4,17 +4,12 @@ import React from "react";
 import "./Header.css";
 import logo from '../../images/logo.png'
 
-class Header extends React.Component {
+export const Header = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
+    const nickname = this.props.nickname;
+    const profilepicture = this.props.profilepicture;
 
-    render() {
-        const nickname = this.props.nickname;
-        const profilepicture = this.props.profilepicture;
-
-        return (
+    return (
             <nav>
                 <div className="header-line">
                     <a href={"../../App.js"}><img className="logo" src={logo} alt="Logo"/></a>
@@ -27,7 +22,6 @@ class Header extends React.Component {
                 </div>
             </nav>
         );
-    }
 }
 
 export default Header;
