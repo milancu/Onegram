@@ -2,20 +2,16 @@
 
 import React from "react";
 import "./Header.css";
+import logo from '../../logo.png'
 
-class Header extends React.Component{
+class Header extends React.Component {
 
-    render(){
+    render() {
         return (
-            <nav className="Nav">
-                <div className="Nav-menus">
-                    <div className="Nav-brand">
-                        {/*<a className="Nav-brand-logo" href="../../logo.png">*/}
-                        {/*<a className="Nav-brand-logo" href="./">*/}
-                        {/*    Instagram*/}
-                        {/*</a>*/}
-z                        <a>Onegram</a>
-                    </div>
+            <nav>
+                <div className="header-line">
+                    <img className="logo" src={logo} alt="Logo"/>
+                    <a className="title">Onegram</a>
                 </div>
             </nav>
         );
