@@ -4,10 +4,10 @@ import React, {Component} from "react";
 import "./Post.css";
 
 export const Post = (props) => {
-    const nickname = this.props.nickname;
-    const profilepicture = this.props.profilepicture;
-    const image = this.props.image;
-    const caption = this.props.caption;
+    const nickname = props.nickname;
+    const profilepicture = props.profilepicture;
+    const image = props.image;
+    const caption = props.caption;
 
     return (
         <article className="Post" ref="Post">

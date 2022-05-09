@@ -6,8 +6,8 @@ import logo from '../../images/logo.png'
 
 export const Header = (props) => {
 
-    const nickname = this.props.nickname;
-    const profilepicture = this.props.profilepicture;
+    const nickname = props.nickname;
+    const profilepicture = props.profilepicture;
 
     return (
             <nav>
