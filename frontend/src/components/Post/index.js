@@ -2,6 +2,7 @@
 
 import React, {Component} from "react";
 import "./Post.css";
+import LikeButton from "../LikeButton";
 
 class Post extends Component {
 
@@ -11,7 +12,7 @@ class Post extends Component {
 
     render() {
         const nickname = this.props.nickname;
-        const profilepicture = this.props.profilepicture;
+        const profilePicture = this.props.profilepicture;
         const image = this.props.image;
         const caption = this.props.caption;
 
@@ -20,7 +21,7 @@ class Post extends Component {
             <header>
                 <div className="Post-user">
                     <div className="Post-user-profilepicture">
-                        <img src={profilepicture} alt={nickname} />
+                        <img src={profilePicture} alt={nickname} />
                     </div>
                     <div className="Post-user-nickname">
                         <span>{nickname}</span>
@@ -36,6 +37,9 @@ class Post extends Component {
 
             <div className="Post-caption">
                 <strong>{nickname}</strong>{caption}
+            </div>
+            <div className="Post-reactions">
+                <LikeButton />
             </div>
 
         </article>;
