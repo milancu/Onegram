@@ -3,6 +3,7 @@
 import React from "react";
 import "./Header.css";
 import logo from '../../images/logo.png'
+import {Link, useNavigate} from "react-router-dom";
 
 export const Header = (props) => {
 
@@ -12,12 +13,16 @@ export const Header = (props) => {
     return (
             <nav>
                 <div className="header-line">
-                    <a href={"../../pages/Feed/index.js"}><img className="logo" src={logo} alt="Logo"/></a>
-                    <a href={"../../App.js"} className="title">Onegram</a>
+                    <Link to={'/feed'}>
+                        <img className="logo" src={logo} alt="Logo"/>
+                    </Link>
+                    <Link to={'/feed'}>
+                        <a className="title">Onegram</a>
+                    </Link>
                     <div className="Post-user-profilepicture profile-image" >
-                        <a href={"../Profile_dashboard/index.js"}>
+                        <Link to={'/profile'}>
                             <img src={profilepicture} alt={nickname} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </nav>
