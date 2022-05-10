@@ -5,9 +5,9 @@ import "./profile.css";
 
 export const Profile = (props) => {
 
-    const nickname = this.props.nickname;
-    const profilepicture = this.props.profilepicture;
-    const description = this.props.description;
+    const nickname = props.nickname;
+    const profilepicture = props.profilepicture;
+    const description = props.description;
 
     console.log("cauky mnauky")
 
@@ -15,6 +15,7 @@ export const Profile = (props) => {
         <section className="profile-description">
             <div className="Post-user-profilepicture">
                 <img src={profilepicture} alt={nickname} className="Post-user-profilepicture"/>
+
             </div>
             {/*    TODO */}
         </section>

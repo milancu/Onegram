@@ -1,26 +1,25 @@
 // src/components/Post/index.js
 
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import "./Post.css";
 
 export const Post = (props) => {
-    const nickname = props.nickname;
-    const profilepicture = props.profilepicture;
-    const image = props.image;
-    const caption = props.caption;
+
+    const nickname = useState(props.nickname);
+    const profilepicture = useState(props.profilepicture);
+    const caption = useState(props.caption);
+    const image = useState(props.image);
 
     return (
         <article className="Post" ref="Post">
-            <header>
-                <div className="Post-user">
-                    <div className="Post-user-profilepicture">
-                        <img src={profilepicture} alt={nickname}/>
-                    </div>
-                    <div className="Post-user-nickname">
-                        <span>{nickname}</span>
-                    </div>
+            <div className="Post-user">
+                <div className="Post-user-profilepicture">
+                    <img src={profilepicture} alt={nickname}/>
                 </div>
-            </header>
+                <div className="Post-user-nickname">
+                    <span>{nickname}</span>
+                </div>
+            </div>
 
             <div className="Post-image">
                 <div className="Post-image-bg">

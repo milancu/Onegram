@@ -6,7 +6,6 @@ import Profile from '../../components/Profile';
 import Header from "../../components/Header";
 
 export const Profile_dashboard = () => {
-    console.log("cauky mnauky2")
     return (
         <div className="App">
             <Header nickname="John D. Veloper"

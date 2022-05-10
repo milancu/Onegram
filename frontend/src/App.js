@@ -2,19 +2,20 @@
 
 import React from 'react';
 import './App.css';
-import {Profile, Profile_dashboard} from "./pages";
+import {Profile_dashboard, Feed} from "./pages";
+import {Route, Routes} from "react-router-dom";
 
-// import {UserRoutes} from "./routes/UserRoutes.js";
+import {UserRoutes} from "./routes/UserRoutes.js";
 
-export const App = (props) => {
-    function useRoutes(props) {
-        return undefined;
-    }
-
-    return useRoutes([
-        {element: <Profile_dashboard/>},
-        {element: <Profile/>}
-    ]);
+export const App = () => {
+    return (
+        <div>
+            <Routes>
+                <Route exact path="/profile" element={<Profile_dashboard/>}/>
+                <Route exact path="/index" element={<Feed/>}/>
+            </Routes>
+        </div>
+    )
 }
 
 export default App;
