@@ -8,6 +8,16 @@
 
 .comment-right-part {
     margin-left: 10px;
+    text-align: left;
+}
+
+.comment-content {
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
 }
 
 .comment-image-container img {
