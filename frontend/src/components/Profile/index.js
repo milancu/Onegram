@@ -3,6 +3,7 @@
 import React from "react";
 import "./profile.css";
 
+
 export const Profile = (props) => {
 
     const nickname = props.nickname;

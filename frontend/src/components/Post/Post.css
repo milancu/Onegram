@@ -41,11 +41,13 @@
     margin-right: 20%;
 }
 
-.Post-caption {
+.Post-caption-container {
     padding: 16px 16px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.Post-caption strong {
+.Post-caption-container strong {
     font-family: 'PT Sans', sans-serif;
     font-weight: bold;
 }

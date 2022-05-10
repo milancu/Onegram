@@ -3,6 +3,8 @@
 import React, {Component, useEffect, useRef} from "react";
 import "./Post.css";
 import logo from "../../images/logo.png";
+import LikeButton from "../LikeButton";
+import Comments from "../Comments";
 
 export const Post = (props) => {
 
@@ -29,8 +31,35 @@ export const Post = (props) => {
                 </div>
             </div>
 
-            <div className="Post-caption">
-                <strong>{nickname}:&#160;</strong>{caption}
+            <div className="Post-caption-container" >
+                <div>
+                    <strong>{nickname}:&#160;</strong>{caption}
+                </div>
+                <div className="Post-reactions">
+                    <LikeButton/>
+                </div>
+            </div>
+
+            <div className="Post-comments">
+                <Comments comments = {[
+                    {
+                        "id": "1",
+                        "parentId": null,
+                        "content": "hi",
+                        "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
+                        "username": "John D. Veloper",
+                        "likeAmount": 5
+                    },
+                    {
+                        "id": "2",
+                        "parentId": 1,
+                        "content": "hi",
+                        "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
+                        "username": "John D. Veloper",
+                        "likeAmount": 3
+                    }
+                ]}
+                />
             </div>
         </article>
     );

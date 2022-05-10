@@ -10,7 +10,7 @@ const Comments = (props) => {
     }, []);
     return (
         <div className="comments">
-            <h3 className="comments-title">Comments</h3>
+            <hr />
             <div className="comments_container">
                 {rootComments.map(rootComment => (
                     <Comment key={rootComment.id} comment={rootComment}/>
