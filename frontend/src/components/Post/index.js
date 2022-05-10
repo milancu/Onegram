@@ -1,34 +1,29 @@
 // src/components/Post/index.js
 
-import React, {Component} from "react";
+import React, {Component, useEffect, useRef} from "react";
 import "./Post.css";
+import logo from "../../images/logo.png";
 import LikeButton from "../LikeButton";
 import Comments from "../Comments";
 
-class Post extends Component {
+export const Post = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
+    const nickname = props.nickname;
+    const profilepicture = props.profilepicture;
+    const caption = props.caption;
+    const image = props.image;
 
-    render() {
-        const nickname = this.props.nickname;
-        const profilePicture = this.props.profilepicture;
-        const image = this.props.image;
-        const caption = this.props.caption;
+    return (
+        <article className="Post">
+            <div className="Post-user">
 
-        return <article className="Post" ref="Post">
-
-            <header>
-                <div className="Post-user">
-                    <div className="Post-user-profilepicture">
-                        <img src={profilePicture} alt={nickname}/>
-                    </div>
-                    <div className="Post-user-nickname">
-                        <span>{nickname}</span>
-                    </div>
+                <div className="Post-user-profilepicture">
+                    <img src={profilepicture} alt={nickname}/>
                 </div>
-            </header>
+                <div className="Post-user-nickname">
+                    <span>{nickname}</span>
+                </div>
+            </div>
 
             <div className="Post-image">
                 <div className="Post-image-bg">
@@ -36,12 +31,15 @@ class Post extends Component {
                 </div>
             </div>
 
-            <div className="Post-caption">
-                <strong>{nickname}</strong>{caption}
+            <div className="Post-caption-container" >
+                <div>
+                    <strong>{nickname}:&#160;</strong>{caption}
+                </div>
+                <div className="Post-reactions">
+                    <LikeButton/>
+                </div>
             </div>
-            <div className="Post-reactions">
-                <LikeButton/>
-            </div>
+
             <div className="Post-comments">
                 <Comments comments = {[
                     {
@@ -60,10 +58,11 @@ class Post extends Component {
                         "username": "John D. Veloper",
                         "likeAmount": 3
                     }
-                ]}/>
+                ]}
+                />
             </div>
-        </article>;
-    }
+        </article>
+    );
 }
 
 export default Post;

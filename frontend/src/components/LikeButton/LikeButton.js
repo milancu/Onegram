@@ -21,8 +21,6 @@ const LikeButton = () => {
         >
             <div className="like-button">
                 <Hand />
-                <span>Like</span>
-                <span className={cn("suffix", { liked })}>d</span>
             </div>
         </button>
     );
