@@ -29,6 +29,26 @@ export const Feed = (props) => {
                       caption={caption}
                       image={image}
                 />
+                <Post nickname = {nickname}
+                      profilepicture={profilepicture}
+                      caption={caption}
+                      image={image}
+                />
+                <Post nickname = {nickname}
+                      profilepicture={profilepicture}
+                      caption={caption}
+                      image={image}
+                />
+                <Post nickname = {nickname}
+                      profilepicture={profilepicture}
+                      caption={caption}
+                      image={image}
+                />
+                <Post nickname = {nickname}
+                      profilepicture={profilepicture}
+                      caption={caption}
+                      image={image}
+                />
             </section>
         </div>
     )

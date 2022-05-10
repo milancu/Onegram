@@ -13,10 +13,10 @@ export const Header = (props) => {
     return (
             <nav>
                 <div className="header-line">
-                    <Link to={'/feed'}>
+                    <Link to={'/'}>
                         <img className="logo" src={logo} alt="Logo"/>
                     </Link>
-                    <Link to={'/feed'}>
+                    <Link to={'/'}>
                         <a className="title">Onegram</a>
                     </Link>
                     <div className="Post-user-profilepicture profile-image" >
