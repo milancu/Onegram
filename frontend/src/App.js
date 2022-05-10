@@ -12,7 +12,7 @@ export const App = () => {
         <div>
             <Routes>
                 <Route exact path="/profile" element={<Profile_dashboard/>}/>
-                <Route exact path="/index" element={<Feed/>}/>
+                <Route exact path="/feed" element={<Feed/>}/>
             </Routes>
         </div>
     )

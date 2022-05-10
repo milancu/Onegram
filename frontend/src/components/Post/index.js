@@ -1,18 +1,20 @@
 // src/components/Post/index.js
 
-import React, {Component, useState} from "react";
+import React, {Component, useEffect, useRef} from "react";
 import "./Post.css";
+import logo from "../../images/logo.png";
 
 export const Post = (props) => {
 
-    const nickname = useState(props.nickname);
-    const profilepicture = useState(props.profilepicture);
-    const caption = useState(props.caption);
-    const image = useState(props.image);
+    const nickname = props.nickname;
+    const profilepicture = props.profilepicture;
+    const caption = props.caption;
+    const image = props.image;
 
     return (
-        <article className="Post" ref="Post">
+        <article className="Post">
             <div className="Post-user">
+
                 <div className="Post-user-profilepicture">
                     <img src={profilepicture} alt={nickname}/>
                 </div>
@@ -28,11 +30,10 @@ export const Post = (props) => {
             </div>
 
             <div className="Post-caption">
-                <strong>{nickname}</strong>{caption}
+                <strong>{nickname}:&#160;</strong>{caption}
             </div>
-
         </article>
-    )
+    );
 }
 
 export default Post;

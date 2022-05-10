@@ -9,8 +9,6 @@ export const Profile = (props) => {
     const profilepicture = props.profilepicture;
     const description = props.description;
 
-    console.log("cauky mnauky")
-
     return (
         <section className="profile-description">
             <div className="Post-user-profilepicture">

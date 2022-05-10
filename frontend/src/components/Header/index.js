@@ -12,7 +12,7 @@ export const Header = (props) => {
     return (
             <nav>
                 <div className="header-line">
-                    <a href={"../../App.js"}><img className="logo" src={logo} alt="Logo"/></a>
+                    <a href={"../../pages/Feed/index.js"}><img className="logo" src={logo} alt="Logo"/></a>
                     <a href={"../../App.js"} className="title">Onegram</a>
                     <div className="Post-user-profilepicture profile-image" >
                         <a href={"../Profile_dashboard/index.js"}>
