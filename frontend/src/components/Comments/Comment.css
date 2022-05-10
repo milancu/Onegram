@@ -1,0 +1,18 @@
+.comment {
+    display: flex;
+}
+
+.comment-image-container {
+    align-items: flex-start;
+}
+
+.comment-right-part {
+    margin-left: 10px;
+}
+
+.comment-image-container img {
+    margin-left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
