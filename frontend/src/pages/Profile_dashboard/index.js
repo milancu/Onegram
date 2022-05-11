@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import '../../App.css';
 import Profile from '../../components/Profile';
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 export const Profile_dashboard = () => {
     return (
@@ -21,6 +22,7 @@ export const Profile_dashboard = () => {
             <div className={"postImageContainer"}>
 
             </div>
+            <Footer />
         </div>
     )
 }
