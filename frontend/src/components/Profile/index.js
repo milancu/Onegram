@@ -2,7 +2,6 @@
 
 import React from "react";
 import "./profile.css";
-import {Link} from "react-router-dom";
 
 
 export const Profile = (props) => {
@@ -25,14 +24,12 @@ export const Profile = (props) => {
                     </div>
                     <h3>{nickname}</h3>
                 </div>
-
-
             </div>
             <div className="profile-info">
                 <div className="Profile-bio"><p>{description}</p></div>
                 <div className="Profile-web">
                     {/*TODO nefunguje*/}
-                    <a href={'www.seznam.cz'}>
+                    <a href={'/profile'}>
                         <p>{webLinkUrl}</p>
                     </a>
                 </div>

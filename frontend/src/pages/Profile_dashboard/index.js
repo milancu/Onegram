@@ -18,6 +18,9 @@ export const Profile_dashboard = () => {
                      followers={8964}
                      postsNumber={87}
             />
+            <div className={"postImageContainer"}>
+
+            </div>
         </div>
     )
 }
