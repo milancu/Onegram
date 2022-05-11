@@ -4,7 +4,8 @@ import React, {Component, useState, useRef} from 'react';
 import '../../App.css';
 import {
     Post,
-    Header
+    Header,
+    Footer
 } from "../../pages";
 
 export const Feed = (props) => {
@@ -50,6 +51,7 @@ export const Feed = (props) => {
                       image={image}
                 />
             </section>
+            <Footer />
         </div>
     )
 }

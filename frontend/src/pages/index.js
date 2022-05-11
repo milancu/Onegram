@@ -16,4 +16,6 @@ export * from './Profile_dashboard/index'
 export * from '../components/Profile'
 export * from '../components/Header'
 export * from '../components/Post'
+export * from '../components/Footer'
+
 

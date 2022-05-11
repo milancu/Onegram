@@ -1,0 +1,11 @@
+.links{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.links div{
+    margin-left: 20px;
+    margin-right: 20px;
+}
