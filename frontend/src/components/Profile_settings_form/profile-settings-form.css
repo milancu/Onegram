@@ -1,0 +1,121 @@
+.Post-user-profilepicture {
+    width: 120px;
+    height: 120px;
+}
+
+.Post-user-profilepicture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.settings-form{
+    margin-left: 25px;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input, textarea{
+    margin-bottom: 10px;
+    margin-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    box-sizing: border-box;
+
+    border: 3px solid #ccc;
+    border-radius: 6px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: 40%;
+}
+
+input:focus{
+    padding-left: 16px;
+    border: 3px solid #555;
+    background-position: 0;
+}
+
+.setting-photo{
+    display: flex;
+    flex-direction: row;
+}
+
+#profile-photo{
+    width: 200px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.is-public{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.is-public label{
+    margin-left: 25px;
+}

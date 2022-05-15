@@ -32,6 +32,7 @@ a{
     padding: 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-direction: row;
     border-bottom: 2px solid black;
 }
