@@ -16,7 +16,7 @@ export const Header = (props) => {
                     <Link to={'/'}>
                         <img className="logo" src={logo} alt="Logo"/>
                     </Link>
-                    <Link to={'/'}>
+                    <Link to={'/search'}>
                         <a className="title">Onegram</a>
                     </Link>
                     <div className="Post-user-profilepicture profile-image" >

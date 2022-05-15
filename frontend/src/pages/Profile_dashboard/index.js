@@ -1,4 +1,4 @@
-// src/page/Profile_dashboard/index.js
+// src/pages/Profile_dashboard/index.js
 
 import React, {Component} from 'react';
 import '../../App.css';
