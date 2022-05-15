@@ -17,6 +17,7 @@ export const Footer = (props) => {
             <div>
                 &copy;2022 Onegram for NSS by Přemek Bělka, Phuong Dong Cu, Ondřej Bureš, Jan Pivoňka
             </div>
+            <br />
         </nav>
     );
 }

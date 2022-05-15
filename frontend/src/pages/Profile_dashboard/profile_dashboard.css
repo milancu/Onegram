@@ -1,6 +1,15 @@
 .postImageContainer {
+    padding-right: 10%;
+    padding-left: 10%;
     grid-template-columns: 100px 50px 100px;
     grid-template-rows: 80px auto 80px;
     column-gap: 10px;
     row-gap: 15px;
+}
+
+.profileDashboardPhoto{
+    margin: 5px;
+    object-fit: cover;
+    width:350px;
+    height:350px;
 }
