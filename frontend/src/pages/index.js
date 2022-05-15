@@ -17,5 +17,6 @@ export * from '../components/Profile'
 export * from '../components/Header'
 export * from '../components/Post'
 export * from '../components/Footer'
-
+export * from '../components/Single_request'
+export * from '../components/Profile_settings_form'
 

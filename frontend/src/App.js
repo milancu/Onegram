@@ -21,7 +21,6 @@ export const App = () => {
                 <Route exact path="/search" element={<Search/>}/>
                 <Route exact path="/messages" element={<Messages/>}/>
                 <Route exact path="/message{id}" element={<Message_detail/>}/>
-                {/*// TODO*/}
                 <Route exact path="/" element={<Feed/>}/>
             </Routes>
         </div>
