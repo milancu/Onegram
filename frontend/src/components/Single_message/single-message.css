@@ -1,0 +1,33 @@
+.message-user-profilepicture {
+    width: 60px;
+    height: 60px;
+}
+
+.message-user-profilepicture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.profile-image{
+    margin-left: 25px;
+}
+
+.single-message-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.message-box{
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.truncate {
+    width: 600px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

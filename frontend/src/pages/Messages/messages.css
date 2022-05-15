@@ -1,0 +1,13 @@
+.messages-h2{
+    margin-left: 25px;
+}
+
+.messages{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.single-message-box:nth-child(even) {
+    background-color: #f6f6f6;
+}
