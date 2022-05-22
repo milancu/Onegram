@@ -1,14 +1,17 @@
 package cz.nss.onegram.user.service;
 
+import config.TestConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 //@TestPropertySource(locations = "classpath:application-test.properties")
+@ContextConfiguration(classes = {TestConfiguration.class})
 public class UserServiceTest {
 
 //    private final Generator generator = new Generator();
