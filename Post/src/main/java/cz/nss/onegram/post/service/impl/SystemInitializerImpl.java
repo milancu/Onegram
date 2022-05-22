@@ -10,8 +10,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,7 +42,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         Post post = Post.builder()
                 .authorId(1)
                 .comments(List.of())
-                .createdAt(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .description("Přeji krásné pondělí!")
                 .likes(List.of())
                 .tags(List.of())

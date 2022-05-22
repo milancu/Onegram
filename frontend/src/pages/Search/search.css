@@ -1,0 +1,51 @@
+.postImageContainer:nth-child(3n) {
+    flex-basis: 100%;
+}
+
+#searchInput{
+    width: 25%;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    box-sizing: border-box;
+
+    border: 3px solid #ccc;
+    border-radius: 6px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+
+    background: url(https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_search_48px-128.png);
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: 40%;
+}
+
+#searchInput:focus{
+    padding-left: 16px;
+    border: 3px solid #555;
+    background-position: 0;
+}
+
+
+input:focus {
+    padding-left: 16px;
+    background-position: 0;
+}
+
+.postImageContainer{
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 5%;
+    padding-left: 5%;
+    justify-content: center;
+}
+
+.profileDashboardPhoto{
+    margin: 5px;
+    object-fit: cover;
+    width: 350px;
+    height: 350px;
+}
+
