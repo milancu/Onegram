@@ -11,16 +11,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.format.datetime.joda.LocalDateTimeParser;
 import org.springframework.security.core.parameters.P;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class SystemInitializerImpl implements SystemInitializer {
@@ -44,6 +46,10 @@ public class SystemInitializerImpl implements SystemInitializer {
     @Override
     @PostConstruct
     public void initSystem() {
+        if (Arrays.asList(environment.getActiveProfiles()).contains("testprofile")) {
+            log.info("Testprofile");
+            return;
+        }
         generateUser();
         generateFollowing();
         generateMessage();

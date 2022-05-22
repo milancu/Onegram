@@ -21,10 +21,12 @@ input RejectRequestInput{
 input MakeProfilePublicInput{
     userId:Int!
 }
+#tady bych ani nepotreboval userID ale nevim jak to udelat zatim
 
 input MakeProfilePrivateInput{
     userId:Int!
 }
+#tady bych ani nepotreboval userID ale nevim jak to udelat zatim
 
 input EditBioInput{
     bio:String!

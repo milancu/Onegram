@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "message")
+@Table(name = "MESSAGE")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Message extends AbstractEntity {
 
-    @Column(name = "message", nullable = false)
+    @Column(name = "TEXT", nullable = false)
     private String message;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "SENT_DATE", nullable = false)
     private LocalDateTime date = LocalDateTime.now();
 
-    @Column(name = "has_read", nullable = false)
+    @Column(name = "HAS_READ", nullable = false)
     private boolean hasRead = false;
 
-    @Column(name = "is_deleted", nullable = false)
+    @Column(name = "IS_DELETED", nullable = false)
     private boolean isDeleted = false;
 
     @ManyToOne

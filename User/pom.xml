@@ -14,6 +14,10 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <!-- Dependency versions -->
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
     </properties>
 
     <dependencies>
@@ -43,6 +47,20 @@
         </dependency>
 
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
             <version>2.6.7</version>
@@ -57,23 +75,11 @@
             <version>0.9.1</version>
         </dependency>
 
-
-        <!--        GRAPHQL-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.graphql-java</groupId>-->
-        <!--            <artifactId>graphql-java</artifactId>-->
-        <!--            <version>18.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.graphql-java</groupId>-->
-        <!--            <artifactId>graphql-spring-boot-starter</artifactId>-->
-        <!--            <version>5.0.2</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.graphql-java</groupId>-->
-        <!--            <artifactId>graphql-java-tools</artifactId>-->
-        <!--            <version>5.2.4</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.4.0-b180830.0359</version><!--$NO-MVN-MAN-VER$-->
+        </dependency>
     </dependencies>
 
 </project>

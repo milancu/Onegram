@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "follow_request")
+@Table(name = "FOLLOW_REQUEST")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,7 +22,7 @@ public class FollowRequest extends AbstractEntity {
     @JoinColumn(name="SENDER_ID")
     private User sender;
 
-    @Column(name = "request_date", nullable = false)
+    @Column(name = "REQUEST_DATE", nullable = false)
     private LocalDateTime date = LocalDateTime.now();
 
     @Override

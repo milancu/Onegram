@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "system_user") //TODO probably to bude jinak
+@Table(name = "ONEGRAM_USER") //TODO probably to bude jinak
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,33 +16,34 @@ import java.util.List;
 @AllArgsConstructor
 public class User extends AbstractEntity {
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "created", nullable = false)
+    @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime created = LocalDateTime.now();
 
-    @Column(name = "bio")
+    @Column(name = "BIO")
     private String bio;
 
-    @Column(name = "link")
+    @Column(name = "LINK")
     private String link; //TODO dunno co to znaci
 
-    @Column(name = "image")
+    @Column(name = "IMAGE")
     private String image; //TODO predelat na filestystem path
 
-    @Column(name = "is_public")
+    @Column(name = "IS_PUBLIC")
     private boolean isPublic;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "system_user_following",
-            joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "following_id")
+            name = "ONEGRAM_USER_FOLLOWING",
+            joinColumns = @JoinColumn(name = "FOLLOWER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
     )
+
     private List<User> following = new ArrayList<>();
 
     @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
