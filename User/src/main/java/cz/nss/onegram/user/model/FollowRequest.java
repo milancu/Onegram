@@ -3,7 +3,10 @@ package cz.nss.onegram.user.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "FOLLOW_REQUEST")
@@ -19,18 +22,22 @@ public class FollowRequest extends AbstractEntity {
     private User receiver;
 
     @ManyToOne
-    @JoinColumn(name="SENDER_ID")
+    @JoinColumn(name = "SENDER_ID")
     private User sender;
 
     @Column(name = "REQUEST_DATE", nullable = false)
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDate createdAtDate = LocalDate.now();
+
+    @Column(name = "REQUEST_TIME", nullable = false)
+    private LocalTime createdAtTime = LocalTime.now();
 
     @Override
     public String toString() {
         return "FollowRequest{" +
                 "receiver=" + receiver +
                 ", sender=" + sender +
-                ", date=" + date +
+                ", createdAtDate=" + createdAtDate +
+                ", createdAtTime=" + createdAtTime +
                 '}';
     }
 }

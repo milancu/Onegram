@@ -12,7 +12,12 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class ScalarConfig {
     @Bean
-    public GraphQLScalarType dateTime() {
-        return ExtendedScalars.DateTime;
+    public GraphQLScalarType date() {
+        return ExtendedScalars.Date;
+    }
+
+    @Bean
+    public GraphQLScalarType localTime() {
+        return ExtendedScalars.LocalTime;
     }
 }

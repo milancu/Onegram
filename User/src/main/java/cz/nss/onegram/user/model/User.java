@@ -3,7 +3,10 @@ package cz.nss.onegram.user.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +25,11 @@ public class User extends AbstractEntity {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    private LocalDateTime created = LocalDateTime.now();
+    @Column(name = "CREATED_DATE", nullable = false)
+    private LocalDate createdAtDate = LocalDate.now();
+
+    @Column(name = "CREATED_TIME", nullable = false)
+    private LocalTime createdAtTime = LocalTime.now();
 
     @Column(name = "BIO")
     private String bio;
@@ -54,9 +60,14 @@ public class User extends AbstractEntity {
         return "User{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", created=" + created +
+                ", createdAtDate=" + createdAtDate +
+                ", createdAtTime=" + createdAtTime +
                 ", bio='" + bio + '\'' +
+                ", link='" + link + '\'' +
+                ", image='" + image + '\'' +
                 ", isPublic=" + isPublic +
+                ", following=" + following +
+                ", follower=" + follower +
                 '}';
     }
 

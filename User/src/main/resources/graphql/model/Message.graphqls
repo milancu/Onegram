@@ -1,9 +1,11 @@
-scalar DateTime
+scalar Date
+scalar LocalTime
 
 type Message{
     id:Int!
     message:String!
-    date:DateTime!
+    sentAtDate : Date!
+    sentAtTime: LocalTime!
     hasRead:Boolean!
     isDeleted:Boolean!
     receiver:User!

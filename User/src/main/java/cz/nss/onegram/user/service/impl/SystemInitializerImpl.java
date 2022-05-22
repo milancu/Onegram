@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +63,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         cuphuon3 = User.builder()
                 .email("cuphuon3" + EMAIL_POSTFIX)
                 .username("cuphuon3")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .bio("Jsem nejhezci")
                 .isPublic(false)
                 .following(new ArrayList<>())
@@ -72,7 +75,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         belkapre = User.builder()
                 .email("belkapre" + EMAIL_POSTFIX)
                 .username("belkapre")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .bio("Dobre jak cyp hej")
                 .isPublic(false)
                 .following(new ArrayList<>())
@@ -84,7 +88,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         bureson2 = User.builder()
                 .email("bureson2" + EMAIL_POSTFIX)
                 .username("bureson2")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .bio("Sparta❤")
                 .isPublic(true)
                 .following(new ArrayList<>())
@@ -96,7 +101,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         pivonja1 = User.builder()
                 .email("pivonja1" + EMAIL_POSTFIX)
                 .username("pivonja1")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .bio("192.168.1.0 Is the only place")
                 .isPublic(true)
                 .following(new ArrayList<>())
@@ -108,7 +114,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         naplava = User.builder()
                 .email("naplava" + EMAIL_POSTFIX)
                 .username("naplava")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .isPublic(true)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -118,7 +125,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         koci = User.builder()
                 .email("koci" + EMAIL_POSTFIX)
                 .username("koci")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -128,7 +136,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         sebekji1 = User.builder()
                 .email("sebekji1" + EMAIL_POSTFIX)
                 .username("sebekji1")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .bio("Nemuzu rict neeee, ale")
                 .isPublic(false)
                 .following(new ArrayList<>())
@@ -139,7 +148,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         nagyoing = User.builder()
                 .email("nagyoing" + EMAIL_POSTFIX)
                 .username("nagyoing")
-                .created(LocalDateTime.now())
+                .createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now())
                 .bio("Foo foo foo")
                 .isPublic(false)
                 .following(new ArrayList<>())
@@ -273,7 +283,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 FollowRequest.builder()
                         .sender(koci)
                         .receiver(nagyoing)
-                        .date(LocalDateTime.now())
+                        .createdAtDate(LocalDate.now())
+                        .createdAtTime(LocalTime.now())
                         .build()
         );
 
@@ -282,7 +293,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 FollowRequest.builder()
                         .sender(koci)
                         .receiver(belkapre)
-                        .date(LocalDateTime.now())
+                        .createdAtDate(LocalDate.now())
+                        .createdAtTime(LocalTime.now())
                         .build()
         );
 
@@ -291,7 +303,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 FollowRequest.builder()
                         .sender(sebekji1)
                         .receiver(nagyoing)
-                        .date(LocalDateTime.now())
+                        .createdAtDate(LocalDate.now())
+                        .createdAtTime(LocalTime.now())
                         .build()
         );
 
@@ -300,7 +313,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 FollowRequest.builder()
                         .sender(nagyoing)
                         .receiver(sebekji1)
-                        .date(LocalDateTime.now())
+                        .createdAtDate(LocalDate.now())
+                        .createdAtTime(LocalTime.now())
                         .build()
         );
 
@@ -309,7 +323,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 FollowRequest.builder()
                         .sender(nagyoing)
                         .receiver(belkapre)
-                        .date(LocalDateTime.now())
+                        .createdAtDate(LocalDate.now())
+                        .createdAtTime(LocalTime.now())
                         .build()
         );
 
@@ -318,7 +333,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 FollowRequest.builder()
                         .sender(naplava)
                         .receiver(cuphuon3)
-                        .date(LocalDateTime.now())
+                        .createdAtDate(LocalDate.now())
+                        .createdAtTime(LocalTime.now())
                         .build()
         );
 
@@ -333,7 +349,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Ahoj jak se mas")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(cuphuon3)
                         .receiver(belkapre)
                         .hasRead(true)
@@ -344,7 +361,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Mam se dobre")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(belkapre)
                         .receiver(cuphuon3)
                         .hasRead(true)
@@ -355,7 +373,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("To to rad slysim")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(cuphuon3)
                         .receiver(belkapre)
                         .hasRead(true)
@@ -366,7 +385,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Co ty?")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(belkapre)
                         .receiver(cuphuon3)
                         .hasRead(false)
@@ -379,7 +399,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Dame jidlo?")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(koci)
                         .receiver(naplava)
                         .hasRead(true)
@@ -390,7 +411,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Nemam moc hlad")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(naplava)
                         .receiver(koci)
                         .hasRead(true)
@@ -401,7 +423,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Nebud kyblik, dej si pytlik")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(koci)
                         .receiver(naplava)
                         .hasRead(true)
@@ -412,7 +435,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Ti dam pytlik ty @$%*#")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(naplava)
                         .receiver(koci)
                         .hasRead(true)
@@ -423,7 +447,8 @@ public class SystemInitializerImpl implements SystemInitializer {
         messageRepository.save(
                 Message.builder()
                         .message("Ale jo")
-                        .date(LocalDateTime.now())
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
                         .sender(naplava)
                         .receiver(koci)
                         .hasRead(true)

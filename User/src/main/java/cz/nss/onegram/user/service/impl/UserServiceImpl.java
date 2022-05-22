@@ -13,7 +13,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void persist(OAuth2User user) {
         String email = user.getAttribute("email");
-        User newUser = User.builder().created(LocalDateTime.now()).email(email).username(email) // TODO
+        User newUser = User.builder().createdAtDate(LocalDate.now())
+                .createdAtTime(LocalTime.now()).email(email).username(email) // TODO
                 .follower(new ArrayList<>()).following(new ArrayList<>()).isPublic(true).build();
 
         userRepository.save(newUser);

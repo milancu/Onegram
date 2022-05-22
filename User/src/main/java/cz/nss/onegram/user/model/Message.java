@@ -3,7 +3,10 @@ package cz.nss.onegram.user.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "MESSAGE")
@@ -18,7 +21,10 @@ public class Message extends AbstractEntity {
     private String message;
 
     @Column(name = "SENT_DATE", nullable = false)
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDate sentAtDate = LocalDate.now();
+
+    @Column(name = "SENT_TIME", nullable = false)
+    private LocalTime sentAtTime = LocalTime.now();
 
     @Column(name = "HAS_READ", nullable = false)
     private boolean hasRead = false;
@@ -38,7 +44,8 @@ public class Message extends AbstractEntity {
     public String toString() {
         return "Message{" +
                 "message='" + message + '\'' +
-                ", date=" + date +
+                ", sentAtDate=" + sentAtDate +
+                ", sentAtTime=" + sentAtTime +
                 ", hasRead=" + hasRead +
                 ", isDeleted=" + isDeleted +
                 ", receiver=" + receiver +

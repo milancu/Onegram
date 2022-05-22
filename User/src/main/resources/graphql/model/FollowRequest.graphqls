@@ -1,8 +1,10 @@
-scalar DateTime
+scalar Date
+scalar LocalTime
 
 type FollowRequest{
     id:Int!
     receiver:User!
     sender:User!
-    date: DateTime!
+    createdAtDate : Date!
+    createdAtTime: LocalTime!
 }

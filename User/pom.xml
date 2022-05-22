@@ -80,6 +80,11 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.4.0-b180830.0359</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-extended-scalars</artifactId>
+            <version>2022-04-28T01-36-15-1764ea8</version>
+        </dependency>
     </dependencies>
 
 </project>
