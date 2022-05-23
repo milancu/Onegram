@@ -26,13 +26,23 @@ public class UserResolver implements GraphQLQueryResolver {
         return userService.getAllReceivedFollowRequests();
     }
 
-    public List<User> getFollowers() {
+    public List<User> getMyFollowers() {
         log.info("Getting all followers");
         return userService.getFollowers();
     }
 
-    public List<User> getFollowing() {
+    public List<User> getMyFollowing() {
         log.info("Getting all followings");
         return userService.getFollowing();
+    }
+
+    public List<User> getFollowers(int user_id) {
+        log.info("Getting all followers");
+        return userService.getFollowers(user_id);
+    }
+
+    public List<User> getFollowing(int user_id) {
+        log.info("Getting all followings");
+        return userService.getFollowing(user_id);
     }
 }

@@ -193,6 +193,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getFollowing(int userID) {
+        return userRepository.findById(userID).get().getFollowing();
+    }
+
+    @Override
+    public List<User> getFollowers(int userID) {
+        return userRepository.findById(userID).get().getFollower();
+    }
+
+    @Override
     public void makeProfilePrivate() {
         getCurrentUser().setPublic(false);
     }
