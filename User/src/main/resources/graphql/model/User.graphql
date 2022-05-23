@@ -1,10 +1,12 @@
-scalar DateTime
+scalar Date
+scalar LocalTime
 
 type User{
     id: Int!
     username: String!
     email:String!
-    created:DateTime!
+    createdAtDate:Date!
+    createdAtTime:LocalTime!
     bio:String!
     link:String!
     image:String!

@@ -3,11 +3,15 @@ package cz.nss.onegram.user.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "system_user") //TODO probably to bude jinak
+@Table(name = "ONEGRAM_USER") //TODO probably to bude jinak
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,57 +19,68 @@ import java.util.List;
 @AllArgsConstructor
 public class User extends AbstractEntity {
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "created", nullable = false)
-    private LocalDateTime created;
+    @Column(name = "CREATED_DATE", nullable = false)
+    private LocalDate createdAtDate = LocalDate.now();
 
-    @Column(name = "bio")
+    @Column(name = "CREATED_TIME", nullable = false)
+    private LocalTime createdAtTime = LocalTime.now();
+
+    @Column(name = "BIO")
     private String bio;
 
-    @Column(name = "link")
+    @Column(name = "LINK")
     private String link; //TODO dunno co to znaci
 
-    @Column(name = "image")
+    @Column(name = "IMAGE")
     private String image; //TODO predelat na filestystem path
 
-    @Column(name = "isPublic")
+    @Column(name = "IS_PUBLIC")
     private boolean isPublic;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "system_user_conversation",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "conversation_id")
+            name = "ONEGRAM_USER_FOLLOWING",
+            joinColumns = @JoinColumn(name = "FOLLOWER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
     )
-    public List<Conversation> conversations;
+    private List<User> following = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender")
-    private List<Message> messages;
-
-    @ManyToMany
-    @JoinTable(
-            name = "system_user_following",
-            joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "following_id")
-    )
-    private List<User> following;
-
-    @ManyToMany(mappedBy = "following")
-    private List<User> follower;
+    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
+    private List<User> follower = new ArrayList<>();
 
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", created=" + created +
+                ", createdAtDate=" + createdAtDate +
+                ", createdAtTime=" + createdAtTime +
                 ", bio='" + bio + '\'' +
                 ", isPublic=" + isPublic +
+                ", following=" + following.size() +
+                ", follower=" + follower.size() +
                 '}';
+    }
+
+    public void addFollower(User user) {
+        follower.add(user);
+    }
+
+    public void removeFollower(User user) {
+        follower.remove(user);
+    }
+
+    public void addFollowing(User user) {
+        following.add(user);
+    }
+
+    public void removeFollowing(User user) {
+        following.remove(user);
     }
 }
