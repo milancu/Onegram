@@ -1,6 +1,8 @@
 type Query {
     user(userId:Int!) : User
     followRequests : [FollowRequest]
-    followers: [User]
-    following: [User]
+    myFollowers: [User]
+    myFollowing: [User]
+    followers(userId:Int!): [User]
+    following(userId:Int!): [User]
 }

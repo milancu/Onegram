@@ -34,6 +34,10 @@ public interface UserService {
 
     public List<User> getFollowers();
 
+    public List<User> getFollowing(int userID);
+
+    public List<User> getFollowers(int userID);
+
     public void makeProfilePrivate();
 
     public void makeProfilePublic();
