@@ -6,6 +6,7 @@ import cz.nss.onegram.post.model.Post;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public interface PostService {
     public Post findById(String id);
@@ -17,6 +18,8 @@ public interface PostService {
     public List<Post> findAll();
 
     public List<Post> findAll(LocalDate fromDate, LocalDate toDate);
+
+    public List<Post> findByAuthorIds(List<Integer> authors);
 
     public void persist(Post post);
 

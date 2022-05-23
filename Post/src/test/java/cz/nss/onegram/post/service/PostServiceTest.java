@@ -83,4 +83,52 @@ public class PostServiceTest {
 
         Assertions.assertEquals(2, result.size());
     }
+
+    @Test
+    public void findByAuthorIds_4postscreated_2found(){
+        Post post1 = Generator.generateRandomPost(1);
+        Post post2 = Generator.generateRandomPost(2);
+        Post post3 = Generator.generateRandomPost(3);
+        Post post4 = Generator.generateRandomPost(4);
+        postRepository.save(post1);
+        postRepository.save(post2);
+        postRepository.save(post3);
+        postRepository.save(post4);
+
+        List<Post> result = postService.findByAuthorIds(List.of(1, 2));
+
+        Assertions.assertEquals(2, result.size());
+    }
+
+    @Test
+    public void delete_postCreatedAndDeleted_0postsFound(){
+        Post post1 = Generator.generateRandomPost(1);
+        postRepository.save(post1);
+
+        postService.delete(post1);
+
+        Assertions.assertEquals(0, postRepository.findAll().size());
+    }
+
+    @Test
+    public void findAll_4postsCreated_2postsFound(){
+        LocalDate from = LocalDate.of(2020, 1, 1);
+        LocalDate to = LocalDate.of(2020, 2, 2);
+        Post post1 = Generator.generateRandomPost(1);
+        post1.setCreatedAtDate(LocalDate.of(2000, 1, 1));
+        Post post2 = Generator.generateRandomPost(2);
+        post2.setCreatedAtDate(from);
+        Post post3 = Generator.generateRandomPost(3);
+        post3.setCreatedAtDate(to);
+        Post post4 = Generator.generateRandomPost(4);
+        post4.setCreatedAtDate(LocalDate.of(2100, 2, 2));
+        postRepository.save(post1);
+        postRepository.save(post2);
+        postRepository.save(post3);
+        postRepository.save(post4);
+
+        List<Post> result = postService.findAll(from, to);
+
+        Assertions.assertEquals(2, result.size());
+    }
 }

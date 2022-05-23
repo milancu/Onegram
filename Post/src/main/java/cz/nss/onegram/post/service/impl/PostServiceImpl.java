@@ -3,14 +3,13 @@ package cz.nss.onegram.post.service.impl;
 import cz.nss.onegram.post.model.Post;
 import cz.nss.onegram.post.repository.PostRepository;
 import cz.nss.onegram.post.service.interfaces.PostService;
+import cz.nss.onegram.post.util.PostTimeComparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.OffsetTime;
-import java.util.InputMismatchException;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +18,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(String id) {
-        return postRepository.findById(id).get();
+        return postRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Post not found id: " + id));
     }
 
     @Override
     public List<Post> findByAuthorId(Integer authorId) {
-        return postRepository.findAllByAuthorId(authorId);
+        return postRepository.findAllByAuthorIdOrderByCreatedAtDateDescCreatedAtTimeDesc(authorId);
     }
 
     /**
@@ -39,7 +38,7 @@ public class PostServiceImpl implements PostService {
             throw new InputMismatchException("FromDate is after toDate.");
         }
 
-        return postRepository.findAllByAuthorIdAndCreatedAtDateBetween(authorId, fromDate.minusDays(1), toDate.plusDays(1));
+        return postRepository.findAllByAuthorIdAndCreatedAtDateBetweenOrderByCreatedAtDateDescCreatedAtTimeDesc(authorId, fromDate.minusDays(1), toDate.plusDays(1));
     }
 
     /**
@@ -49,12 +48,28 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public List<Post> findAll(LocalDate fromDate, LocalDate toDate) {
-        return postRepository.findAllByCreatedAtDateBetween(fromDate.minusDays(1), toDate.plusDays(1));
+        if (fromDate.isAfter(toDate)){
+            throw new InputMismatchException("FromDate is after toDate.");
+        }
+
+        return postRepository.findAllByCreatedAtDateBetweenOrderByCreatedAtDateDescCreatedAtTimeDesc(fromDate.minusDays(1), toDate.plusDays(1));
     }
 
     @Override
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    @Override
+    public List<Post> findByAuthorIds(List<Integer> authors) {
+        List<Post> result = new ArrayList<>();
+        authors.stream()
+                .forEach(authorId -> result.addAll(this.findByAuthorId(authorId)));
+
+        result.sort(new PostTimeComparator());
+        Collections.reverse(result);
+
+        return result;
     }
 
     @Override

@@ -2,6 +2,7 @@ package environment;
 
 import cz.nss.onegram.post.model.Comment;
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.model.SubComment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,5 +37,15 @@ public class Generator {
                 .build();
 
         return comment;
+    }
+
+    public static SubComment generateRandomSubComment(Integer authorId){
+        SubComment subComment = SubComment.builder()
+                .authorId(authorId)
+                .content("Random comment: " + random.nextInt(1, 1000))
+                .likes(new ArrayList<>())
+                .build();
+
+        return subComment;
     }
 }

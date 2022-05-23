@@ -3,4 +3,7 @@ type Comment {
     content : String!
     authorId : Int!
     subComments : [SubComment!]!
+    likes: [Like!]
+    createdAtDate : Date!
+    createdAtTime: LocalTime!
 }
