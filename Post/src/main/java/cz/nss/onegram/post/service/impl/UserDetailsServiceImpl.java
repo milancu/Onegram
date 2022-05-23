@@ -1,9 +1,10 @@
 package cz.nss.onegram.post.service.impl;
 
-import cz.nss.onegram.post.security.model.User;
 import cz.nss.onegram.post.security.model.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,18 +23,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String jwt) throws UsernameNotFoundException {
-        User user = this.fetchUserFromUserMicroservice(jwt);
+        UserDetails user = this.fetchUserFromUserMicroservice(jwt);
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
-        return UserDetailsImpl.build(user);
+        ((UserDetailsImpl) user).setJwt(jwt.split(" ")[1]); // TODO might cause problems
+        return user;
     }
 
-    private User fetchUserFromUserMicroservice(String jwt){
-        HttpEntity<String> request = getRequest(jwt);
-        User user
-                = restTemplate.exchange(reqUrl, HttpMethod.GET, request, User.class).getBody();
+    public static UserDetailsImpl getLoadedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.isAuthenticated()){
+            return (UserDetailsImpl) auth.getPrincipal();
+        }
+        return null;
+    }
 
+    private UserDetails fetchUserFromUserMicroservice(String jwt){
+        HttpEntity<String> request = getRequest(jwt);
+        UserDetailsImpl user
+                = restTemplate.exchange(reqUrl, HttpMethod.GET, request, UserDetailsImpl.class).getBody();
         return user;
     }
 

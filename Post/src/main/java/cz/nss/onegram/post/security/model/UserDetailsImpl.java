@@ -1,45 +1,39 @@
 package cz.nss.onegram.post.security.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Objects;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
 
     private String username;
 
     private String email;
+
+    private String jwt;
 
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
-
-    public static UserDetailsImpl build(User user) {
-
-        return new UserDetailsImpl(
-                user.getUsername(),
-                user.getEmail()
-        );
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
