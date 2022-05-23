@@ -1,32 +1,43 @@
 package cz.nss.onegram.user.model;
 
-import cz.nss.onegram.user.model.enums.FollowState;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "follow_request")
+@Table(name = "FOLLOW_REQUEST")
 @Getter
 @Setter
 @NoArgsConstructor
-public class FollowRequest extends AbstractEntity {//TODO prodiskutovat zadatele a druhou stranu
+@Builder
+@AllArgsConstructor
+public class FollowRequest extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "from_user")
-    private User fromUser;
+    @JoinColumn(name = "RECEIVER_ID")
+    private User receiver;
 
     @ManyToOne
-    @JoinColumn(name="to_user")
-    private User toUser;
+    @JoinColumn(name = "SENDER_ID")
+    private User sender;
 
-    @Column(name = "request_date", nullable = false)
-    private LocalDate date;
+    @Column(name = "REQUEST_DATE", nullable = false)
+    private LocalDate createdAtDate = LocalDate.now();
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "request_state", nullable = false)
-    private FollowState followState;
+    @Column(name = "REQUEST_TIME", nullable = false)
+    private LocalTime createdAtTime = LocalTime.now();
+
+    @Override
+    public String toString() {
+        return "FollowRequest{" +
+                "receiver=" + receiver +
+                ", sender=" + sender +
+                ", createdAtDate=" + createdAtDate +
+                ", createdAtTime=" + createdAtTime +
+                '}';
+    }
 }

@@ -1,9 +1,0 @@
-scalar DateTime
-
-type FollowRequest{
-    id: Int!
-    formUser: User!
-    toUser: User!
-    date: DateTime!
-    followState: FollowState!
-}

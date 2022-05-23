@@ -1,0 +1,33 @@
+input FollowUserInput{
+    userId:Int!
+}
+
+input UnFollowUserInput{
+    userId:Int!
+}
+
+input RemoveFollowerInput{
+    userId:Int!
+}
+
+input AcceptRequestInput{
+    requestId:Int!
+}
+
+input RejectRequestInput{
+    requestId:Int!
+}
+
+input MakeProfilePublicInput{
+    userId:Int!
+}
+#tady bych ani nepotreboval userID ale nevim jak to udelat zatim
+
+input MakeProfilePrivateInput{
+    userId:Int!
+}
+#tady bych ani nepotreboval userID ale nevim jak to udelat zatim
+
+input EditBioInput{
+    bio:String!
+}

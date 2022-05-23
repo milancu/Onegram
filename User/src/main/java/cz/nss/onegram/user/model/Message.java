@@ -1,32 +1,55 @@
 package cz.nss.onegram.user.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "message")
+@Table(name = "MESSAGE")
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Message extends AbstractEntity {
 
-    @Column(name = "message", nullable = false)
+    @Column(name = "TEXT", nullable = false)
     private String message;
 
-    @Column(name = "date", nullable = false) //TODO probably neco jineho nez name date
-    private LocalDateTime date;
+    @Column(name = "SENT_DATE", nullable = false)
+    private LocalDate sentAtDate = LocalDate.now();
 
-    @Column(name = "has_read", nullable = false)
-    private boolean hasRead;
+    @Column(name = "SENT_TIME", nullable = false)
+    private LocalTime sentAtTime = LocalTime.now();
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
+    @Column(name = "HAS_READ", nullable = false)
+    private boolean hasRead = false;
 
-    @ManyToOne //TODO prodiskutovat tohle reseni
-    @JoinColumn(name="sender_id")
+    @Column(name = "IS_DELETED", nullable = false)
+    private boolean isDeleted = false;
+
+    @ManyToOne
+    @JoinColumn(name = "RECEIVER_ID")
+    private User receiver;
+
+    @ManyToOne
+    @JoinColumn(name = "SENDER_ID")
     private User sender;
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "message='" + message + '\'' +
+                ", sentAtDate=" + sentAtDate +
+                ", sentAtTime=" + sentAtTime +
+                ", hasRead=" + hasRead +
+                ", isDeleted=" + isDeleted +
+                ", receiver=" + receiver +
+                ", sender=" + sender +
+                '}';
+    }
 }
