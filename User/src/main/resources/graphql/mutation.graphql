@@ -9,7 +9,8 @@ type Mutation {
     removeFollower(input: RemoveFollowerInput!):Int!
     acceptRequest(input: AcceptRequestInput!):Int!
     rejectRequest(input: RejectRequestInput!):Int!
-    makeProfilePublic(input: MakeProfilePublicInput!):User!
-    makeProfilePrivate(input: MakeProfilePrivateInput!):User!
+    makeProfilePublic:User!
+    makeProfilePrivate:User!
     editBio(input: EditBioInput!):User!
+    setProfilePhoto: User!
 }
