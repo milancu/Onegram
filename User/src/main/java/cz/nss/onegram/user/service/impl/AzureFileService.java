@@ -1,12 +1,11 @@
-package cz.nss.onegram.post.service.impl;
+package cz.nss.onegram.user.service.impl;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
-import cz.nss.onegram.post.exception.InvalidImageException;
+import cz.nss.onegram.user.service.interfaces.FileService;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
-import cz.nss.onegram.post.service.interfaces.FileService;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Primary
 @RequiredArgsConstructor
-public class AzureFileServiceImpl implements FileService {
+public class AzureFileService implements FileService {
 
     private final BlobContainerClient containerCLient;
 
@@ -31,7 +30,7 @@ public class AzureFileServiceImpl implements FileService {
             return client.getBlobUrl();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new InvalidImageException("Image could not be saved.");
+            throw new RuntimeException("Image could not be saved.");
         }
     }
 

@@ -4,6 +4,7 @@ import cz.nss.onegram.user.model.FollowRequest;
 import cz.nss.onegram.user.model.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.io.InputStream;
 import java.util.List;
 
 public interface UserService {
@@ -46,4 +47,5 @@ public interface UserService {
 
     public void editBio(String bio);
 
+    public void addPhoto(User user, InputStream file);
 }

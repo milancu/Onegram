@@ -4,15 +4,18 @@ import cz.nss.onegram.user.dao.FollowRequestRepository;
 import cz.nss.onegram.user.dao.UserRepository;
 import cz.nss.onegram.user.model.FollowRequest;
 import cz.nss.onegram.user.model.User;
+import cz.nss.onegram.user.service.interfaces.FileService;
 import cz.nss.onegram.user.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,7 +29,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     private final FollowRequestRepository followRequestRepository;
+
+    private final FileService fileService;
+
+    @Value("${storage.defaultprofilephoto}")
+    private String DEFAULT_PHOTO_LINK;
 
     @Override
     public List<User> getAllUsers() {
@@ -40,6 +49,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void persist(User user) {
+        if (user.getImage() == null){
+            log.info("Setting default image for user: {}, while persisting.", user.getUsername());
+            user.setImage(DEFAULT_PHOTO_LINK);
+        }
         userRepository.save(user);
     }
 
@@ -53,6 +66,7 @@ public class UserServiceImpl implements UserService {
         String email = user.getAttribute("email");
         User newUser = User.builder().createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now()).email(email).username(email) // TODO
+                .image(DEFAULT_PHOTO_LINK)
                 .follower(new ArrayList<>()).following(new ArrayList<>()).isPublic(true).build();
 
         userRepository.save(newUser);
@@ -222,5 +236,21 @@ public class UserServiceImpl implements UserService {
         getCurrentUser().setBio(bio);
         userRepository.save(getCurrentUser());
         log.info("Change bio: {}", getCurrentUser());
+    }
+
+    @Override
+    public void addPhoto(User user, InputStream file) {
+        String newImageUrl = fileService.saveAsPngFile(file);
+        log.info("Saved new profile photo for user id: {} ", user.getId());
+
+        String oldImageUrl = user.getImage();
+        if (oldImageUrl != null && !oldImageUrl.equals(DEFAULT_PHOTO_LINK)){
+            // TODO check if file exists, FileService implementation
+            fileService.deleteFile(fileService.extractFilenameFromPath(oldImageUrl));
+            log.info("Deleted old profile photo of user id: {}", user.getId());
+        }
+
+        user.setImage(newImageUrl);
+        userRepository.save(user);
     }
 }
