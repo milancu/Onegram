@@ -1,9 +1,8 @@
 package cz.nss.onegram.user.service.impl;
 
+import cz.nss.onegram.user.Producer;
 import cz.nss.onegram.user.dao.MessageRepository;
-import cz.nss.onegram.user.dao.UserRepository;
 import cz.nss.onegram.user.model.Message;
-import cz.nss.onegram.user.model.MessageKafka;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.MessageService;
 import cz.nss.onegram.user.service.interfaces.UserService;
@@ -15,10 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -30,7 +27,7 @@ public class MessageServiceImpl implements MessageService {
     private final UserService userService;
 
     @Autowired
-    private KafkaTemplate<String, MessageKafka> kafkaTemplate;
+    private final Producer producer;
 
     @Override
     public Message findById(int id) {
@@ -49,19 +46,9 @@ public class MessageServiceImpl implements MessageService {
         newMessage.setReceiver(receiver);
 
         messageRepository.save(newMessage);
+        producer.sendMessage(message);
 
         log.info("sent message: {}", newMessage);
-
-        try {
-            MessageKafka messageKafka = new MessageKafka();
-            messageKafka.setContent(message);
-            messageKafka.setSender(currentUser.getUsername());
-            messageKafka.setTimestamp(LocalDateTime.now().toString());
-            kafkaTemplate.send("onegram", messageKafka).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-
         return newMessage;
     }
 
