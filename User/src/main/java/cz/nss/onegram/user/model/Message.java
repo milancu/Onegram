@@ -17,7 +17,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class Message extends AbstractEntity {
 
-    @Column(name = "TEXT", nullable = false)
+    @Column(name = "CONTENT", nullable = false)
     private String message;
 
     @Column(name = "SENT_DATE", nullable = false)

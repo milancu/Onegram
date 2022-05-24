@@ -1,19 +1,21 @@
 package cz.nss.onegram.user.service.impl;
 
+import cz.nss.onegram.user.Producer;
 import cz.nss.onegram.user.dao.MessageRepository;
-import cz.nss.onegram.user.dao.UserRepository;
 import cz.nss.onegram.user.model.Message;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.MessageService;
 import cz.nss.onegram.user.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Slf4j
@@ -24,6 +26,9 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final UserService userService;
 
+    @Autowired
+    private final Producer producer;
+
     @Override
     public Message findById(int id) {
         return messageRepository.findById(id).get();
@@ -32,18 +37,18 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message sendMessage(String message, int receiver_id) {
 
-        //TODO na validaci uzivatele, mozna udelat validaci na public profil
         User currentUser = userService.getCurrentUser();
         User receiver = userService.findById(receiver_id);
 
         Message newMessage = new Message();
         newMessage.setMessage(message);
+        newMessage.setSender(currentUser);
         newMessage.setReceiver(receiver);
 
         messageRepository.save(newMessage);
+        producer.sendMessage(message);
 
         log.info("sent message: {}", newMessage);
-
         return newMessage;
     }
 
