@@ -23,6 +23,7 @@ public class Generator {
                 .description("Random post" + random.nextInt(1, 1000))
                 .likes(new ArrayList<>())
                 .tags(new ArrayList<>())
+                .imagePaths(List.of("foo"))
                 .build();
 
         return post;
