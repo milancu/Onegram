@@ -40,14 +40,16 @@ public class Post implements Likeable {
     private List<Comment> comments;
 
     @NotNull
-    private Integer authorId; // TODO probably change later
+    private Integer authorId;
 
     @NotNull
     private LocalDate createdAtDate;
 
     @NotNull
     private LocalTime createdAtTime;
-    // TODO images
+
+    @NotNull
+    private List<String> imagePaths;
 
     public List<Likeable> getLikeables() {
         ArrayList<Likeable> likeables = new ArrayList<>();

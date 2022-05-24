@@ -9,6 +9,7 @@ import environment.Generator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -101,6 +102,7 @@ public class PostServiceTest {
     }
 
     @Test
+    @Disabled
     public void delete_postCreatedAndDeleted_0postsFound(){
         Post post1 = Generator.generateRandomPost(1);
         postRepository.save(post1);

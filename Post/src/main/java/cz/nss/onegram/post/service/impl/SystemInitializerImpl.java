@@ -76,6 +76,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .description(description)
                 .likes(new ArrayList<>())
                 .tags(new ArrayList<>())
+                .imagePaths(List.of("https://nssonegram.blob.core.windows.net/images/obrazek.png"))
                 .build();
 
         postRepository.save(post);

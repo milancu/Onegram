@@ -13,17 +13,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class InputMapper {
     private final ModelMapper mapper;
 
-    public Post convertToEntity(CreatePostInput postInput) {
+    public Post convertToEntity(CreatePostInput postInput, List<String> paths) {
         Post post = mapper.map(postInput, Post.class);
         post.setComments(new ArrayList<>());
         post.setLikes(new ArrayList<>());
         post.setTags(new ArrayList<>());
+        post.setImagePaths(paths);
         return post;
     }
 
