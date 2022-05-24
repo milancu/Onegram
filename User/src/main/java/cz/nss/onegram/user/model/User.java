@@ -38,7 +38,7 @@ public class User extends AbstractEntity {
     private String link; //TODO dunno co to znaci
 
     @Column(name = "IMAGE")
-    private String image; //TODO predelat na filestystem path
+    private String image;
 
     @Column(name = "IS_PUBLIC")
     private boolean isPublic;

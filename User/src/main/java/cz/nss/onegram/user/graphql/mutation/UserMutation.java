@@ -2,11 +2,18 @@ package cz.nss.onegram.user.graphql.mutation;
 
 import cz.nss.onegram.user.graphql.input.user.*;
 import cz.nss.onegram.user.model.User;
+import cz.nss.onegram.user.service.interfaces.FileService;
 import cz.nss.onegram.user.service.interfaces.UserService;
+import cz.nss.onegram.user.util.UploadUtil;
 import graphql.kickstart.tools.GraphQLMutationResolver;
+import graphql.schema.DataFetchingEnvironment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -14,6 +21,8 @@ import org.springframework.stereotype.Component;
 public class UserMutation implements GraphQLMutationResolver {
 
     private final UserService userService;
+
+    private final FileService fileService;
 
     public User followUser(FollowUserInput input) {
         return userService.followUser(input.getUserId());
@@ -39,18 +48,31 @@ public class UserMutation implements GraphQLMutationResolver {
         return 1;
     }
 
-    public User makeProfilePublic(MakeProfilePublicInput input){
+    public User makeProfilePublic(){
         userService.makeProfilePublic();
-        return userService.findById(input.getUserId());
+        User user = userService.getCurrentUser();
+        return user;
     }
 
-    public User makeProfilePrivate(MakeProfilePrivateInput input){
+    public User makeProfilePrivate(){
         userService.makeProfilePrivate();
-        return userService.findById(input.getUserId());
+        User user = userService.getCurrentUser();
+        return user;
     }
 
     public User editBio(EditBioInput input){
         userService.editBio(input.getBio());
         return userService.getCurrentUser(); //TODO return
+    }
+
+    public User setProfilePhoto(DataFetchingEnvironment environment) throws IOException {
+        UploadUtil.validateUploadedImages(environment);
+        List<InputStream> files = UploadUtil.extractFiles(environment);
+        if (files.size() != 1){
+            throw new RuntimeException("Exactly one image must be passed."); // TODO replace with application specific exception for the API handler
+        }
+        User user = userService.getCurrentUser();
+        userService.addPhoto(user, files.get(0));
+        return user;
     }
 }

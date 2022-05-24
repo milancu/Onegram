@@ -8,6 +8,7 @@ import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.format.datetime.joda.LocalDateTimeParser;
 import org.springframework.security.core.parameters.P;

@@ -1,4 +1,4 @@
-package cz.nss.onegram.post.service.interfaces;
+package cz.nss.onegram.user.service.interfaces;
 
 import java.io.InputStream;
 import java.util.List;
@@ -14,4 +14,6 @@ public interface FileService {
         String[] splitPath =  path.split("/");
         return splitPath[splitPath.length - 1];
     }
+
+    // TODO exists
 }

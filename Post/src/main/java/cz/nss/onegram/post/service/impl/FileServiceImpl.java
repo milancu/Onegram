@@ -1,25 +1,21 @@
 package cz.nss.onegram.post.service.impl;
 
-import cz.nss.onegram.post.exception.InvalidImageException;
 import cz.nss.onegram.post.exception.PostserviceException;
 import cz.nss.onegram.post.service.interfaces.FileService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @Deprecated
 public class FileServiceImpl implements FileService {
     @Override
-    public String saveFile(InputStream inputStream) {
+    public String saveAsPngFile(InputStream inputStream) {
         ClassLoader classLoader = getClass().getClassLoader();
         String id = (new ObjectId()).toString();
         File targetFile = new File(classLoader.getResource(".").getFile() + "/img" + id + ".png");
@@ -40,9 +36,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<String> saveFiles(List<InputStream> files) {
+    public List<String> saveAsPngFiles(List<InputStream> files) {
         List<String> result = new ArrayList<>();
-        files.forEach(f -> result.add(saveFile(f)));
+        files.forEach(f -> result.add(saveAsPngFile(f)));
         return result;
     }
 
