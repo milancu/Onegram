@@ -8,6 +8,7 @@
     justify-content: left;
 }
 
+/*TODO opravit dolisne pozadi zprav, uz jednou fungovalo, pak nahodne prestalo*/
 .single-message-box:nth-child(even) {
-    background-color: #f6f6f6;
+    background-color: #f3f2f2;
 }
