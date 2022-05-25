@@ -3,15 +3,7 @@ import {useState} from "react";
 import './profile_dashboard.css'
 import Single_follow from "../../components/Single_follow";
 
-const Form = () => {
-
-
-
-    const valid = (e) => {
-        e.preventDefault();
-    }
-
-
+const ModalFollowing = () => {
     return (
         <div className={"center-follower-box"}>
             <div className={'follow-list'}>
@@ -28,10 +20,5 @@ const Form = () => {
     )
 }
 
-let props;
 
-export const ModalFollowing = (prop) => {
-    props = prop;
-    if (!props.show) return (<></>);
-    return <Form/>
-}
+export default ModalFollowing;

@@ -77,6 +77,15 @@
     touch-action: manipulation;
 }
 
+.follow-list{
+    position: absolute;
+    background-color: white;
+}
+
+.follow-list:active{
+    display: none;
+}
+
 /*.postImageContainer {*/
 /*    padding-right: 10%;*/
 /*    padding-left: 10%;*/
