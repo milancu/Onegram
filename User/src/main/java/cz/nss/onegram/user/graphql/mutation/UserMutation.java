@@ -35,7 +35,7 @@ public class UserMutation implements GraphQLMutationResolver {
         return 1;
     }
 
-    public Integer removeFollower(UnFollowUserInput input) { //TODO return
+    public Integer removeFollower(UnFollowUserInput input) {
         userService.removeFollower(input.getUserId());
         return 1;
     }
