@@ -1,8 +1,9 @@
 package cz.nss.onegram.user.service.impl;
 
-import cz.nss.onegram.user.Producer;
+import cz.nss.onegram.user.constants.KafkaConstants;
 import cz.nss.onegram.user.dao.MessageRepository;
 import cz.nss.onegram.user.model.Message;
+import cz.nss.onegram.user.model.MessageKafka;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.MessageService;
 import cz.nss.onegram.user.service.interfaces.UserService;
@@ -13,7 +14,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -27,7 +27,7 @@ public class MessageServiceImpl implements MessageService {
     private final UserService userService;
 
     @Autowired
-    private final Producer producer;
+    private KafkaTemplate<String, MessageKafka> kafkaTemplate;
 
     @Override
     public Message findById(int id) {
@@ -36,6 +36,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message sendMessage(String message, int receiver_id) {
+        if (message.trim().length() == 0) throw new RuntimeException("Emtpy String"); //TODO
 
         User currentUser = userService.getCurrentUser();
         User receiver = userService.findById(receiver_id);
@@ -46,15 +47,22 @@ public class MessageServiceImpl implements MessageService {
         newMessage.setReceiver(receiver);
 
         messageRepository.save(newMessage);
-        producer.sendMessage(message);
-
+        try {
+            MessageKafka messageKafka = new MessageKafka();
+            messageKafka.setMessage(message);
+            messageKafka.setSender(currentUser.getUsername());
+            messageKafka.setReceiver(receiver.getUsername());
+            kafkaTemplate.send(KafkaConstants.KAFKA_TOPIC, messageKafka).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
         log.info("sent message: {}", newMessage);
         return newMessage;
     }
 
     @Override
     public int removeMessage(int id) {
-
+        //TODO validace na ot jestli usera poslal tu zpravu
         User currentUser = userService.getCurrentUser();
         Message messageToDelete = findById(id);
 
@@ -71,6 +79,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message makeMessageRead(int id) {
+        //TODO validace na ot jestli usera ziskal tu zpravu
         Message message = findById(id);
         User current = userService.getCurrentUser();
 
@@ -85,6 +94,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message makeMessageUnread(int id) {
+        //TODO validace na ot jestli usera ziskal tu zpravu
         Message message = findById(id);
         User current = userService.getCurrentUser();
 
@@ -92,7 +102,6 @@ public class MessageServiceImpl implements MessageService {
             log.error("message does not exists");
             return null;
         }
-        ;
 
         return null;
     }
