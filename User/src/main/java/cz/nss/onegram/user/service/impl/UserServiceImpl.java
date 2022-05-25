@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
-            throw new UserServiceException("No current user");
+            return null;
         } else {
             String email = SecurityContextHolder.getContext().getAuthentication().getName();
             if (!email.contains("@")) { //Pouze pro testing

@@ -2,6 +2,7 @@ package cz.nss.onegram.user.service;
 
 import cz.nss.onegram.user.dao.FollowRequestRepository;
 import cz.nss.onegram.user.dao.UserRepository;
+import cz.nss.onegram.user.exception.UserServiceException;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.security.services.UserDetailsServiceImpl;
 import cz.nss.onegram.user.service.impl.UserServiceImpl;
@@ -17,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.TestPropertySource;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -36,6 +39,13 @@ public class UserServiceTest {
     @Autowired
     private FollowRequestRepository followRequestRepository;
 
+    public void setCurrentUserToContext(User user) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
     @BeforeEach
     public void removeData() {
         followRequestRepository.deleteAll(followRequestRepository.findAll());
@@ -48,11 +58,7 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User bureson2 = generator.generateBureson2();
         userService.persist(bureson2);
@@ -78,24 +84,26 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User bureson2 = generator.generateBureson2();
         userService.persist(bureson2);
 
         //ACT
         userService.followUser(bureson2.getId());
-        userService.followUser(bureson2.getId());
+        UserServiceException exception = assertThrows(UserServiceException.class, () -> {
+            userService.followUser(bureson2.getId());
+            ;
+        });
+
 
         //ASSERT
+        String expectedMessage = "cz.nss.onegram.user.exception.UserServiceException: User is already being followed";
         int followers = userRepository.findByEmail(bureson2.getEmail()).getFollower().size();
         int following = userRepository.findByEmail(cuphuon3.getEmail()).getFollowing().size();
         int sentRequest = followRequestRepository.getAllSentRequestFromUser(cuphuon3.getId()).size();
         int receivedRequest = followRequestRepository.getAllReceivedRequestOfUser(bureson2.getId()).size();
+        Assertions.assertTrue(expectedMessage.contains(exception.getMessage()));
         Assertions.assertEquals(1, followers);
         Assertions.assertEquals(1, following);
         Assertions.assertEquals(0, sentRequest);
@@ -109,11 +117,7 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User belkapre = generator.generateBelkapre();
         userService.persist(belkapre);
@@ -139,11 +143,7 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User belkapre = generator.generateBelkapre();
         userService.persist(belkapre);
@@ -170,11 +170,7 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User bureson2 = generator.generateBureson2();
         userService.persist(bureson2);
@@ -196,21 +192,13 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User bureson2 = generator.generateBureson2();
         userService.persist(bureson2);
 
         userService.followUser(bureson2.getId());
-
-        userDetails = userDetailsService.loadUserByUsername(bureson2.getUsername());
-        authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(bureson2);
 
         //ACT
         userService.removeFollower(cuphuon3.getId());
@@ -228,21 +216,13 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         User belkapre = generator.generateBelkapre();
         userService.persist(belkapre);
 
         userService.followUser(belkapre.getId());
-
-        userDetails = userDetailsService.loadUserByUsername(belkapre.getUsername());
-        authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(belkapre);
 
         //ACT
         userService.acceptRequest(followRequestRepository.getRequestToUser(cuphuon3.getId(), belkapre.getId()).getId());
@@ -264,21 +244,15 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
+        setCurrentUserToContext(cuphuon3);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User belkapre = generator.generateBelkapre();
         userService.persist(belkapre);
 
         userService.followUser(belkapre.getId());
+        setCurrentUserToContext(belkapre);
 
-        userDetails = userDetailsService.loadUserByUsername(belkapre.getUsername());
-        authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         //ACT
         userService.rejectRequest(followRequestRepository.getRequestToUser(cuphuon3.getId(), belkapre.getId()).getId());
@@ -300,11 +274,7 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         //ACT
         userService.makeProfilePublic();
@@ -320,11 +290,7 @@ public class UserServiceTest {
         //ARRANGE
         User bureson2 = generator.generateBureson2();
         userService.persist(bureson2);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(bureson2.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(bureson2);
 
         //ACT
         userService.makeProfilePrivate();
@@ -340,11 +306,7 @@ public class UserServiceTest {
         //ARRANGE
         User cuphuon3 = generator.generateCuphuon3();
         userService.persist(cuphuon3);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
 
         //ACT
         String newBio = "Stale jsem nejhezci";
