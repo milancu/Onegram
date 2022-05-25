@@ -47,10 +47,6 @@ public interface UserService {
 
     public void addPhoto(InputStream file);
 
-    public boolean isFollowingUser(int userID);
-
-    public boolean isFollowedByUser(int userID);
-
     public boolean hasSentRequest(int requestID);
 
     public boolean hasReceivedRequest(int requestID);
