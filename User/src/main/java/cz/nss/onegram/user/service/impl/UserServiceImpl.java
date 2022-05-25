@@ -292,22 +292,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isFollowingUser(int userID) {
-        return getCurrentUser().getFollowing().contains(findById(userID));
-    }
-
-    @Override
-    public boolean isFollowedByUser(int userID) {
-        return getCurrentUser().getFollower().contains(findById(userID));
-    }
-
-    @Override
     public boolean hasSentRequest(int requestID) {
+        log.debug("Checking if user sent a request.");
         return followRequestRepository.findById(requestID).getSender().equals(getCurrentUser());
     }
 
     @Override
     public boolean hasReceivedRequest(int requestID) {
+        log.debug("Checking if user received a request.");
         return followRequestRepository.findById(requestID).getReceiver().equals(getCurrentUser());
     }
 }

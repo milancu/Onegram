@@ -40,13 +40,13 @@ public class UserMutation implements GraphQLMutationResolver {
         return 1;
     }
 
-    @PreAuthorize("@userServiceImpl.hasReceivedRequest(#input.id)")
+    @PreAuthorize("@userServiceImpl.hasReceivedRequest(#input.requestId)")
     public Integer acceptRequest(AcceptRequestInput input) {
         userService.acceptRequest(input.getRequestId());
         return 1;
     }
 
-    @PreAuthorize("@userServiceImpl.hasReceivedRequest(#input.id)")
+    @PreAuthorize("@userServiceImpl.hasReceivedRequest(#input.requestId)")
     public Integer rejectRequest(RejectRequestInput input) {
         userService.rejectRequest(input.getRequestId());
         return 1;
