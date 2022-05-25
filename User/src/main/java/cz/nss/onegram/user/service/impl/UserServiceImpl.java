@@ -2,6 +2,7 @@ package cz.nss.onegram.user.service.impl;
 
 import cz.nss.onegram.user.dao.FollowRequestRepository;
 import cz.nss.onegram.user.dao.UserRepository;
+import cz.nss.onegram.user.exception.UserServiceException;
 import cz.nss.onegram.user.model.FollowRequest;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.FileService;
@@ -38,18 +39,13 @@ public class UserServiceImpl implements UserService {
     private String DEFAULT_PHOTO_LINK;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public User findById(int id) {
         return userRepository.findById(id).get();
     }
 
     @Override
     public void persist(User user) {
-        if (user.getImage() == null){
+        if (user.getImage() == null) {
             log.info("Setting default image for user: {}, while persisting.", user.getUsername());
             user.setImage(DEFAULT_PHOTO_LINK);
         }
@@ -77,11 +73,11 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null) return null;
-        else {
+        if (authentication == null) {
+            throw new UserServiceException("No current user");
+        } else {
             String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            //Pouze pro testing
-            if (!email.contains("@")) {
+            if (!email.contains("@")) { //Pouze pro testing
                 return userRepository.findByEmail(email.concat("@fel.cvut.cz"));
             }
             return userRepository.findByEmail(email);
@@ -89,24 +85,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User followUser(int userToFollowId) {
+    public void followUser(int userToFollowId) {
         User currUser = getCurrentUser();
         User userToFollow = findById(userToFollowId);
 
         /**
-         * if userToFollow is null then return exception //TODO
+         * if userToFollow is null then throw exception
          */
         if (userToFollow == null) {
-            log.error("cannot find user");
-            return currUser;
+            log.error("User does not exists");
+            throw new UserServiceException("User does not exists");
         }
 
         /**
-         * return false if userToFollow is equal as currentUser
+         * throw exception if userToFollow is equal as currentUser
          */
         if (currUser.equals(userToFollow)) {
-            log.warn("cannot follow yourself");
-            return currUser;
+            log.warn("Cannot follow yourself");
+            throw new UserServiceException("Cannot follow yourself");
         }
 
         /**
@@ -114,8 +110,8 @@ public class UserServiceImpl implements UserService {
          */
         if (userToFollow.isPublic()) {
             if (currUser.getFollowing().contains(userToFollow)) {
-                log.warn("User has been already followed");
-                return userToFollow;
+                log.warn("User is already being followed");
+                throw new UserServiceException("User is already being followed");
             }
             userToFollow.addFollower(currUser);
             currUser.addFollowing(userToFollow);
@@ -134,34 +130,42 @@ public class UserServiceImpl implements UserService {
                 log.warn("Request already sent");
             }
         }
-        return userToFollow;
     }
 
     @Override
-    public void unFollowUser(int userToUnFollowId) {//TODO mozna predelat mapping, je to docela zbytecne to mapovat pres following a follower
+    public void unFollowUser(int userToUnFollowId) {
         User currUser = getCurrentUser();
         User userToUnFollow = findById(userToUnFollowId);
 
+        if (userToUnFollow == null) {
+            log.error("User does not exists");
+            throw new UserServiceException("User does not exists");
+        }
+
         if (currUser.getFollowing().contains(userToUnFollow)) {
-            userToUnFollow.removeFollower(currUser); //TODO validace na not exists in list
+            userToUnFollow.removeFollower(currUser);
             currUser.removeFollowing(userToUnFollow);
 
             userRepository.save(userToUnFollow);
             userRepository.save(currUser);
 
             log.info("unfollowed User: {}", userToUnFollow);
-            return;
+        } else {
+            log.warn("User is no longer followed");
+            throw new UserServiceException("User is no longer followed");
         }
-        log.warn("User already unfollowed");
     }
 
     @Override
-    public void removeFollower(int userId) { //TODO execption
+    public void removeFollower(int userId) {
         User follower = findById(userId);
+
         if (follower == null) {
-//            throw new ("user does not exists");
             log.error("User does not exists");
-        } else {
+            throw new UserServiceException("User does not exists");
+        }
+
+        if (getCurrentUser().getFollower().contains(follower)) {
             getCurrentUser().removeFollower(follower);
             userRepository.save(getCurrentUser());
 
@@ -169,6 +173,10 @@ public class UserServiceImpl implements UserService {
             userRepository.save(follower);
 
             log.info("Remove follower: {}", follower);
+
+        } else {
+            log.warn("User is no longer following You");
+            throw new UserServiceException("User is no longer following You");
         }
     }
 
@@ -177,23 +185,43 @@ public class UserServiceImpl implements UserService {
         User currentUser = getCurrentUser();
 
         FollowRequest followRequest = followRequestRepository.findById(requestId);
-        followRequest.getSender().addFollowing(currentUser);
-        currentUser.addFollower(followRequest.getSender());
 
-        userRepository.save(followRequest.getSender());
-        userRepository.save(currentUser);
+        if (followRequest == null) {
+            log.error("No such follow request was found");
+            throw new UserServiceException("No such follow request was found");
+        }
 
-        followRequestRepository.delete(followRequest);
+        if (followRequest.getReceiver().equals(currentUser)) {
+            followRequest.getSender().addFollowing(currentUser);
+            currentUser.addFollower(followRequest.getSender());
 
-        log.info("Accepted follow request: {}", followRequest);
+            userRepository.save(followRequest.getSender());
+            userRepository.save(currentUser);
+
+            followRequestRepository.delete(followRequest);
+            log.info("Accepted follow request: {}", followRequest);
+        } else {
+            log.error("No such follow request was found");
+            throw new UserServiceException("No such follow request was found");
+        }
     }
 
     @Override
     public void rejectRequest(int requestId) {
         FollowRequest followRequest = followRequestRepository.findById(requestId);
-        followRequestRepository.delete(followRequest);
 
-        log.info("Rejected follow request: {}", followRequest);
+        if (followRequest == null) {
+            log.error("No such follow request was found");
+            throw new UserServiceException("No such follow request was found");
+        }
+
+        if (followRequest.getReceiver().equals(getCurrentUser())) {
+            followRequestRepository.delete(followRequest);
+            log.info("Rejected follow request: {}", followRequest);
+        } else {
+            log.error("No such follow request was found");
+            throw new UserServiceException("No such follow request was found");
+        }
     }
 
     @Override
@@ -208,12 +236,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getFollowing(int userID) {
-        return userRepository.findById(userID).get().getFollowing();
+        if (findById(userID) == null) {
+            log.error("User does not exists");
+            throw new UserServiceException("User does not exists");
+        }
+        return findById(userID).getFollowing();
     }
 
     @Override
     public List<User> getFollowers(int userID) {
-        return userRepository.findById(userID).get().getFollower();
+        if (findById(userID) == null) {
+            log.error("User does not exists");
+            throw new UserServiceException("User does not exists");
+        }
+        return findById(userID).getFollower();
     }
 
     @Override
@@ -239,12 +275,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addPhoto(User user, InputStream file) {
+    public void addPhoto(InputStream file) {
+        User user = getCurrentUser();
         String newImageUrl = fileService.saveAsPngFile(file);
         log.info("Saved new profile photo for user id: {} ", user.getId());
 
         String oldImageUrl = user.getImage();
-        if (oldImageUrl != null && !oldImageUrl.equals(DEFAULT_PHOTO_LINK)){
+        if (oldImageUrl != null && !oldImageUrl.equals(DEFAULT_PHOTO_LINK)) {
             // TODO check if file exists, FileService implementation
             fileService.deleteFile(fileService.extractFilenameFromPath(oldImageUrl));
             log.info("Deleted old profile photo of user id: {}", user.getId());
@@ -252,5 +289,25 @@ public class UserServiceImpl implements UserService {
 
         user.setImage(newImageUrl);
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean isFollowingUser(int userID) {
+        return getCurrentUser().getFollowing().contains(findById(userID));
+    }
+
+    @Override
+    public boolean isFollowedByUser(int userID) {
+        return getCurrentUser().getFollower().contains(findById(userID));
+    }
+
+    @Override
+    public boolean hasSentRequest(int requestID) {
+        return followRequestRepository.findById(requestID).getSender().equals(getCurrentUser());
+    }
+
+    @Override
+    public boolean hasReceivedRequest(int requestID) {
+        return followRequestRepository.findById(requestID).getReceiver().equals(getCurrentUser());
     }
 }

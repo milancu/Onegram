@@ -2,6 +2,7 @@ package cz.nss.onegram.user.service.impl;
 
 import cz.nss.onegram.user.constants.KafkaConstants;
 import cz.nss.onegram.user.dao.MessageRepository;
+import cz.nss.onegram.user.exception.MessageServiceException;
 import cz.nss.onegram.user.model.Message;
 import cz.nss.onegram.user.model.MessageKafka;
 import cz.nss.onegram.user.model.User;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message sendMessage(String message, int receiver_id) {
-        if (message.trim().length() == 0) throw new RuntimeException("Emtpy String"); //TODO
+        if (message.trim().length() == 0) throw new MessageServiceException("Empty message");
 
         User currentUser = userService.getCurrentUser();
         User receiver = userService.findById(receiver_id);
@@ -61,49 +63,62 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public int removeMessage(int id) {
-        //TODO validace na ot jestli usera poslal tu zpravu
+    public void removeMessage(int id) {
         User currentUser = userService.getCurrentUser();
         Message messageToDelete = findById(id);
 
         if (messageToDelete == null) {
-            log.error("message does not exists");
-            return 0;
-        } else {
-            messageToDelete.setDeleted(true);
-            messageRepository.save(messageToDelete);
-            log.info("deleted message: {}", messageToDelete);
+            log.error("Message does not exists");
+            throw new MessageServiceException("Message does not exists");
         }
-        return 0;
+        if (!messageToDelete.getSender().equals(currentUser)) {
+            log.error("Message does not exists");
+            throw new MessageServiceException("Message does not exists");
+        }
+
+        messageToDelete.setDeleted(true);
+        messageRepository.save(messageToDelete);
+        log.info("deleted message: {}", messageToDelete);
     }
 
     @Override
-    public Message makeMessageRead(int id) {
-        //TODO validace na ot jestli usera ziskal tu zpravu
+    public void makeMessageRead(int id) {
         Message message = findById(id);
-        User current = userService.getCurrentUser();
+        User currentUser = userService.getCurrentUser();
 
         if (message == null) {
-            log.error("message does not exists");
-            return null;
+            log.error("Message does not exists");
+            throw new MessageServiceException("Message does not exists");
         }
-        ;
 
-        return null;
+        if (!message.getReceiver().equals(currentUser)) {
+            log.error("Message does not exists");
+            throw new MessageServiceException("Message does not exists");
+        }
+
+        message.setHasRead(true);
+        messageRepository.save(message);
+        log.info("Read message: {}", message);
     }
 
     @Override
-    public Message makeMessageUnread(int id) {
-        //TODO validace na ot jestli usera ziskal tu zpravu
+    public void makeMessageUnread(int id) {
         Message message = findById(id);
-        User current = userService.getCurrentUser();
+        User currentUser = userService.getCurrentUser();
 
         if (message == null) {
-            log.error("message does not exists");
-            return null;
+            log.error("Message does not exists");
+            throw new MessageServiceException("Message does not exists");
         }
 
-        return null;
+        if (!message.getReceiver().equals(currentUser)) {
+            log.error("Message does not exists");
+            throw new MessageServiceException("Message does not exists");
+        }
+
+        message.setHasRead(false);
+        messageRepository.save(message);
+        log.info("Unread message: {}", message);
     }
 
     //TODO
@@ -112,5 +127,17 @@ public class MessageServiceImpl implements MessageService {
         List<Message> m = messageRepository.getAllMessageWithUser(receiver_id, userService.getCurrentUser().getId());
         m.addAll(messageRepository.getAllMessageWithUser(userService.getCurrentUser().getId(), receiver_id));
         return m;
+    }
+
+    @Override
+    public boolean hasSentMessage(int id) {
+        log.debug("Checking if user sent a message.");
+        return findById(id).getSender().equals(userService.getCurrentUser());
+    }
+
+    @Override
+    public boolean hasReceivedMessage(int id) {
+        log.debug("Checking if user received a message.");
+        return findById(id).getReceiver().equals(userService.getCurrentUser());
     }
 }
