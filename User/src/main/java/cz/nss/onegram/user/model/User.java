@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ONEGRAM_USER") //TODO probably to bude jinak
+@Table(name = "ONEGRAM_USER")
 @Getter
 @Setter
 @NoArgsConstructor

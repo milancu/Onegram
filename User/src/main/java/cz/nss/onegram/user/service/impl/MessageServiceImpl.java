@@ -121,7 +121,6 @@ public class MessageServiceImpl implements MessageService {
         log.info("Unread message: {}", message);
     }
 
-    //TODO
     @Override
     public List<Message> getAllMessageWithUser(int receiver_id) {
         List<Message> m = messageRepository.getAllMessageWithUser(receiver_id, userService.getCurrentUser().getId());
