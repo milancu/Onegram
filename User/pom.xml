@@ -101,6 +101,16 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>7.17.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>
