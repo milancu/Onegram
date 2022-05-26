@@ -1,7 +1,9 @@
 package cz.nss.onegram.post.service.impl;
 
+import cz.nss.onegram.post.rest.interfaces.UserMicroserviceClient;
 import cz.nss.onegram.post.security.model.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,9 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final String reqUrl = "http://localhost:1010/auth/current"; // TODO remove hardcoded value, might be problem because of protocol when deployed
 
+    private final UserMicroserviceClient userMicroserviceClient;
+
     @Override
     public UserDetails loadUserByUsername(String jwt) throws UsernameNotFoundException {
-        UserDetails user = this.fetchUserFromUserMicroservice(jwt);
+        UserDetails user = userMicroserviceClient.fetchUserFromUserMicroservice(jwt);
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
@@ -37,20 +41,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return (UserDetailsImpl) auth.getPrincipal();
         }
         return null;
-    }
-
-    private UserDetails fetchUserFromUserMicroservice(String jwt){
-        HttpEntity<String> request = getRequest(jwt);
-        UserDetailsImpl user
-                = restTemplate.exchange(reqUrl, HttpMethod.GET, request, UserDetailsImpl.class).getBody();
-        return user;
-    }
-
-    private HttpEntity<String> getRequest(String jwt){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(jwt.split(" ")[1]); // TODO might cause problems
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        return entity;
     }
 }
