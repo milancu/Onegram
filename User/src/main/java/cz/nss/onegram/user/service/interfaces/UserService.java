@@ -45,6 +45,10 @@ public interface UserService {
 
     public void editBio(String bio);
 
+    public void editUsername(String username);
+
+    public void editLink(String link);
+
     public void addPhoto(InputStream file);
 
     public boolean hasSentRequest(int requestID);

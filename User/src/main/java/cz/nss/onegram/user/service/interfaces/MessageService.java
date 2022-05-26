@@ -13,8 +13,7 @@ public interface MessageService {
     public void makeMessageRead(int id);
     public void makeMessageUnread(int id);
     public List<Message> getAllMessageWithUser(int receiver_id);
-
+    public List<Message> getLatestMessages();
     public boolean hasSentMessage(int id);
-
     public boolean hasReceivedMessage(int id);
 }

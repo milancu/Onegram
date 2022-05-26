@@ -11,6 +11,9 @@ type Mutation {
     rejectRequest(input: RejectRequestInput!):Int!
     makeProfilePublic:Int!
     makeProfilePrivate:Int!
-    editBio(input: EditBioInput!):Int!
     setProfilePhoto: Int!
+    editBio(input: EditBioInput!):Int!
+    editLink(input: EditLinkInput!):Int!
+    editUsername(input: EditUsernameInput!):Int!
+    editProfile(input: EditProfileInput!):Int!
 }

@@ -70,6 +70,13 @@ public class UserMutation implements GraphQLMutationResolver {
         return 1;
     }
 
+    public Integer editProfile(EditProfileInput input) {
+        userService.editBio(input.getBio());
+        userService.editUsername(input.getUsername());
+        userService.editLink(input.getLink());
+        return 1;
+    }
+
     public Integer setProfilePhoto(DataFetchingEnvironment environment) throws IOException {
         UploadUtil.validateUploadedImages(environment);
         List<InputStream> files = UploadUtil.extractFiles(environment);
@@ -78,6 +85,16 @@ public class UserMutation implements GraphQLMutationResolver {
         }
         User user = userService.getCurrentUser();
         userService.addPhoto(files.get(0));
+        return 1;
+    }
+
+    public Integer editLink(EditLinkInput input) {
+        userService.editLink(input.getLink());
+        return 1;
+    }
+
+    public Integer editUsername(EditUsernameInput input) {
+        userService.editUsername(input.getUsername());
         return 1;
     }
 }

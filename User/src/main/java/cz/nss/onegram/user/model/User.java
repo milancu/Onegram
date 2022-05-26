@@ -35,7 +35,7 @@ public class User extends AbstractEntity {
     private String bio;
 
     @Column(name = "LINK")
-    private String link; //TODO dunno co to znaci
+    private String link;
 
     @Column(name = "IMAGE")
     private String image;

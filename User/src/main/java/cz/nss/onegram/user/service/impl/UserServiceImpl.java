@@ -62,6 +62,8 @@ public class UserServiceImpl implements UserService {
         String email = user.getAttribute("email");
         User newUser = User.builder().createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now()).email(email).username(email) // TODO
+                .link("")
+                .bio("")
                 .image(DEFAULT_PHOTO_LINK)
                 .follower(new ArrayList<>()).following(new ArrayList<>()).isPublic(true).build();
 
@@ -272,6 +274,31 @@ public class UserServiceImpl implements UserService {
         getCurrentUser().setBio(bio);
         userRepository.save(getCurrentUser());
         log.info("Change bio: {}", getCurrentUser());
+    }
+
+    @Override
+    public void editUsername(String username) {
+
+        if (userRepository.findByUsername(username) != null) {
+            log.error("Username already exists");
+            throw new UserServiceException("Username already exists");
+        }
+
+        User user = getCurrentUser();
+        user.setUsername(username);
+        persist(user);
+
+        log.info("Set new username:{}", user);
+    }
+
+    @Override
+    public void editLink(String link) {
+
+        User user = getCurrentUser();
+        user.setLink(link);
+        persist(user);
+
+        log.info("Set new link:{}", user);
     }
 
     @Override

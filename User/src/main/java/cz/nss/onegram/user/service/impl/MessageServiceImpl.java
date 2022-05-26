@@ -3,6 +3,7 @@ package cz.nss.onegram.user.service.impl;
 import cz.nss.onegram.user.constants.KafkaConstants;
 import cz.nss.onegram.user.dao.MessageRepository;
 import cz.nss.onegram.user.exception.MessageServiceException;
+import cz.nss.onegram.user.exception.UserServiceException;
 import cz.nss.onegram.user.model.Message;
 import cz.nss.onegram.user.model.MessageKafka;
 import cz.nss.onegram.user.model.User;
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -123,9 +125,34 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getAllMessageWithUser(int receiver_id) {
+        if (userService.findById(receiver_id) == null) throw new UserServiceException("User does not exists.");
         List<Message> m = messageRepository.getAllMessageWithUser(receiver_id, userService.getCurrentUser().getId());
-        m.addAll(messageRepository.getAllMessageWithUser(userService.getCurrentUser().getId(), receiver_id));
+        for (Message message : messageRepository.getAllMessageWithUser(userService.getCurrentUser().getId(), receiver_id)) {
+            if (!m.contains(message)) m.add(message);
+        }
         return m;
+    }
+
+    @Override
+    public List<Message> getLatestMessages() {
+        List<Integer> conversation = new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
+
+        User currUser = userService.getCurrentUser();
+        int id = currUser.getId();
+
+
+        messageRepository.getConversationSent(id).forEach(x -> {
+            if (x != id && !conversation.contains(x)) conversation.add(x);
+        });
+        messageRepository.getConversationReceived(id).forEach(x -> {
+            if (x != id && !conversation.contains(x)) conversation.add(x);
+        });
+
+        for (Integer x : conversation) {
+            messages.add(messageRepository.getAllMessageWithUser(id, x).get(0));
+        }
+        return messages;
     }
 
     @Override

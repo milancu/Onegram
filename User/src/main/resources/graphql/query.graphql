@@ -5,4 +5,7 @@ type Query {
     myFollowing: [User]
     followers(userId:Int!): [User]
     following(userId:Int!): [User]
+
+    messagesInConversation(id:Int!): [Message]
+    latestMessages: [Message]
 }
