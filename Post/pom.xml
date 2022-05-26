@@ -67,6 +67,13 @@
             <artifactId>graphql-java-extended-scalars</artifactId>
             <version>2022-04-28T01-36-15-1764ea8</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>7.1.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
