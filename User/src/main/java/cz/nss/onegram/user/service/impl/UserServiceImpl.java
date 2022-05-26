@@ -40,6 +40,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int id) {
+        if (userRepository.findById(id).isEmpty()) {
+            log.error("User does not exists");
+            throw new UserServiceException("User does not exists");
+        }
         return userRepository.findById(id).get();
     }
 
