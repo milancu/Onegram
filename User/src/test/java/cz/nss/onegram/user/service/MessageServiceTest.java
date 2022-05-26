@@ -8,11 +8,9 @@ import cz.nss.onegram.user.security.services.UserDetailsServiceImpl;
 import cz.nss.onegram.user.service.impl.MessageServiceImpl;
 import cz.nss.onegram.user.service.impl.UserServiceImpl;
 import enviroment.Generator;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.junit.jupiter.api.Test;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,6 +47,7 @@ public class MessageServiceTest {
     }
 
     @BeforeEach
+    @AfterEach
     public void removeData(){
         messageRepository.deleteAll(messageRepository.findAll());
         userRepository.deleteAll(userRepository.findAll());
