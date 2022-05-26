@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<User> getAllUsers();
-
     public User findById(int id);
 
     public User findByEmail(String email);
@@ -21,7 +19,7 @@ public interface UserService {
 
     public User getCurrentUser();
 
-    public User followUser(int userToFollowId);
+    public void followUser(int userToFollowId);
 
     public void unFollowUser(int userToUnFollowId);
 
@@ -47,5 +45,13 @@ public interface UserService {
 
     public void editBio(String bio);
 
-    public void addPhoto(User user, InputStream file);
+    public void editUsername(String username);
+
+    public void editLink(String link);
+
+    public void addPhoto(InputStream file);
+
+    public boolean hasSentRequest(int requestID);
+
+    public boolean hasReceivedRequest(int requestID);
 }

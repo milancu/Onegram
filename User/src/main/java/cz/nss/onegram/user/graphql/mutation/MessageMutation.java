@@ -9,6 +9,7 @@ import cz.nss.onegram.user.service.interfaces.MessageService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,15 +23,20 @@ public class MessageMutation implements GraphQLMutationResolver {
         return messageService.sendMessage(input.getMessage(), input.getReceiver_id());
     }
 
+    @PreAuthorize("@messageServiceImpl.hasSentMessage(#input.id)")
     public Integer deleteMessage(DeleteMessageInput input) {
-        return messageService.removeMessage(input.getId());
+        messageService.removeMessage(input.getId());
+        return 1;
+    }
+    @PreAuthorize("@messageServiceImpl.hasReceivedMessage(#input.id)")
+    public Integer makeMessageRead(MakeMessageReadInput input) {
+        messageService.makeMessageRead(input.getId());
+        return 1;
     }
 
-    public Message makeMessageRead(MakeMessageReadInput input) {
-        return messageService.makeMessageRead(input.getId());
-    }
-
-    public Message makeMessageUnread(MakeMessageUnreadInput input) {
-        return messageService.makeMessageUnread(input.getId());
+    @PreAuthorize("@messageServiceImpl.hasReceivedMessage(#input.id)")
+    public Integer makeMessageUnread(MakeMessageUnreadInput input) {
+        messageService.makeMessageUnread(input.getId());
+        return 1;
     }
 }

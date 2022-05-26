@@ -9,6 +9,7 @@ import graphql.kickstart.tools.GraphQLMutationResolver;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,55 +25,76 @@ public class UserMutation implements GraphQLMutationResolver {
 
     private final FileService fileService;
 
-    public User followUser(FollowUserInput input) {
-        return userService.followUser(input.getUserId());
+    public Integer followUser(FollowUserInput input) {
+        userService.followUser(input.getUserId());
+        return 1;
     }
 
-    public User unFollowUser(UnFollowUserInput input) {
+    public Integer unFollowUser(UnFollowUserInput input) {
         userService.unFollowUser(input.getUserId());
-        return null;
+        return 1;
     }
 
-    public int removeFollower(UnFollowUserInput input){ //TODO return
+    public Integer removeFollower(UnFollowUserInput input) {
         userService.removeFollower(input.getUserId());
         return 1;
     }
 
+    @PreAuthorize("@userServiceImpl.hasReceivedRequest(#input.requestId)")
     public Integer acceptRequest(AcceptRequestInput input) {
         userService.acceptRequest(input.getRequestId());
         return 1;
     }
 
+    @PreAuthorize("@userServiceImpl.hasReceivedRequest(#input.requestId)")
     public Integer rejectRequest(RejectRequestInput input) {
         userService.rejectRequest(input.getRequestId());
         return 1;
     }
 
-    public User makeProfilePublic(){
+    public Integer makeProfilePublic() {
         userService.makeProfilePublic();
         User user = userService.getCurrentUser();
-        return user;
+        return 1;
     }
 
-    public User makeProfilePrivate(){
+    public Integer makeProfilePrivate() {
         userService.makeProfilePrivate();
         User user = userService.getCurrentUser();
-        return user;
+        return 1;
     }
 
-    public User editBio(EditBioInput input){
+    public Integer editBio(EditBioInput input) {
         userService.editBio(input.getBio());
-        return userService.getCurrentUser(); //TODO return
+        userService.getCurrentUser();
+        return 1;
     }
 
-    public User setProfilePhoto(DataFetchingEnvironment environment) throws IOException {
+    public Integer editProfile(EditProfileInput input) {
+        userService.editBio(input.getBio());
+        userService.editUsername(input.getUsername());
+        userService.editLink(input.getLink());
+        return 1;
+    }
+
+    public Integer setProfilePhoto(DataFetchingEnvironment environment) throws IOException {
         UploadUtil.validateUploadedImages(environment);
         List<InputStream> files = UploadUtil.extractFiles(environment);
-        if (files.size() != 1){
+        if (files.size() != 1) {
             throw new RuntimeException("Exactly one image must be passed."); // TODO replace with application specific exception for the API handler
         }
         User user = userService.getCurrentUser();
-        userService.addPhoto(user, files.get(0));
-        return user;
+        userService.addPhoto(files.get(0));
+        return 1;
+    }
+
+    public Integer editLink(EditLinkInput input) {
+        userService.editLink(input.getLink());
+        return 1;
+    }
+
+    public Integer editUsername(EditUsernameInput input) {
+        userService.editUsername(input.getUsername());
+        return 1;
     }
 }

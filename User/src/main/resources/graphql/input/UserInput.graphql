@@ -21,3 +21,17 @@ input RejectRequestInput{
 input EditBioInput{
     bio:String!
 }
+
+input EditLinkInput{
+    link:String!
+}
+
+input EditUsernameInput{
+    username:String!
+}
+
+input EditProfileInput{
+    username:String!
+    bio:String!
+    link:String!
+}

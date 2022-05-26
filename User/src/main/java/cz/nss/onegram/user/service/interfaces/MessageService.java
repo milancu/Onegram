@@ -9,8 +9,11 @@ public interface MessageService {
 
     public Message findById(int id);
     public Message sendMessage(String message, int receiver_id);
-    public int removeMessage(int id);
-    public Message makeMessageRead(int id);
-    public Message makeMessageUnread(int id);
+    public void removeMessage(int id);
+    public void makeMessageRead(int id);
+    public void makeMessageUnread(int id);
     public List<Message> getAllMessageWithUser(int receiver_id);
+    public List<Message> getLatestMessages();
+    public boolean hasSentMessage(int id);
+    public boolean hasReceivedMessage(int id);
 }
