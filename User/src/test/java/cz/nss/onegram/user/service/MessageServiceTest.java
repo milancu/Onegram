@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.TestPropertySource;
 
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class MessageServiceTest {
 
@@ -41,6 +41,13 @@ public class MessageServiceTest {
     @Autowired
     private UserRepository userRepository;
 
+    public void setCurrentUserToContext(User user){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
     @BeforeEach
     public void removeData(){
         messageRepository.deleteAll(messageRepository.findAll());
@@ -55,22 +62,16 @@ public class MessageServiceTest {
         User belkapre = generator.generateBelkapre();
         userService.persist(cuphuon3);
         userService.persist(belkapre);
+        Message message = generator.generateMessage(cuphuon3, belkapre, "Preji krasnou nedeli");
 
         //ACT
-        Message message = generator.generateMessage(cuphuon3, belkapre, "Preji krasnou nedeli");
         messageRepository.save(message);
 
         //ASSERT
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
         int conversation1 = messageService.getAllMessageWithUser(belkapre.getId()).size();
 
-        userDetails = userDetailsService.loadUserByUsername(belkapre.getUsername());
-        authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(belkapre);
         int conversation2 = messageService.getAllMessageWithUser(cuphuon3.getId()).size();
 
         Assertions.assertEquals(1, conversation1);
@@ -86,23 +87,18 @@ public class MessageServiceTest {
         User belkapre = generator.generateBelkapre();
         userService.persist(cuphuon3);
         userService.persist(belkapre);
-
-        //ACT
+        setCurrentUserToContext(cuphuon3);
         Message message = generator.generateMessage(cuphuon3, belkapre, "Preji krasnou nedeli");
         messageRepository.save(message);
+
+        //ACT
         messageService.removeMessage(message.getId());
 
         //ASSERT
-        UserDetails userDetails = userDetailsService.loadUserByUsername(cuphuon3.getUsername());
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(belkapre);
         int conversation1 = messageService.getAllMessageWithUser(belkapre.getId()).size();
 
-        userDetails = userDetailsService.loadUserByUsername(belkapre.getUsername());
-        authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        setCurrentUserToContext(cuphuon3);
         int conversation2 = messageService.getAllMessageWithUser(cuphuon3.getId()).size();
 
         Assertions.assertEquals(0, conversation1);
@@ -117,10 +113,11 @@ public class MessageServiceTest {
         User belkapre = generator.generateBelkapre();
         userService.persist(cuphuon3);
         userService.persist(belkapre);
-
-        //ACT
         Message message = generator.generateMessage(cuphuon3, belkapre, "Preji krasnou nedeli");
         messageRepository.save(message);
+
+        //ACT
+        setCurrentUserToContext(belkapre);
         messageService.makeMessageRead(message.getId());
 
         //ASSERT
@@ -135,10 +132,11 @@ public class MessageServiceTest {
         User belkapre = generator.generateBelkapre();
         userService.persist(cuphuon3);
         userService.persist(belkapre);
-
-        //ACT
         Message message = generator.generateMessage(cuphuon3, belkapre, "Preji krasnou nedeli");
         messageRepository.save(message);
+
+        //ACT
+        setCurrentUserToContext(belkapre);
         messageService.makeMessageRead(message.getId());
         messageService.makeMessageUnread(message.getId());
 

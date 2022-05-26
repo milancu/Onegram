@@ -67,6 +67,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
                 .bio("Jsem nejhezci")
+                .link("milancu.com")
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -79,6 +80,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
                 .bio("Dobre jak cyp hej")
+                .link("github.com")
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -92,6 +94,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
                 .bio("Sparta❤")
+                .link("sparta.cz")
                 .isPublic(true)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -104,7 +107,8 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .username("pivonja1")
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
-                .bio("192.168.1.0 Is the only place")
+                .bio("127.0.0.1 Is the only place")
+                .link("slavia.cz")
                 .isPublic(true)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -117,6 +121,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .username("naplava")
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
+                .link("http://naplavovi.cz/")
                 .isPublic(true)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -128,6 +133,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .username("koci")
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
+                .link("https://czm.fel.cvut.cz/cs/")
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -140,6 +146,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
                 .bio("Nemuzu rict neeee, ale")
+                .link("https://czm.fel.cvut.cz/cs/")
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -151,6 +158,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .username("nagyoing")
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
+                .link("https://czm.fel.cvut.cz/cs/")
                 .bio("Foo foo foo")
                 .isPublic(false)
                 .following(new ArrayList<>())
@@ -457,6 +465,42 @@ public class SystemInitializerImpl implements SystemInitializer {
                         .build()
         );
         //</editor-fold>
+
+        messageRepository.save(
+                Message.builder()
+                        .message("Ahoj")
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
+                        .sender(nagyoing)
+                        .receiver(naplava)
+                        .hasRead(true)
+                        .isDeleted(false)
+                        .build()
+        );
+
+        messageRepository.save(
+                Message.builder()
+                        .message("Jak se mas")
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
+                        .sender(sebekji1)
+                        .receiver(naplava)
+                        .hasRead(true)
+                        .isDeleted(false)
+                        .build()
+        );
+
+        messageRepository.save(
+                Message.builder()
+                        .message("Dobre")
+                        .sentAtDate(LocalDate.now())
+                        .sentAtTime(LocalTime.now())
+                        .sender(naplava)
+                        .receiver(sebekji1)
+                        .hasRead(true)
+                        .isDeleted(false)
+                        .build()
+        );
 
         log.info("messages were generated.");
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ONEGRAM_USER") //TODO probably to bude jinak
+@Table(name = "ONEGRAM_USER")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,7 +35,7 @@ public class User extends AbstractEntity {
     private String bio;
 
     @Column(name = "LINK")
-    private String link; //TODO dunno co to znaci
+    private String link;
 
     @Column(name = "IMAGE")
     private String image;
