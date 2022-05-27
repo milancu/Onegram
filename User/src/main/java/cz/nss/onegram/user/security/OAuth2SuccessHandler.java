@@ -52,9 +52,10 @@ public class OAuth2SuccessHandler extends SavedRequestAwareAuthenticationSuccess
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(email);
-        String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
+        String redirectionUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth2/redirect/")
                 .queryParam("Authorization", jwt)
                 .build().toUriString();
+
         response.setHeader("Authorization", jwt);
         log.info("Created new jwtToken: {}", jwt);
         getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
