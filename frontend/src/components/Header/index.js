@@ -13,7 +13,7 @@ export const Header = (props) => {
     return (
             <nav>
                 <div className="header-line">
-                    <Link to={'/'}>
+                    <Link to={'/Feed'}>
                         <img className="logo" src={logo} alt="Logo"/>
                     </Link>
                     <Link to={'/search'}>

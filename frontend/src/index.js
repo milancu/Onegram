@@ -4,15 +4,48 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider
+} from "@apollo/client";
+
+import { useQuery } from '@apollo/client';
+import { GET_USERS } from "./gql/Query";
+
+const client = new ApolloClient({
+    uri: 'http://localhost:1010/graphql',
+    fetchOptions: {
+        credentials: "include"
+    },
+    request: operation => {
+        const token = localStorage.getItem("authToken") || ""
+        operation.setContext({
+            headers: {
+                Authorization: token
+            }
+        })
+    },
+    cache: new InMemoryCache(),
+    clientState: {
+        defaults: {
+            isLoggedIn: !!localStorage.getItem("authToken")
+        }
+    }
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <ApolloProvider client={client}>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
