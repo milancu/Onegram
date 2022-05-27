@@ -21,6 +21,11 @@ public class UserResolver implements GraphQLQueryResolver {
         return userService.findById(userId);
     }
 
+    public User getMy() {
+        log.info("Getting user.");
+        return userService.getCurrentUser();
+    }
+
     public List<FollowRequest> getFollowRequests() {
         log.info("Getting all follow request");
         return userService.getAllReceivedFollowRequests();
