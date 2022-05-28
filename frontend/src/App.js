@@ -11,6 +11,18 @@ import {Route, Routes} from "react-router-dom";
 // import {UserRoutes} from "./routes/UserRoutes.js";
 
 export const App = () => {
+
+    const user = localStorage.getItem("token");
+
+    if(user){
+        const queryParams = new URLSearchParams(window.location.search);
+        const authorization = queryParams.get("Authorization");
+    } else {
+        
+    }
+
+
+
     return (
         <div>
             <Routes>
