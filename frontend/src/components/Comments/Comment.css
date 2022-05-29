@@ -26,3 +26,11 @@
     height: 60px;
     border-radius: 50%;
 }
+
+.comment-actions {
+    font-size: 0.7rem;
+}
+.comment-action {
+    float: left;
+    margin: 0 6px 0 0;
+}
