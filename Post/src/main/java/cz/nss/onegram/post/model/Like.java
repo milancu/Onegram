@@ -13,5 +13,5 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Like {
     @NotNull
-    private Integer authorId; // TODO probably change later
+    private Integer authorId;
 }

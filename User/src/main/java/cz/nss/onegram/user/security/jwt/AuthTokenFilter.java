@@ -32,6 +32,17 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
 
+            //Only for dev
+            if (jwt != null && jwt.equals("admin")) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername("cuphuon3");
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
@@ -56,6 +67,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String headerAuth = request.getHeader("Authorization");
         String headerParam = request.getQueryString();
         if (StringUtils.hasText(headerParam) && headerParam.startsWith("Authorization=")) {
+            System.out.println(headerParam.substring(14));
+            if (headerParam.substring(14, headerParam.length()).contains("&")) {
+                int end = headerParam.substring(14, headerParam.length()).indexOf("&");
+                return headerParam.substring(14, end + 14);
+            }
+            headerParam.substring(14, headerParam.length());
             return headerParam.substring(14, headerParam.length());
         } else if (StringUtils.hasText(headerAuth)) {
             if (headerAuth.startsWith("Bearer ")) {

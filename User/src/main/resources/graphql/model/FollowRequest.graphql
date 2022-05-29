@@ -1,0 +1,7 @@
+type FollowRequest{
+    id:Int!
+    receiver:User!
+    sender:User!
+    createdAtDate:Date!
+    createdAtTime:LocalTime!
+}

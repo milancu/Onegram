@@ -1,0 +1,16 @@
+input SendMessageInput{
+    message: String!
+    receiver_id: Int!
+}
+
+input DeleteMessageInput{
+    id: Int!
+}
+
+input MakeMessageUnreadInput{
+    id: Int!
+}
+
+input MakeMessageReadInput{
+    id: Int!
+}

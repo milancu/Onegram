@@ -1,0 +1,19 @@
+type Mutation {
+    sendMessage(input: SendMessageInput!): Message!
+    deleteMessage(input: DeleteMessageInput!): Int!
+    makeMessageRead(input: MakeMessageReadInput): Int!
+    makeMessageUnread(input: MakeMessageUnreadInput): Int!
+
+    followUser(input: FollowUserInput!):Int!
+    unFollowUser(input: UnFollowUserInput!):Int!
+    removeFollower(input: RemoveFollowerInput!):Int!
+    acceptRequest(input: AcceptRequestInput!):Int!
+    rejectRequest(input: RejectRequestInput!):Int!
+    makeProfilePublic:Int!
+    makeProfilePrivate:Int!
+    setProfilePhoto: Int!
+    editBio(input: EditBioInput!):Int!
+    editLink(input: EditLinkInput!):Int!
+    editUsername(input: EditUsernameInput!):Int!
+    editProfile(input: EditProfileInput!):Int!
+}

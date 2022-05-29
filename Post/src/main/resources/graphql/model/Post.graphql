@@ -1,4 +1,6 @@
+# YYYY-MM-DD With leading zeroes
 scalar Date
+# HH:MM:SS:sss (s = millisecond)
 scalar LocalTime
 
 type Post {
@@ -10,4 +12,5 @@ type Post {
     authorId : Int!
     createdAtDate : Date!
     createdAtTime: LocalTime!
+    imagePaths: [String!]!
 }

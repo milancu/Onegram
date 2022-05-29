@@ -1,0 +1,9 @@
+type Message{
+    id:Int!
+    message:String!
+    sentAtDate:Date!
+    sentAtTime:LocalTime!
+    hasRead:Boolean!
+    isDeleted:Boolean!
+    receiver:User!
+}

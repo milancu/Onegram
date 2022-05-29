@@ -2,7 +2,9 @@
 
 import React from "react";
 import "./profile.css";
+import {ModalFollowing} from "../../pages/Profile_dashboard/ModalFollowing";
 
+import {useState, useMemo, useEffect} from "react";
 
 export const Profile = (props) => {
 
@@ -11,9 +13,8 @@ export const Profile = (props) => {
     const description = props.description;
     const webLinkUrl = props.webLinkUrl;
     const follows = props.follows;
-    const followers = props.followers
+    const followers = props.followers;
     const postsNumber = props.postsNumber;
-
 
     return (
         <section className="profile-description">
@@ -41,12 +42,13 @@ export const Profile = (props) => {
                     <p>{postsNumber}</p>
                 </div>
 
-                <div className={"statsContainer"}>
-                    <p>Followers</p>
+                <div className={"statsContainer"} >
+                    <a id={"followers-link"}>Followers</a>
                     <p>{followers}</p>
                 </div>
+
                 <div className={"statsContainer"}>
-                    <p>Follows</p>
+                    <a id={"follows-link"}>Follows</a>
                     <p>{follows}</p>
                 </div>
             </div>

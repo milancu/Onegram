@@ -31,6 +31,7 @@ services:
     restart: unless-stopped
 
   mongodb:
+    container_name: mongo
     image: mongo
     ports:
       - 27017:27017
@@ -55,6 +56,81 @@ services:
     networks:
       - MONGO
 
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+
+  broker:
+    container_name: broker
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  elasticsearch:
+    container_name: elasticsearch
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
+      - elasticsearch:/usr/share/elasticsearch/data:z
+    ports:
+      - "9200:9200"
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      discovery.type: single-node
+    networks:
+      - elk
+
+  logstash:
+    container_name: logstash
+    build:
+      context: logstash/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro,Z
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    ports:
+      - "5000:5000"
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx256m
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    container_name: kibana
+    build:
+      context: kibana/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
 networks:
   postgres:
     driver: bridge
@@ -62,7 +138,11 @@ networks:
   MONGO:
     name: MONGO
 
+  elk:
+    driver: bridge
+
 volumes:
   postgres:
   pgadmin:
   mongo:
+  elasticsearch:

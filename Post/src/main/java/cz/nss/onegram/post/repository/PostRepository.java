@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
-    List<Post> findAllByCreatedAtDateBetween(LocalDate fromDate, LocalDate toDate);
+    List<Post> findAllByCreatedAtDateBetweenOrderByCreatedAtDateDescCreatedAtTimeDesc(LocalDate fromDate, LocalDate toDate);
 
-    List<Post> findAllByAuthorId(Integer authorId);
+    List<Post> findAllByAuthorIdOrderByCreatedAtDateDescCreatedAtTimeDesc(Integer authorId);
 
-    List<Post> findAllByAuthorIdAndCreatedAtDateBetween(Integer authorId, LocalDate fromDate, LocalDate toDate);
+    List<Post> findAllByAuthorIdAndCreatedAtDateBetweenOrderByCreatedAtDateDescCreatedAtTimeDesc(Integer authorId, LocalDate fromDate, LocalDate toDate);
 }

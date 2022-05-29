@@ -1,0 +1,37 @@
+input FollowUserInput{
+    userId:Int!
+}
+
+input UnFollowUserInput{
+    userId:Int!
+}
+
+input RemoveFollowerInput{
+    userId:Int!
+}
+
+input AcceptRequestInput{
+    requestId:Int!
+}
+
+input RejectRequestInput{
+    requestId:Int!
+}
+
+input EditBioInput{
+    bio:String!
+}
+
+input EditLinkInput{
+    link:String!
+}
+
+input EditUsernameInput{
+    username:String!
+}
+
+input EditProfileInput{
+    username:String!
+    bio:String!
+    link:String!
+}

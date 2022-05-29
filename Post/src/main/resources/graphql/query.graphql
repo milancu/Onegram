@@ -1,4 +1,11 @@
 type Query {
-    posts : [Post]
+    # Returns a single post.
+    post(id : String) : Post
+    # Returns all posts of a user.
+    userPosts(author : Int) : [Post]
+    # Returns all posts of a user within a specified time frame. The boundaries are inclusive.
+    userPostsTime(author : Int, fromDate: Date, toDate: Date) : [Post]
+    # Returns all posts of the users, that the currently logged in user follows.
+    followingsPosts  : [Post]
 }
 

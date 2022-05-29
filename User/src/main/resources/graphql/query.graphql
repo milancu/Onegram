@@ -1,0 +1,12 @@
+type Query {
+    user(userId:Int!) : User
+    my: User
+    followRequests : [FollowRequest]
+    myFollowers: [User]
+    myFollowing: [User]
+    followers(userId:Int!): [User]
+    following(userId:Int!): [User]
+
+    messagesInConversation(id:Int!): [Message]
+    latestMessages: [Message]
+}
