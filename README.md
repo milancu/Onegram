@@ -28,7 +28,7 @@ Aplikaci jsme vyvinuli s použitím mikroservisní architektury.
 - **Websocket** - Milan dopiš.
 - **Kafka** - Milan dopiš.
 - **ELK** - Milan dopiš
-- **React** (frontend)
+- **React** - (frontend)
 
 # Použité design patterny
 - **Simple factory** - Vytváření objektů pro testování. (User/test/environment/Generator, Post/test/environment/Generator)
