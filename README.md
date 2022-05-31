@@ -1,3 +1,9 @@
+# Úvod
+
+Aplikace je ořezaný klon Instagramu, který umožňuje přidávat příspěvky s obrázky, ty pak komentovat a likovat. Dál aplikace umožňuje jednotlivým uživatelům spolu chatovat.
+
+Aplikaci jsme vyvinuli s použitím mikroservisní architektury.
+
 # Lokální vývoj
 
 1. Běž do rootu projektu a spusť
@@ -22,6 +28,7 @@
 - **Websocket** - Milan dopiš.
 - **Kafka** - Milan dopiš.
 - **ELK** - Milan dopiš
+- **React** (frontend)
 
 # Použité design patterny
 - **Simple factory** - Vytváření objektů pro testování. (User/test/environment/Generator, Post/test/environment/Generator)
