@@ -27,6 +27,7 @@
 - **Simple factory** - Vytváření objektů pro testování. (User/test/environment/Generator, Post/test/environment/Generator)
 - **Builder** - Pomocí @Builder anotace z Lombok. (Post/service/SysteminitializerImpl)
 - **Composite** - Model Post mikroservisy je strom (Příspěvek -> komenty -> subkomenty). Pro každý uzel tohoto stromu je potřeba jednotný interface pro vytvoření/smazání liku. (Post/model/interfaces/Likeable).
+- **Ghost** - Komenty, příspěvky a liky mají svého autora. Autor patří do bounded contextu User mikroservisy. Příspěvek, koment a like do bounded contextu Post mikroservisy. Autor se nenačítá hned přímo, ale pouze se na něj odkazuje idčkem.
 - **Dependency Injection** - Spring.
 
 # Deployment
