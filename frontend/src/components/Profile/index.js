@@ -5,13 +5,21 @@ import "./profile.css";
 import {ModalFollowing} from "../../pages/Profile_dashboard/ModalFollowing";
 
 import {useState, useMemo, useEffect} from "react";
+import {useQuery} from "@apollo/client";
+import {GET_ME} from "../../gql/Query";
 
 export const Profile = (props) => {
 
-    const nickname = props.nickname;
-    const profilepicture = props.profilepicture;
-    const description = props.description;
-    const webLinkUrl = props.webLinkUrl;
+    const { loading, error, data } = useQuery(GET_ME);
+    console.log(data);
+    // console.log(data.user.bio);
+    const profileData = data.my;
+    console.log(profileData);
+
+    const nickname = profileData.username;
+    const profilepicture = profileData.image;
+    const description = profileData.bio;
+    const webLinkUrl = profileData.link;
     const follows = props.follows;
     const followers = props.followers;
     const postsNumber = props.postsNumber;

@@ -1,6 +1,5 @@
 // src.pages/index.js
 
-import React, {Component, useState, useRef} from 'react';
 import '../../App.css';
 import {
     Post,
