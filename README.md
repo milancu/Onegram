@@ -11,7 +11,7 @@ Aplikaci jsme vyvinuli s použitím mikroservisní architektury.
    - Bez ELK: `docker compose -f docker-compose-noelastic.yml up`
 2. Spusť main User modulu a main Post modulu
 3. Při zapnutí se samy nainicializují testovací data
-4. Pro obejití přihlášení lze poslat jako JWT token řetězec "admin".
+4. Pro obejití přihlášení lze poslat jako JWT token řetězec "admin", "belkapre", "bureson2", "pivonja1", "naplava", "koci", "sebekji1" a "nagyoing"
 
 
 # Použité technologie a kde je najít v projektu
