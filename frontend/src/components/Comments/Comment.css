@@ -8,6 +8,16 @@
 
 .comment-right-part {
     margin-left: 10px;
+    text-align: left;
+}
+
+.comment-content {
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
 }
 
 .comment-image-container img {
@@ -15,4 +25,12 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
+}
+
+.comment-actions {
+    font-size: 0.7rem;
+}
+.comment-action {
+    float: left;
+    margin: 0 6px 0 0;
 }

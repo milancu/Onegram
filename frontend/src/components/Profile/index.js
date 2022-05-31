@@ -9,17 +9,17 @@ import {useQuery} from "@apollo/client";
 import {GET_ME} from "../../gql/Query";
 
 export const Profile = (props) => {
-    const { loading, error, data } = useQuery(GET_ME);
-    console.log(data);
+    // const { loading, error, data } = useQuery(GET_ME);
+    // console.log(data);
     // console.log(data.user.bio);
-    const profileData = data.my;
-    console.log(profileData);
-    console.log();
+    // const profileData = data.my;
+    // console.log(profileData);
+    // console.log();
 
-    const nickname = profileData.username;
-    const profilepicture = profileData.image;
-    const description = profileData.bio;
-    const webLinkUrl = profileData.link;
+    const nickname = props.nickname;
+    const profilepicture = props.profilepicture;
+    const description = props.description;
+    const webLinkUrl = props.webLinkUrl;
     const follows = props.follows;
     const followers = props.followers;
     const postsNumber = props.postsNumber;
