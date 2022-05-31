@@ -9,12 +9,12 @@ import {useQuery} from "@apollo/client";
 import {GET_ME} from "../../gql/Query";
 
 export const Profile = (props) => {
-
     const { loading, error, data } = useQuery(GET_ME);
     console.log(data);
     // console.log(data.user.bio);
     const profileData = data.my;
     console.log(profileData);
+    console.log();
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;
