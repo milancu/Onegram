@@ -13,3 +13,6 @@
   - password: password
 5. GraphQL playground
   - localhost:9090/playground anebo localhost:1010/playground
+
+# Deploy na heroku
+heroku deploy:jar User/target/User-0.0.1-SNAPSHOT.jar --app nss-onegram
