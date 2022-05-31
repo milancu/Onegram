@@ -25,9 +25,9 @@ Aplikaci jsme vyvinuli s použitím mikroservisní architektury.
 - **Hazelcast** - Autentikaci v systému provádí User mikroservisa. Pokud chce Post mikroservisa zjistit, kdo posílá dotaz, tak se ji musí zeptat. Výsledek tohoto dotazu jsme se rozhodli zacachovat. (Post/rest/UserMicroserviceImpl, metoda fetchUserFromUserMicroservice)
 - **Interceptors** - Logujem příchozí dotazy (Post/interceptor, User/interceptor)
 - **OAUth2** - Aplikace využívá google login. (User/security)
-- **Websocket** - Milan dopiš.
-- **Kafka** - Milan dopiš.
-- **ELK** - Milan dopiš
+- **Websocket** - K messaging nám poslouží i websocket (User/config).
+- **Kafka** - použili jsme pro messaging, je vytvořený topic "onegram" (User/service).
+- **ELK** - pouižili jsme pro loggovaní. Přes docker-compose se vytvoří elastic search, kibana a logstash. Logování pomocí Slf4j.lombok.
 - **React** - (frontend)
 
 # Použité design patterny
@@ -44,5 +44,9 @@ User mikroservisu jsme s Postgre nasadili na Heroku. Zbytek včetně FE není na
 # Co jsme zkusili použít ale nedotáhli do konce, protože se nám to nepovedlo
 
 Původně jsme chtěli jako vstupní bod pro aplikaci použít API Gateway pattern. To se nám ale nakonec nepodařilo a nedodělali jsme to. Chtěli jsme pro to použít Spring Cloud Gateway.
+
+V plánu jsme chtěli mít i naimplementované identity providera na API-Gateway, ale k tomu jsme se nedostali.
+
+Nejsme si jistí jestli využíváme správně Kafku, neboť máme jeden topic a ty zprávy jdou broadcastove všem listenerům.
 
 Nejsme si jistí, jestli máme spravně nakonfigurovaný ELK. Milanovi funguje, ostatní si myslíme, že nám se možná chová aplikace divně, protože máme pomalé počítače. (např. nam v lozích vypisuje info o tom, že operace s elasticem zabírají příliš mnoho času)
