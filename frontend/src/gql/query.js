@@ -10,6 +10,7 @@ export const GET_USER_DATA = `
             bio
             link
             image
+            isPublic
         }
         followers(userId:1){
             id
@@ -30,6 +31,16 @@ export const GET_MY_FOLLOWING = `
         }
     }
 `;
+
+export const GET_POST_FOR_SEARCH = `
+{   
+   posts(fromDate: "1999-01-01", toDate: "2024-12-12") {
+       id  
+      authorId
+      description
+      imagePaths
+   }
+}`
 
 export const GET_LATEST_MESSAGE = `
     {

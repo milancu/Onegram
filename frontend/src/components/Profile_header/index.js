@@ -5,6 +5,7 @@ import "./profile-header.css";
 import logo from '../../images/logo.png'
 import messagesIcon from '../../images/messages.png'
 import settingsIcon from '../../images/settings.png'
+import addIcon from '../../images/add.png';
 import {Link, useNavigate} from "react-router-dom";
 
 export const Profile_header = (props) => {
@@ -22,6 +23,10 @@ export const Profile_header = (props) => {
                     <a className="title">Onegram</a>
                 </Link>
                 <div className={"other-options"}>
+                    {/*// TODO add new post*/}
+                    <Link to={'/'}>
+                        <img className={"options"} src={addIcon} alt={"add new picture icon"} />
+                    </Link>
                     <Link to={'/messages'}>
                         <img className={"options"} src={messagesIcon} alt={"messages icon"} />
                     </Link>
