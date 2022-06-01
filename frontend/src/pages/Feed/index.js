@@ -9,6 +9,7 @@ import {
 } from "../../pages";
 import axios from "axios";
 import * as Constants from "../../gql/query";
+import {GET_MY_FOLLOWING} from "../../gql/query";
 
 export const Feed = () => {
     // TODO
@@ -18,20 +19,8 @@ export const Feed = () => {
     // const image = "https://cdn-images-1.medium.com/max/1200/1*dMSWcBZCuzyRDeMr4uE_og.png";
 
     let userData;
-    let followingPosts;
-
-    axios.post(Constants.POST_GRAPHQL_API,
-        {
-            query: Constants.GET_FOLLOWING_POSTS
-        }, {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            }
-        }).then(r => {
-        followingPosts = r.data.data.followingsPosts;
-        console.log(followingPosts)
-        localStorage.setItem('followingPosts', JSON.stringify(followingPosts));
-    })
+    let followingPosts = JSON.parse(localStorage.getItem('followingPosts'));
+    let followingUsers = JSON.parse(localStorage.getItem('followingUsers'));
 
     axios.post(Constants.USER_GRAPHQL_API,
         {
@@ -42,7 +31,34 @@ export const Feed = () => {
             }
         }).then(r => {
         userData = r.data.data.my;
+        followingUsers = r.data.data.following;
         localStorage.setItem('userData', JSON.stringify(userData));
+        localStorage.setItem('userData', JSON.stringify(followingUsers));
+        // console.log(followingUsers);
+    })
+
+    axios.post(Constants.POST_GRAPHQL_API,
+        {
+            query: Constants.GET_FOLLOWING_POSTS
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        followingPosts = r.data.data.followingsPosts;
+        // console.log(followingUsers);
+        for(let i = 0; i < followingPosts.length; i++){
+            for(let j = 0; j < followingUsers.length; j++) {
+                if (followingPosts[i].authorId === followingUsers[j].id) {
+                    followingPosts.authorUsername = followingUsers[j].username;
+                    followingPosts.authorImage = followingUsers[j].image;
+                    break;
+                }
+            }
+        }
+
+        console.log(followingPosts)
+        localStorage.setItem('followingPosts', JSON.stringify(followingPosts));
     })
 
 
@@ -55,40 +71,12 @@ export const Feed = () => {
 
             <section className="App-main">
                 {JSON.parse(localStorage.getItem('followingPosts')).map(post => (
-                    // <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} />
-                    <Post nickname = {nickname}
-                      profilepicture={profilepicture}
-                      caption={post.description}
-                      image={post.imagePaths}
-                />
-
-                ))}
-
-                {/*<Post nickname = {nickname}*/}
-                {/*      profilepicture={profilepicture}*/}
-                {/*      caption={caption}*/}
-                {/*      image={image}*/}
-                {/*/>*/}
-                {/*<Post nickname = {nickname}*/}
-                {/*      profilepicture={profilepicture}*/}
-                {/*      caption={caption}*/}
-                {/*      image={image}*/}
-                {/*/>*/}
-                {/*<Post nickname = {nickname}*/}
-                {/*      profilepicture={profilepicture}*/}
-                {/*      caption={caption}*/}
-                {/*      image={image}*/}
-                {/*/>*/}
-                {/*<Post nickname = {nickname}*/}
-                {/*      profilepicture={profilepicture}*/}
-                {/*      caption={caption}*/}
-                {/*      image={image}*/}
-                {/*/>*/}
-                {/*<Post nickname = {nickname}*/}
-                {/*      profilepicture={profilepicture}*/}
-                {/*      caption={caption}*/}
-                {/*      image={image}*/}
-                {/*/>*/}
+                    <Post nickname = {post.authorUsername}
+                          profilepicture={post.authorImage}
+                          caption={post.description}
+                          image={post.imagePaths}
+                    />))
+                }
             </section>
             <Footer />
         </div>

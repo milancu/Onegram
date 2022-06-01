@@ -16,6 +16,17 @@ export const GET_USER_DATA = `
          }
         following(userId:1){
             id
+            image
+            username
+        }
+    }
+`;
+
+export const GET_MY_FOLLOWING = `
+    myFollowing{
+            id
+            username
+            image
         }
     }
 `;
