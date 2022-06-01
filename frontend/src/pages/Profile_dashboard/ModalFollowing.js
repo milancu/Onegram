@@ -1,4 +1,4 @@
-
+import React, { Component }  from 'react';
 import {useState} from "react";
 import './profile_dashboard.css'
 import Single_follow from "../../components/Single_follow";

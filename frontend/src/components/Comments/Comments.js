@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
+import React, { Component }  from 'react';
 
 const Comments = (props) => {
     const [postComments, setPostComments] = useState([])

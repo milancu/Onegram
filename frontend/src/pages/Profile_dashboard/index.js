@@ -6,33 +6,44 @@ import './profile_dashboard.css';
 import Profile from '../../components/Profile';
 import Footer from "../../components/Footer";
 import Profile_header from "../../components/Profile_header";
-
 import ModalFollowing from "./ModalFollowing.js";
-
-
-const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
+import { useState, useEffect} from "react";
+import * as Constants from '../../gql/query';
+import axios from 'axios';
+import {GET_USER_DATA} from "../../gql/query";
 
 export const Profile_dashboard = () => {
+
+    const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
+
+    let userData;
+    let followers;
+    let following;
+
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_DATA
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        userData = r.data.data.my;
+        followers = r.data.data.followers;
+        following = r.data.data.following;
+        localStorage.setItem('userData', JSON.stringify(userData));
+        localStorage.setItem('followers', JSON.stringify(followers));
+        localStorage.setItem('following', JSON.stringify(following));
+    })
+
 
     return (
         <div className="App">
 
-            {/*TODO my profil dashboard vs others profile dahsboard (settings, messages atd */}
-            {/*<Header nickname="John D. Veloper"*/}
-            {/*        // profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>*/}
-
-            <Profile_header nickname="John D. Veloper"
-                    profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>
+            <Profile_header userData={userData}/>
 
 
-            <Profile nickname="John D. Veloper"
-                     profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
-                     description="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed convallis magna eu sem. Aenean vel massa quis mauris vehicula lacinia. Nunc tincidunt ante vitae massa. Fusce nibh. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Maecenas libero. Pellentesque ipsum. Mauris metus. Nullam lectus justo, vulputate eget mollis sed, tempor sed magna. Fusce consectetuer risus a nunc. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. In rutrum. Mauris suscipit, ligula sit amet pharetra semper, nibh ante cursus purus, vel sagittis velit mauris vel metus. Pellentesque ipsum. Sed ac dolor sit amet purus malesuada congue. Etiam posuere lacus quis dolor. Duis viverra diam non justo."
-                     webLinkUrl={"CaukyMnauky.com"}
-                     follows={56}
-                     followers={8964}
-                     postsNumber={87}
-            />
+            <Profile />
 
             {/*<ModalFollowing className={"follow-list"} />*/}
 

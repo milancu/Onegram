@@ -1,5 +1,6 @@
 import {useState} from "react";
 import "./CommentForm.css"
+import React, { Component }  from 'react';
 
 const CommentForm = ({handleSubmit, submitLabel, hasCancelButton = false, initialText = "", handleCancel}) => {
     const [text, setText] = useState(initialText);
