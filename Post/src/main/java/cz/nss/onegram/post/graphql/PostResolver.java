@@ -30,6 +30,12 @@ public class PostResolver implements GraphQLQueryResolver {
         return postService.findById(id);
     }
 
+    public List<Post> getPosts(LocalDate from, LocalDate to){
+        log.info("Getting posts from date {} to date {}.", from, to);
+
+        return postService.findAll(from, to);
+    }
+
     public List<Post> getUserPosts(Integer authorId) {
         log.info("Getting user's post with id: {}", authorId);
 

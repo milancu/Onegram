@@ -46,6 +46,11 @@ public class SystemInitializerImpl implements SystemInitializer {
     private User sebekji1;
     private User nagyoing;
 
+    @Value("${spring.cloud.azure.storage.blob.account-endpoint}")
+    private String BASE_PHOTO_LINK;
+
+    private final List<String> DEFAULT_PHOTO_NAMES = SystemInitializer.getDefaultPhotoNames();
+
     @Override
     @PostConstruct
     public void initSystem() {
@@ -68,6 +73,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtTime(LocalTime.now())
                 .bio("Jsem nejhezci")
                 .link("milancu.com")
+                .image(BASE_PHOTO_LINK + "/" + DEFAULT_PHOTO_NAMES.get(1))
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -81,6 +87,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtTime(LocalTime.now())
                 .bio("Dobre jak cyp hej")
                 .link("github.com")
+                .image(BASE_PHOTO_LINK + "/" + DEFAULT_PHOTO_NAMES.get(2))
                 .isPublic(false)
                 .following(new ArrayList<>())
                 .follower(new ArrayList<>())
@@ -94,6 +101,7 @@ public class SystemInitializerImpl implements SystemInitializer {
                 .createdAtDate(LocalDate.now())
                 .createdAtTime(LocalTime.now())
                 .bio("Sparta❤")
+                .image(BASE_PHOTO_LINK + "/" + DEFAULT_PHOTO_NAMES.get(3))
                 .link("sparta.cz")
                 .isPublic(true)
                 .following(new ArrayList<>())
