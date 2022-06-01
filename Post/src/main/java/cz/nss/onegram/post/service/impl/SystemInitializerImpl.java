@@ -3,6 +3,7 @@ package cz.nss.onegram.post.service.impl;
 import cz.nss.onegram.post.model.Comment;
 import cz.nss.onegram.post.model.Like;
 import cz.nss.onegram.post.model.Post;
+import cz.nss.onegram.post.model.SubComment;
 import cz.nss.onegram.post.model.interfaces.Likeable;
 import cz.nss.onegram.post.repository.PostRepository;
 import cz.nss.onegram.post.service.interfaces.CommentService;
@@ -16,9 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.OffsetTime;
 import java.util.*;
 
 @Service
@@ -35,7 +34,9 @@ public class SystemInitializerImpl implements SystemInitializer {
 
     private final LikeService likeService;
 
-    private final static Random random = new Random();
+    private final String LOREM1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
+    private final String LOREM2 = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium";
 
     @Override
     @PostConstruct
@@ -61,11 +62,44 @@ public class SystemInitializerImpl implements SystemInitializer {
                 LocalTime.of(10, 10));
 
         createComment(oldPost, "Hodne stary koment", 2);
+
+        for (int i = 1; i < 8; i++){
+            generatePostsForAuthor(i, i + 4);
+        }
     }
 
     private Post createPostNow(String description, Integer authorId){
         return createPost(description, authorId, LocalDate.now(), LocalTime.now());
     }
+
+    private void generatePostsForAuthor(Integer authorId, Integer amount){
+        for (int i = 0; i < amount; i++){
+            Post post = createPost(LOREM1, authorId, getDateBasedOnAuthor(authorId, i), getTimeBasedOnAuthor(authorId, i));
+            generateCommentsForPost(post, (amount + authorId) % 5);
+        }
+    }
+
+    private void generateCommentsForPost(Post post, Integer amount){
+        for (int i = 0; i < amount; i++){
+            Comment comment = createComment(post, LOREM2, (((i + amount) * (i + amount)) % 7) + 1);
+            generateSubcomments(post, comment, ((amount + i) * (amount + i)) % 4);
+        }
+    }
+
+    private void generateSubcomments(Post post, Comment comment, Integer amount){
+        for (int i = 0; i < amount; i++){
+            SubComment subComment = createSubcomment(comment, post, LOREM2, (((i + amount) * (i + amount)) % 7) + 1);
+        }
+    }
+
+    private LocalDate getDateBasedOnAuthor(Integer authorId, Integer postOrder){
+        return LocalDate.of(2022, ((authorId + postOrder) % 5) + 1, ((authorId + postOrder) % 29) + 1);
+    }
+
+    private LocalTime getTimeBasedOnAuthor(Integer authorId, Integer postOrder){
+        return LocalTime.of((authorId + postOrder) % 12, (authorId + postOrder) % 60, (authorId + postOrder) % 60);
+    }
+
 
     private Post createPost(String description, Integer authorId, LocalDate date, LocalTime time){
         Post post = Post.builder()
@@ -95,6 +129,18 @@ public class SystemInitializerImpl implements SystemInitializer {
         commentService.persist(comment, post);
         log.info("Generated comment: {}", comment);
         return comment;
+    }
+
+    private SubComment createSubcomment(Comment comment, Post post, String content, Integer authorId){
+        SubComment subComment = SubComment.builder()
+                .authorId(authorId)
+                .content(content)
+                .likes(new ArrayList<>())
+                .build();
+
+        commentService.persistSubComment(subComment, comment, post);
+        log.info("Generated subcomment: {}", subComment);
+        return subComment;
     }
 
     private Like createLike(Post post, Likeable likeable, Integer authorId){
