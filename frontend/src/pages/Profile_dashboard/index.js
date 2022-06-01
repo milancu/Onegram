@@ -49,7 +49,6 @@ export const Profile_dashboard = () => {
         localStorage.setItem('following', JSON.stringify(following));
     })
 
-
     return (
         <div className="App">
 

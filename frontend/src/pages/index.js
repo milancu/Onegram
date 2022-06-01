@@ -1,7 +1,5 @@
 export * from '../components/ErrorBoundary'
 export * from '../components/Follow_requests'
-export * from './followers/followers'
-export * from './following/following'
 export * from './Message_detail'
 export * from './Messages'
 export * from './post_detail/post_detail'

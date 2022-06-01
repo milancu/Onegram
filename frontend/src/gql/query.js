@@ -20,6 +20,10 @@ export const GET_USER_DATA = `
     }
 `;
 
+export const GET_FOLLOWING_POSTS = `
+    
+`;
+
 export const GET_USER_POSTS = `
    {   
    userPosts(author: 5) {
