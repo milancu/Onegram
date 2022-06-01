@@ -31,8 +31,24 @@ export const GET_MY_FOLLOWING = `
     }
 `;
 
-export const GET_FOLLOWING_POSTS = `
-    {   
+export const GET_LATEST_MESSAGE = `
+    {
+        latestMessages{
+            id
+            hasRead
+            message
+            receiver{
+              id
+              username
+              image
+            }
+            sentAtDate
+            sentAtTime
+        }
+    }
+`;
+
+export const GET_FOLLOWING_POSTS = `{
     followingsPosts{
       id
       imagePaths
