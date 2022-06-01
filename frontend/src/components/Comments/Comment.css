@@ -1,3 +1,7 @@
+.comments {
+    border-top: 1px solid;
+}
+
 .comment {
     display: flex;
 }
@@ -12,8 +16,8 @@
 }
 
 .comment-content {
-    height: 60px;
-    margin-bottom: 5px;
+    height: max-content;
+    margin-bottom: 10px;
 }
 
 .comment-author {
@@ -29,8 +33,16 @@
 
 .comment-actions {
     font-size: 0.7rem;
+    height: 10px;
 }
 .comment-action {
     float: left;
     margin: 0 6px 0 0;
+}
+.comment-text {
+    overflow-wrap: anywhere;
+}
+
+.replies {
+    display: inline-block;
 }

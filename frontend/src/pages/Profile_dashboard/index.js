@@ -73,7 +73,11 @@ export const Profile_dashboard = () => {
             {/*        // profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>*/}
 
             <div className={"postModalWindow"}>
-                {openPostModal && <PostModal closePostModal={setOpenPostModal}/>}
+                {openPostModal && <PostModal
+                    closePostModal={closeModal}
+                    post={activePost}
+                    profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
+                />}
             </div>
             <Profile_header nickname="John D. Veloper"
                     profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>
@@ -92,7 +96,7 @@ export const Profile_dashboard = () => {
 
             <div className={"postImageContainer"}>
                 {posts.map((post) => {
-                    return <img className={"profileDashboardPhoto"} src={post.image} alt={"randomPic"} onClick={() => setOpenPostModal(true)}/>
+                    return <img className={"profileDashboardPhoto"} src={post.image} alt={"randomPic"} onClick={() => openModal(post)}/>
                 })}
             </div>
             <Footer />

@@ -43,7 +43,7 @@ export const Post = (props) => {
             <div className="Post-comments">
                 <Comments comments = {[
                     {
-                        "id": "1",
+                        "id": 1,
                         "parentId": null,
                         "content": "hi",
                         "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",

@@ -53,7 +53,7 @@ const Comments = (props) => {
     }, [])
     return (
         <div className="comments">
-            <hr />
+
             <CommentForm submitLabel="Write" handleSubmit={addComment}/>
             <div className="comments_container">
                 {rootComments.map(rootComment => (
