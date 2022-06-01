@@ -47,7 +47,6 @@ export const Profile_dashboard = () => {
         localStorage.setItem('userData', JSON.stringify(userData));
         localStorage.setItem('followers', JSON.stringify(followers));
         localStorage.setItem('following', JSON.stringify(following));
-
     })
 
     return (
