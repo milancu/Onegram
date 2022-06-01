@@ -8,32 +8,37 @@ import Comments from "../Comments";
 
 export const Post = (props) => {
 
-    const nickname = props.nickname;
-    const profilepicture = props.profilepicture;
-    const caption = props.caption;
-    const image = props.image;
+    const authorUsername = props.authorUsername;
+    const authorImage = props.authorImage;
+    const description = props.description;
+    const imagePaths = props.imagePaths;
+
+    console.log(authorUsername);
+    console.log(authorImage);
+    // console.log(JSON.parse(localStorage.getItem('followingPosts')));
+
 
     return (
         <article className="Post">
             <div className="Post-user">
 
                 <div className="Post-user-profilepicture">
-                    <img src={profilepicture} alt={nickname}/>
+                    <img src={authorImage} alt={authorUsername}/>
                 </div>
                 <div className="Post-user-nickname">
-                    <span>{nickname}</span>
+                    <span>{authorUsername}</span>
                 </div>
             </div>
 
             <div className="Post-image">
                 <div className="Post-image-bg">
-                    <img alt={caption} src={image}/>
+                    <img alt={description} src={imagePaths}/>
                 </div>
             </div>
 
             <div className="Post-caption-container" >
                 <div>
-                    <strong>{nickname}:&#160;</strong>{caption}
+                    <strong>{authorUsername}:&#160;</strong>{description}
                 </div>
                 <div className="Post-reactions">
                     <LikeButton/>

@@ -6,9 +6,10 @@ import logo from '../../images/logo.png'
 import {Link, useNavigate} from "react-router-dom";
 
 export const Header = (props) => {
+    const profileData = JSON.parse(localStorage.getItem('userData'));
 
-    const nickname = props.nickname;
-    const profilepicture = props.profilepicture;
+    const nickname = profileData.username;
+    const profilepicture = profileData.image;
 
     return (
             <nav>

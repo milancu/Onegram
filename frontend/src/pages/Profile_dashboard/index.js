@@ -10,7 +10,7 @@ import ModalFollowing from "./ModalFollowing.js";
 import { useState, useEffect} from "react";
 import * as Constants from '../../gql/query';
 import axios from 'axios';
-import {GET_USER_DATA} from "../../gql/query";
+import {GET_MY_FOLLOWING} from "../../gql/query";
 
 export const Profile_dashboard = () => {
 
@@ -47,8 +47,8 @@ export const Profile_dashboard = () => {
         localStorage.setItem('userData', JSON.stringify(userData));
         localStorage.setItem('followers', JSON.stringify(followers));
         localStorage.setItem('following', JSON.stringify(following));
-    })
 
+    })
 
     return (
         <div className="App">

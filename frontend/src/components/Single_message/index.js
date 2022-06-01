@@ -7,18 +7,18 @@ const nickname = 'Test_nickname'
 //TODO pak vzresit ykracovani nahledu zpravy
 const testText = 'Lorem ipsum (zkráceně lipsum) je označení pro standardní pseudolatinský text užívaný v grafickém designu a navrhování jako demonstrativní výplňový text při vytváření pracovních ukázek grafických návrhů (např. internetových stránek, rozvržení časopisů či všech druhů reklamních materiálů). Lipsum tak pracovně znázorňuje text v ukázkových maketách (tzv. mock-up) předtím, než bude do hotového návrhu vložen smysluplný obsah.'
 
-export const Single_message = () => {
+export const Single_message = (props) => {
     return (
         <div className="single-message-box">
             {/*TODO link to id*/}
             <div className={"message-user-profilepicture"}>
-                <img className={"profile-image"} src={testProfilePhoto} alt={"testProfilePhoto"}/>
+                <img className={"profile-image"} src={props.image} alt={"testProfilePhoto"}/>
             </div>
 
             <div className={"message-box"}>
-                <strong><p className={"request-link"}>{nickname}</p></strong>
+                <strong><p className={"request-link"}>{props.username}</p></strong>
 
-                <p className={"request-link truncate"}>{testText}</p>
+                <p className={"request-link truncate"}>{props.message}</p>
             </div>
         </div>
     );

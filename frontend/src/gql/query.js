@@ -16,8 +16,56 @@ export const GET_USER_DATA = `
          }
         following(userId:1){
             id
+            image
+            username
         }
     }
+`;
+
+export const GET_MY_FOLLOWING = `
+    myFollowing{
+            id
+            username
+            image
+        }
+    }
+`;
+
+export const GET_LATEST_MESSAGE = `
+    {
+        latestMessages{
+            id
+            hasRead
+            message
+            receiver{
+              id
+              username
+              image
+            }
+            sentAtDate
+            sentAtTime
+        }
+    }
+`;
+
+export const GET_FOLLOWING_POSTS = `{
+    followingsPosts{
+      id
+      imagePaths
+      comments {
+         id
+         content
+         authorId
+         subComments {
+            id
+            content
+            authorId
+         }
+      }
+      authorId
+      description
+   }
+}
 `;
 
 export const GET_USER_POSTS = `
