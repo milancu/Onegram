@@ -61,21 +61,11 @@ export const Profile_dashboard = () => {
             {/*<ModalFollowing className={"follow-list"} />*/}
 
             <div className={"postImageContainer"}>
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
-                <img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />
+                {JSON.parse(localStorage.getItem('userPosts')).map(post => (
+                    <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} />
+                ))}
+                {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
+                {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
             </div>
             <Footer />
         </div>

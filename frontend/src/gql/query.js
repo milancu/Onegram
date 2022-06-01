@@ -24,6 +24,7 @@ export const GET_USER_POSTS = `
    {   
    userPosts(author: 5) {
       id
+      imagePaths
       comments {
          id
          content
