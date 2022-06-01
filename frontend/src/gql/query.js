@@ -10,6 +10,7 @@ export const GET_USER_DATA = `
             bio
             link
             image
+            isPublic
         }
         followers(userId:1){
             id
