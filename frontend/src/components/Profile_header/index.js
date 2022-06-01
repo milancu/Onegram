@@ -9,6 +9,7 @@ import {Link, useNavigate} from "react-router-dom";
 
 export const Profile_header = (props) => {
 
+    // TODO
     const nickname = props.nickname;
     const profilepicture = props.profilepicture;
 

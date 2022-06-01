@@ -6,15 +6,20 @@ import {ModalFollowing} from "../../pages/Profile_dashboard/ModalFollowing";
 
 import {useState, useMemo, useEffect} from "react";
 
-export const Profile = (props) => {
+export const Profile = () => {
+    const profileData = JSON.parse(localStorage.getItem('userData'));
+    const followersData = JSON.parse(localStorage.getItem('followers'));
+    const followingData = JSON.parse(localStorage.getItem('following'));
+    const profilePosts = JSON.parse(localStorage.getItem('userPosts'));
 
-    const nickname = props.nickname;
-    const profilepicture = props.profilepicture;
-    const description = props.description;
-    const webLinkUrl = props.webLinkUrl;
-    const follows = props.follows;
-    const followers = props.followers;
-    const postsNumber = props.postsNumber;
+
+    const nickname = profileData.username;
+    const profilepicture = profileData.image;
+    const description = profileData.bio;
+    const webLinkUrl = profileData.link;
+    const follows = followingData.length;
+    const followers = followersData.length;
+    const postsNumber = profilePosts.length;
 
     return (
         <section className="profile-description">

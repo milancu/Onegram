@@ -1,5 +1,6 @@
 import "./Comment.css"
 import CommentForm from "./CommentForm";
+import React, { Component }  from 'react';
 
 const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, parentId=null}) => {
     const canReply = comment.parentId == null; //Boolean (logged in)
