@@ -10,6 +10,8 @@ export const Profile = () => {
     const profileData = JSON.parse(localStorage.getItem('userData'));
     const followersData = JSON.parse(localStorage.getItem('followers'));
     const followingData = JSON.parse(localStorage.getItem('following'));
+    const profilePosts = JSON.parse(localStorage.getItem('userPosts'));
+
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;
@@ -17,7 +19,7 @@ export const Profile = () => {
     const webLinkUrl = profileData.link;
     const follows = followingData.length;
     const followers = followersData.length;
-    const postsNumber = 94;
+    const postsNumber = profilePosts.length;
 
     return (
         <section className="profile-description">

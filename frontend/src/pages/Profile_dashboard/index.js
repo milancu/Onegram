@@ -17,8 +17,21 @@ export const Profile_dashboard = () => {
     const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
 
     let userData;
+    let userPosts;
     let followers;
     let following;
+
+    axios.post(Constants.POST_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_POSTS
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        userPosts = r.data.data.userPosts;
+        localStorage.setItem('userPosts', JSON.stringify(userPosts));
+    })
 
     axios.post(Constants.USER_GRAPHQL_API,
         {

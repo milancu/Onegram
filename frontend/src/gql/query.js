@@ -19,3 +19,23 @@ export const GET_USER_DATA = `
         }
     }
 `;
+
+export const GET_USER_POSTS = `
+   {   
+   userPosts(author: 5) {
+      id
+      comments {
+         id
+         content
+         authorId
+         subComments {
+            id
+            content
+            authorId
+         }
+      }
+      authorId
+      description
+   }
+}
+`;
