@@ -20,45 +20,49 @@ export const Profile_dashboard = () => {
         {
             nickname: "John D. Veloper",
             profilepicture: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            caption: "Loving educative",
+            caption: "post1",
             image: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
         },
         {
             nickname: "John D. Veloper",
             profilepicture: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            caption: "Loving educative",
+            caption: "post2",
             image: "https://cdn-images-1.medium.com/max/1200/1*dMSWcBZCuzyRDeMr4uE_og.png"
         },
         {
             nickname: "John D. Veloper",
             profilepicture: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            caption: "Loving educative",
+            caption: "post3",
             image: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
         },
         {
             nickname: "John D. Veloper",
             profilepicture: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            caption: "Loving educative",
+            caption: "post4",
             image: "https://cdn-images-1.medium.com/max/1200/1*dMSWcBZCuzyRDeMr4uE_og.png"
         },
         {
             nickname: "John D. Veloper",
             profilepicture: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            caption: "Loving educative",
+            caption: "post5",
             image: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
         },
         {
             nickname: "John D. Veloper",
             profilepicture: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            caption: "Loving educative",
+            caption: "post6",
             image: "https://cdn-images-1.medium.com/max/1200/1*dMSWcBZCuzyRDeMr4uE_og.png"
         }
     ]
     const [openPostModal, setOpenPostModal] = useState(false);
     const [activePost, setActivePost] = useState(null);
     const openModal = (post) => {
-        setOpenPostModal(true);
         setActivePost(post);
+        setOpenPostModal(true);
+    }
+    const  closeModal = () => {
+        setActivePost(null)
+        setOpenPostModal(false)
     }
 
     return (
@@ -68,6 +72,9 @@ export const Profile_dashboard = () => {
             {/*<Header nickname="John D. Veloper"*/}
             {/*        // profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>*/}
 
+            <div className={"postModalWindow"}>
+                {openPostModal && <PostModal closePostModal={setOpenPostModal}/>}
+            </div>
             <Profile_header nickname="John D. Veloper"
                     profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>
 
@@ -85,11 +92,8 @@ export const Profile_dashboard = () => {
 
             <div className={"postImageContainer"}>
                 {posts.map((post) => {
-                    return <img className={"profileDashboardPhoto"} src={post.image} alt={"randomPic"} onClick={() => openModal(post)}/>
+                    return <img className={"profileDashboardPhoto"} src={post.image} alt={"randomPic"} onClick={() => setOpenPostModal(true)}/>
                 })}
-            </div>
-            <div className={"postModalWindow"}>
-                {openPostModal && <PostModal props={activePost}/>}
             </div>
             <Footer />
         </div>
