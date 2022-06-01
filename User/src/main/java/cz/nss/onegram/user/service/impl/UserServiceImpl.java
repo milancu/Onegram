@@ -6,6 +6,7 @@ import cz.nss.onegram.user.exception.UserServiceException;
 import cz.nss.onegram.user.model.FollowRequest;
 import cz.nss.onegram.user.model.User;
 import cz.nss.onegram.user.service.interfaces.FileService;
+import cz.nss.onegram.user.service.interfaces.SystemInitializer;
 import cz.nss.onegram.user.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -312,7 +313,7 @@ public class UserServiceImpl implements UserService {
         log.info("Saved new profile photo for user id: {} ", user.getId());
 
         String oldImageUrl = user.getImage();
-        if (oldImageUrl != null && !oldImageUrl.equals(DEFAULT_PHOTO_LINK)) {
+        if (oldImageUrl != null && !SystemInitializer.isDefaultPhotoName(fileService.extractFilenameFromPath(oldImageUrl))) {
             // TODO check if file exists, FileService implementation
             fileService.deleteFile(fileService.extractFilenameFromPath(oldImageUrl));
             log.info("Deleted old profile photo of user id: {}", user.getId());

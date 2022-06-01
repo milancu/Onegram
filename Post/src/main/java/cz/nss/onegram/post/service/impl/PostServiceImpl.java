@@ -5,6 +5,7 @@ import cz.nss.onegram.post.model.Post;
 import cz.nss.onegram.post.repository.PostRepository;
 import cz.nss.onegram.post.service.interfaces.FileService;
 import cz.nss.onegram.post.service.interfaces.PostService;
+import cz.nss.onegram.post.service.interfaces.SystemInitializer;
 import cz.nss.onegram.post.util.PostTimeComparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -89,6 +90,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(Post post) {
         postRepository.delete(post);
-        post.getImagePaths().forEach(path -> fileService.deleteFile(fileService.extractFilenameFromPath(path)));
+
+        post.getImagePaths().forEach(path -> {
+            if (!fileService.extractFilenameFromPath(path).equals(SystemInitializer.getDefaultImageName()))
+            fileService.deleteFile(fileService.extractFilenameFromPath(path));
+        });
     }
 }
