@@ -21,7 +21,24 @@ export const GET_USER_DATA = `
 `;
 
 export const GET_FOLLOWING_POSTS = `
-    
+    {   
+    followingsPosts{
+      id
+      imagePaths
+      comments {
+         id
+         content
+         authorId
+         subComments {
+            id
+            content
+            authorId
+         }
+      }
+      authorId
+      description
+   }
+}
 `;
 
 export const GET_USER_POSTS = `

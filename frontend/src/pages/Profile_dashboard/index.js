@@ -10,7 +10,6 @@ import ModalFollowing from "./ModalFollowing.js";
 import { useState, useEffect} from "react";
 import * as Constants from '../../gql/query';
 import axios from 'axios';
-import {GET_USER_DATA} from "../../gql/query";
 
 export const Profile_dashboard = () => {
 
