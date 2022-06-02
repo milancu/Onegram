@@ -52,7 +52,7 @@ export const Profile_dashboard = () => {
     return (
         <div className="App">
 
-            <Profile_header userData={userData}/>
+            <Profile_header />
 
 
             <Profile />

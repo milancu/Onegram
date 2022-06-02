@@ -3,6 +3,8 @@ import './profile-settings-form.css'
 import {Link} from "react-router-dom";
 
 import './profile-settings-form.css'
+import axios from "axios";
+import * as Constants from "../../gql/query";
 
 let data = JSON.parse(localStorage.getItem('userData'));
 let username = data.username;
@@ -10,17 +12,31 @@ let bio = data.bio;
 let link = data.link;
 let isPublic = data.isPublic;
 
-console.log(isPublic)
-
 // TODO asynchronne
 if(isPublic){
     let switchPublic = document.querySelector('#isPublicInput');
-    console.log(switchPublic)
+    // console.log(switchPublic)
     if(switchPublic){
         switchPublic.checked = true
     }
     // switchPublic.checked = true
 }
+
+let requestsData;
+
+axios.post(Constants.USER_GRAPHQL_API,
+    {
+        query: Constants.GET_MY_FOLLOW_REQUESTS
+    }, {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }
+    }).then(r => {
+    // console.log(r)
+    requestsData = r.data.data.followRequests;
+    localStorage.setItem('requestsData', JSON.stringify(requestsData));
+    console.log(requestsData);
+})
 
 
 export const Profile_settings_form = () => {

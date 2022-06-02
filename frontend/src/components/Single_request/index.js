@@ -7,17 +7,17 @@ import {Link} from "react-router-dom";
 const testProfilePhoto = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
 const nickname = 'Test_nickname'
 
-export const Single_request = () => {
+export const Single_request = (props) => {
     return (
         <div className={'requestItems'}>
             <div className={"single-request"}>
                 {/*TODO link on correct profile*/}
                 <Link to={'/profile'} className={"request-user-profilepicture"}>
-                    <img src={testProfilePhoto} alt={"testProfilePhoto"} className="request-user-profilepicture"/>
+                    <img src={props.image} alt={"testProfilePhoto"} className="request-user-profilepicture"/>
                 </Link>
 
                 <Link to='/profile'>
-                    <a className={"request-link"}>{nickname}</a>
+                    <a className={"request-link"}>{props.username}</a>
                 </Link>
 
                 {/*TODO rozliseni spravneho requestu*/}

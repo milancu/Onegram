@@ -3,10 +3,14 @@
 import React from "react";
 import './follow_requests.css'
 import {Link} from "react-router-dom";
-import {Single_request, Profile_settings_form
-} from "../../pages";
+import {Single_request, Profile_settings_form} from "../../pages";
+import axios from "axios";
+import * as Constants from "../../gql/query";
+
+// console.log(JSON.parse(localStorage.getItem('requestsData')));
 
 export const Follow_requests = () => {
+
     return (
         <div>
             {/*TODO zprovoznit filter requestu nebo uplne zrusit*/}
@@ -15,9 +19,9 @@ export const Follow_requests = () => {
             <form>
                 <input id="searchInput" type="text" placeholder="Search"/>
             </form>
-            <Single_request />
-            <Single_request />
-            <Single_request />
+            {JSON.parse(localStorage.getItem('requestsData')).map(request => (
+                <Single_request image={request.sender.image} username={request.sender.username}/>
+            ))}
             <br/>
             <hr/>
         </div>
