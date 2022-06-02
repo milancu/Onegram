@@ -55,7 +55,7 @@ export const Feed = () => {
                         }
                     }).then(r => {
                     followingPosts = r.data.data.followingsPosts;
-                    // localStorage.setItem('followingPosts', JSON.stringify(followingPosts));
+                    localStorage.setItem('followingPosts', JSON.stringify(followingPosts));
                     // console.log(followingPosts);
                 })
             } catch (e) {
