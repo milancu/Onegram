@@ -5,7 +5,7 @@ import "./Header.css";
 import logo from '../../images/logo.png'
 import {Link, useNavigate} from "react-router-dom";
 
-export const Header = (props) => {
+export const Header = () => {
     const profileData = JSON.parse(localStorage.getItem('userData'));
 
     const nickname = profileData.username;

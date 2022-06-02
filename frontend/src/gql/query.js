@@ -23,6 +23,20 @@ export const GET_USER_DATA = `
     }
 `;
 
+export const GET_MY_FOLLOW_REQUESTS = `
+    {
+  followRequests{
+    createdAtDate
+    createdAtTime
+    sender{
+      id
+      username
+      image
+    }
+  }
+}
+`;
+
 export const GET_MY_FOLLOWING = `
     myFollowing{
             id

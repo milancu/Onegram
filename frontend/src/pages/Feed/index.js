@@ -75,7 +75,7 @@ export const Feed = () => {
                 }
             }
             localStorage.setItem('combinedData', JSON.stringify(followingPosts));
-            console.log(JSON.parse(localStorage.getItem('combinedData')));
+            // console.log(JSON.parse(localStorage.getItem('combinedData')));
             // console.log(followingPosts);
         }
 
