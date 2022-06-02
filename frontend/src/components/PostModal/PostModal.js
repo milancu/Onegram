@@ -3,7 +3,6 @@ import "./postModal.css"
 import Comments from "../Comments";
 
 const PostModal = ({closePostModal, post, user}) => {
-    //window.confirm(props.post.caption)
 
     return (
         <div className={"post-modal-background"} >

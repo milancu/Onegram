@@ -2,9 +2,10 @@
 
 import React from "react";
 import "./profile.css";
-import {ModalFollowing} from "../../pages/Profile_dashboard/ModalFollowing";
+import ModalFollowing from "../../pages/Profile_dashboard/ModalFollowing.js";
 
 import {useState, useMemo, useEffect} from "react";
+import ModalFollowers from "../../pages/Profile_dashboard/ModalFollowers";
 
 export const Profile = () => {
     const profileData = JSON.parse(localStorage.getItem('userData'));
@@ -21,8 +22,15 @@ export const Profile = () => {
     const followers = followersData.length;
     const postsNumber = profilePosts.length;
 
+    const[openFollowersModal, setOpenFollowingModal] = useState(false);
+    const[openFollowsModal, setOpenFollowsModal] = useState(false);
+
     return (
         <section className="profile-description">
+            <div className={"modal-windows"}>
+                {openFollowsModal && <ModalFollowing close={setOpenFollowsModal}/>}
+                {openFollowersModal && <ModalFollowers close={setOpenFollowingModal}/>}
+            </div>
             <div className="profile-photo">
                 <div className={"profile-main"}>
                     <div className={"profile-user-profilepicture"}>
@@ -49,12 +57,12 @@ export const Profile = () => {
 
                 <div className={"statsContainer"} >
                     <a id={"followers-link"}>Followers</a>
-                    <p>{followers}</p>
+                    <p onClick={() => {setOpenFollowingModal(true)}}>{followers}</p>
                 </div>
 
-                <div className={"statsContainer"}>
+                <div className={"statsContainer"} >
                     <a id={"follows-link"}>Follows</a>
-                    <p>{follows}</p>
+                    <p onClick={() => {setOpenFollowsModal(true)}}>{follows}</p>
                 </div>
             </div>
         </section>

@@ -1,21 +1,22 @@
-import React, { Component }  from 'react';
+import React from 'react';
+import './Modal.css'
+import Single_follow from "../../components/Single_follow";
 
-
-const Followers = () => {
+const ModalFollowers = ({close}) => {
     return (
-        <div>
+        <div className={"modal-background"}>
+            <div className={"center-modal-box"}>
+                <div className={'follow-list'}>
+                    <button className={"close-btn"} onClick={() => {close(false)}}> X </button>
+                    {JSON.parse(localStorage.getItem('followers')).map(followed => (
+                        <Single_follow follow={followed}/>
+                    ))}
+                </div>
 
+            </div>
         </div>
-
     )
 }
 
 
-
-let props;
-
-export const ModalFollowers = (prop) => {
-    props = prop;
-    if (!props.show) return (<></>);
-    return <Followers/>
-}
+export default ModalFollowers;
