@@ -20,7 +20,7 @@ export const Profile_header = (props) => {
                 </Link>
                 <div className={"other-options"}>
                     {/*// TODO add new post*/}
-                    <Link to={'/'}>
+                    <Link to={'/add'}>
                         <img className={"options"} src={addIcon} alt={"add new picture icon"} />
                     </Link>
                     <Link to={'/messages'}>

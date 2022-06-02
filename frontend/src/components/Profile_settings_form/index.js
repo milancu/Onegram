@@ -1,8 +1,6 @@
 import React from "react";
 import './profile-settings-form.css'
-import {Link} from "react-router-dom";
 
-import './profile-settings-form.css'
 import axios from "axios";
 import * as Constants from "../../gql/query";
 
@@ -35,7 +33,7 @@ axios.post(Constants.USER_GRAPHQL_API,
     // console.log(r)
     requestsData = r.data.data.followRequests;
     localStorage.setItem('requestsData', JSON.stringify(requestsData));
-    console.log(requestsData);
+    // console.log(requestsData);
 })
 
 

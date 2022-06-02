@@ -95,7 +95,7 @@ export const GET_FOLLOWING_POSTS = `{
 
 export const GET_USER_POSTS = `
    {   
-   userPosts(author: 5) {
+   userPosts(author: 1) {
       id
       imagePaths
       comments {
