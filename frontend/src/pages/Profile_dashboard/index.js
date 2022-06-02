@@ -11,10 +11,24 @@ import { useState, useEffect} from "react";
 import * as Constants from '../../gql/query';
 import axios from 'axios';
 import {GET_MY_FOLLOWING} from "../../gql/query";
+import PostModal from "../../components/PostModal";
 
 export const Profile_dashboard = () => {
 
     const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
+
+    const [openPostModal, setOpenPostModal] = useState(false);
+    const [activePost, setActivePost] = useState(null);
+
+    const openModal = (post) => {
+        setActivePost(post);
+        setOpenPostModal(true);
+    };
+
+    const closeModal = () => {
+        setActivePost(null);
+        setOpenPostModal(false);
+    }
 
     let userData;
     let userPosts;
@@ -52,6 +66,14 @@ export const Profile_dashboard = () => {
     return (
         <div className="App">
 
+            <div className={"postModalWindow"}>
+                {openPostModal && <PostModal
+                    closePostModal={closeModal}
+                    post={activePost}
+                    user={localStorage.getItem('userData')}
+                />}
+            </div>
+
             <Profile_header />
 
 
@@ -61,7 +83,7 @@ export const Profile_dashboard = () => {
 
             <div className={"postImageContainer"}>
                 {JSON.parse(localStorage.getItem('userPosts')).map(post => (
-                    <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} />
+                    <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} onClick={() => openModal(post)}/>
                 ))}
                 {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
                 {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}

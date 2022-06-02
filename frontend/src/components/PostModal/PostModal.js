@@ -2,14 +2,14 @@ import React from "react"
 import "./postModal.css"
 import Comments from "../Comments";
 
-const PostModal = ({closePostModal, post, profilepicture}) => {
+const PostModal = ({closePostModal, post, user}) => {
     //window.confirm(props.post.caption)
 
     return (
         <div className={"post-modal-background"} >
             <div className={"post-modal-container"}>
                 <div className={"post-modal-image"}>
-                    <img src={post.image} alt={"photo"}/>
+                    <img src={post.imagePaths} alt={post.description}/>
                 </div>
                 <div className={"post-modal-right-part"}>
                     <div className={"post-modal-user-container"}>
@@ -18,14 +18,14 @@ const PostModal = ({closePostModal, post, profilepicture}) => {
                         </div>
                         <div className={"post-modal-user"}>
                             <div className={"post-modal-user-image"}>
-                                <img src={profilepicture} alt={"profile picture"}/>
+                                <img src={JSON.parse(user).image} alt={JSON.parse(user).username}/>
                             </div>
                             <div className={"post-modal-user-caption"}>
                                 <p className={"post-modal-user-nickname"}>
-                                    {post.nickname}
+                                    {JSON.parse(user).username}
                                 </p>
                                 <p className={"post-modal-user-text"}>
-                                    {post.caption}
+                                    {post.description}
                                 </p>
 
                             </div>
