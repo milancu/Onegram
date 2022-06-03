@@ -1,22 +1,20 @@
-import React, { Component }  from 'react';
-import {useState} from "react";
-import './profile_dashboard.css'
+import React from 'react';
+import './Modal.css'
 import Single_follow from "../../components/Single_follow";
 
-const ModalFollowing = () => {
+const ModalFollowing = ({close}) => {
     return (
-        <div className={"center-follower-box"}>
-            <div className={'follow-list'}>
-                <Single_follow />
-                <Single_follow />
-                <Single_follow />
-                <Single_follow />
-                <Single_follow />
-                <Single_follow />
+        <div className={"modal-background"}>
+            <div className={"center-modal-box"}>
+                <div className={'follow-list'}>
+                    <button className={"close-btn"} onClick={() => {close(false)}}> X </button>
+                    {JSON.parse(localStorage.getItem('following')).map(followed => (
+                        <Single_follow follow={followed}/>
+                    ))}
+                </div>
+
             </div>
-
         </div>
-
     )
 }
 
