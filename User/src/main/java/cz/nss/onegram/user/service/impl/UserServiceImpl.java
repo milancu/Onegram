@@ -63,6 +63,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public void persist(OAuth2User user) {
         String email = user.getAttribute("email");
         User newUser = User.builder().createdAtDate(LocalDate.now())
