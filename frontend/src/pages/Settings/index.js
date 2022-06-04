@@ -10,8 +10,7 @@ import {Follow_requests, Profile_settings_form
 export const Settings = () => {
     return (
         <div>
-            <Header nickname="John D. Veloper"
-                    profilepicture="https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"/>
+            <Header />
             <Follow_requests />
             <h2>Profile settings</h2>
             <Profile_settings_form />

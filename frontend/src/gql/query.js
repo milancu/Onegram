@@ -14,6 +14,8 @@ export const GET_USER_DATA = `
         }
         followers(userId:1){
             id
+            image
+            username
          }
         following(userId:1){
             id
@@ -95,7 +97,7 @@ export const GET_FOLLOWING_POSTS = `{
 
 export const GET_USER_POSTS = `
    {   
-   userPosts(author: 5) {
+   userPosts(author: 1) {
       id
       imagePaths
       comments {

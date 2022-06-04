@@ -119,3 +119,33 @@ input:checked + .slider:before {
 .is-public label{
     margin-left: 25px;
 }
+
+.accept-button:hover {
+    background-color: #1C84FF;
+}
+
+.accept-button{
+    margin-right: 20px;
+    align-items: center;
+    background-color: #0276FF;
+    border: 1px solid #0276FF;;
+    border-radius: 8px;
+    box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-shrink: 0;
+    font-family: "RM Neue",sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    padding: 10px 21px;
+    text-align: center;
+    text-transform: none;
+    transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}

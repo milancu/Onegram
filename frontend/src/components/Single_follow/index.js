@@ -16,7 +16,7 @@ export const Single_follow = ({follow}) => {
                     </Link>
                 </div>
             </div>
-            <div className={'center-height'}>
+            <div className={'center-height width-name'}>
                 {follow.username}
             </div>
             {/*TODO button follow, unfollow / podle reality*/}
