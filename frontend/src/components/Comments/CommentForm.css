@@ -2,6 +2,7 @@
     height: auto;
     display: flex;
     justify-content: center;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 10px;
     padding-left: 10px;
@@ -11,8 +12,7 @@
 .comment-form-textarea {
     resize: none;
     height:2.11rem;
-    border-bottom-left-radius: 8px;
-    border-top-left-radius: 8px;
+    border-radius: 8px;
     width: 100%;
     font-size: 1rem;
     font-family: sans-serif;
@@ -22,25 +22,33 @@
 .comment-form-button {
     height:2.5rem;
     width: 6rem;
-    border-bottom-right-radius: 8px;
-    border-top-right-radius: 8px;
+    border-radius: 8px;
     font-size: 1rem;
-    background-color: black;
+    background-color: #0276FF;
     color: white;
 }
 
 .comment-form-button:hover {
-    background-color: #54a0ff;
-    transition: background-color 0.3s ease-in;
-    cursor: pointer;
-    border: #54a0ff;
+    height:2.5rem;
+    width: 6rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #0267ff;
+    color: #d9dbde;
 }
 
-.comment-form-button:active {
-    background-color: #074ca3;
-    transition: background-color 0.1s linear;
-}
+/*.comment-form-button:hover {*/
+/*    background-color: #54a0ff;*/
+/*    transition: background-color 0.3s ease-in;*/
+/*    cursor: pointer;*/
+/*    border: #54a0ff;*/
+/*}*/
 
-.comment-form-button:disabled {
-    pointer-events: none;
-}
+/*.comment-form-button:active {*/
+/*    background-color: #074ca3;*/
+/*    transition: background-color 0.1s linear;*/
+/*}*/
+
+/*.comment-form-button:disabled {*/
+/*    pointer-events: none;*/
+/*}*/

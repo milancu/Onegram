@@ -3,16 +3,17 @@
 import React from "react";
 import "./profile.css";
 import ModalFollowing from "../../pages/Profile_dashboard/ModalFollowing.js";
+import { useNavigate } from "react-router-dom";
 
 import {useState, useMemo, useEffect} from "react";
 import ModalFollowers from "../../pages/Profile_dashboard/ModalFollowers";
+
 
 export const Profile = () => {
     const profileData = JSON.parse(localStorage.getItem('userData'));
     const followersData = JSON.parse(localStorage.getItem('followers'));
     const followingData = JSON.parse(localStorage.getItem('following'));
     const profilePosts = JSON.parse(localStorage.getItem('userPosts'));
-
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;
@@ -44,7 +45,7 @@ export const Profile = () => {
                 <div className="Profile-web">
                     {/*TODO nefunguje*/}
                     <a href={'/profile'}>
-                        <p>{webLinkUrl}</p>
+                        <p id={"webLinkUrl"}>{webLinkUrl}</p>
                     </a>
                 </div>
 
