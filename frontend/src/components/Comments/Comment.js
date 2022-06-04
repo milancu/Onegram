@@ -22,7 +22,6 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                     {!isEditing && <div className="comment-text">{comment.content}</div>}
                     {isEditing && (
                         <CommentForm submitLabel="Update"
-                                     hasCancelButton
                                      initialText={comment.content}
                                      handleSubmit={(text) => updateComment(text, comment.id)}
                                      handleCancel={() => setActiveComment(null)}/>
@@ -32,8 +31,6 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                             id: comment.id,
                             type: "replying"
                         })}>Reply</div>}
-                        {canEdit && <div className="comment-action"
-                                         onClick={() => setActiveComment({id: comment.id, type: "editing"})}>Edit</div>}
                         {canDelete &&
                             <div className="comment-action" onClick={() => deleteComment(comment.id)}>Delete</div>}
                     </div>

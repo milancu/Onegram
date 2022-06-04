@@ -2,7 +2,19 @@ import React from "react"
 import "./postModal.css"
 import Comments from "../Comments";
 
-const PostModal = ({closePostModal, post, user}) => {
+const PostModal = ({closePostModal, post}) => {
+
+    let userId = post.authorId
+    console.log(userId)
+    let user = {};
+    let data = JSON.parse(localStorage.getItem('users'));
+    for(let u of data){
+        if(u.id === userId){
+            user.image = u.image;
+            user.username = u.username;
+        }
+    }
+
 
     return (
         <div className={"post-modal-background"} >
@@ -17,11 +29,11 @@ const PostModal = ({closePostModal, post, user}) => {
                         </div>
                         <div className={"post-modal-user"}>
                             <div className={"post-modal-user-image"}>
-                                <img src={JSON.parse(user).image} alt={JSON.parse(user).username}/>
+                                <img src={user.image} alt={user.username}/>
                             </div>
                             <div className={"post-modal-user-caption"}>
                                 <p className={"post-modal-user-nickname"}>
-                                    {JSON.parse(user).username}
+                                    {user.username}
                                 </p>
                                 <p className={"post-modal-user-text"}>
                                     {post.description}

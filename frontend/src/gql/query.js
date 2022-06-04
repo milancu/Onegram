@@ -25,6 +25,15 @@ export const GET_USER_DATA = `
     }
 `;
 
+export const GET_USERS = `
+query{
+    users{
+        id
+        username
+        image
+    }
+}`
+
 export const GET_MY_FOLLOW_REQUESTS = `
     {
   followRequests{

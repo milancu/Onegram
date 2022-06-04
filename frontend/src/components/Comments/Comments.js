@@ -55,7 +55,7 @@ const Comments = (props) => {
     return (
         <div className="comments">
             <hr />
-            <CommentForm submitLabel="Write" handleSubmit={addComment}/>
+            <CommentForm submitLabel="Comment" handleSubmit={addComment}/>
             <div className="comments_container">
                 {rootComments.map(rootComment => (
                     <Comment key={rootComment.id}

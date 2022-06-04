@@ -79,13 +79,10 @@ export const Profile_dashboard = () => {
 
             <Profile />
 
-            {/*<ModalFollowing className={"follow-list"} />*/}
-
             <div className={"postImageContainer"}>
                 {JSON.parse(localStorage.getItem('userPosts')).map(post => (
                     <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} onClick={() => openModal(post)}/>
                 ))}
-                {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
                 {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
             </div>
             <Footer />
