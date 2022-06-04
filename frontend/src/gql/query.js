@@ -14,6 +14,8 @@ export const GET_USER_DATA = `
         }
         followers(userId:1){
             id
+            image
+            username
          }
         following(userId:1){
             id
