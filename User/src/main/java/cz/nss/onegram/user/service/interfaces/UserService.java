@@ -13,6 +13,8 @@ public interface UserService {
 
     public User findByEmail(String email);
 
+    public List<User> findAll();
+
     public void persist(User user);
 
     public void persist(OAuth2User user);
