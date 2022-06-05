@@ -55,11 +55,35 @@ export const Profile_dashboard = () => {
             }
         }).then(r => {
         userData = r.data.data.my;
-        followers = r.data.data.followers;
-        following = r.data.data.following;
+        // followers = r.data.data.followers;
+        // following = r.data.data.following;
         localStorage.setItem('userData', JSON.stringify(userData));
-        localStorage.setItem('followers', JSON.stringify(followers));
+        // localStorage.setItem('followers', JSON.stringify(followers));
+        // localStorage.setItem('following', JSON.stringify(following));
+    })
+
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_FOLLOWING
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        following = r.data.data.following;
         localStorage.setItem('following', JSON.stringify(following));
+    })
+
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_FOLLOWERS
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        followers = r.data.data.followers;
+        localStorage.setItem('followers', JSON.stringify(followers));
     })
 
     return (

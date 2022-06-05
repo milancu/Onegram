@@ -12,16 +12,26 @@ export const GET_USER_DATA = `
             image
             isPublic
         }
-        followers(userId:1){
-            id
-            image
-            username
-         }
-        following(userId:1){
+    }
+`;
+
+export const GET_USER_FOLLOWING = `
+    {
+        following(userId: 1){
             id
             image
             username
         }
+    }
+`;
+
+export const GET_USER_FOLLOWERS = `
+    {
+        followers(userId: 1){
+            id
+            image
+            username
+         }
     }
 `;
 

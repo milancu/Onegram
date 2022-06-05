@@ -25,7 +25,6 @@ const profileData = JSON.parse(localStorage.getItem('userData'));
 
 export const Header = () => {
 
-
     const nickname = profileData.username;
     const profilepicture = profileData.image;
 

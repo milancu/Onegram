@@ -5,6 +5,8 @@ import axios from "axios";
 import * as Constants from "../../gql/query";
 import ImageUploading from "react-images-uploading";
 
+import logo from "../../images/logo.png";
+
 export const Profile_settings_form = () => {
 
     let data = JSON.parse(localStorage.getItem('userData'));
@@ -13,7 +15,7 @@ export const Profile_settings_form = () => {
     let link = data.link;
     let isPublic = data.isPublic;
 
-    function saveChanges() {
+    function SaveChanges() {
         let formData = new FormData();
 
         // let description = document.getElementById('description').value;
@@ -177,8 +179,9 @@ export const Profile_settings_form = () => {
                 </label>
             </div>
             <br/>
-            <button id={'submit'} className={"accept-button"} type={"button"} onClick={saveChanges}>Save changes
+            <button id={'submit'} className={"accept-button"} type={"button"} onClick={SaveChanges}>Save changes
             </button>
+
         </form>
 
     );
