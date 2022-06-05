@@ -10,11 +10,23 @@
 }
 
 .profile-description{
-    min-height: 350px;
+    padding-left: 50px;
+    min-height: 300px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     border-bottom: 1px solid black;
+}
+.Profile-bio{
+    width: 400px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.statsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .profile-stats{
@@ -28,7 +40,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 100px;
 }
 
 .profile-main{

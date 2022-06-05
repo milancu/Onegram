@@ -5,6 +5,7 @@ import "./Post.css";
 import logo from "../../images/logo.png";
 import LikeButton from "../LikeButton";
 import Comments from "../Comments";
+import {Link} from "react-router-dom";
 
 export const Post = (props) => {
 
@@ -12,23 +13,26 @@ export const Post = (props) => {
     const authorImage = props.authorImage;
     const description = props.description;
     const imagePaths = props.imagePaths;
+    const authorId = props.authorId;
 
     // console.log(authorUsername);
     // console.log(authorImage);
     // console.log(JSON.parse(localStorage.getItem('followingPosts')));
 
-
     return (
         <article className="Post">
-            <div className="Post-user">
+            <Link to={'/profile/'+authorId}>
+                <div className="Post-user">
 
-                <div className="Post-user-profilepicture">
-                    <img src={authorImage} alt={authorUsername}/>
+                    <div className="Post-user-profilepicture">
+                        <img src={authorImage} alt={authorUsername}/>
+                    </div>
+                    <div className="Post-user-nickname">
+                        <span>{authorUsername}</span>
+                    </div>
+
                 </div>
-                <div className="Post-user-nickname">
-                    <span>{authorUsername}</span>
-                </div>
-            </div>
+            </Link>
 
             <div className="Post-image">
                 <div className="Post-image-bg">
@@ -36,7 +40,7 @@ export const Post = (props) => {
                 </div>
             </div>
 
-            <div className="Post-caption-container" >
+            <div className="Post-caption-container">
                 <div>
                     <strong>{authorUsername}:&#160;</strong>{description}
                 </div>
@@ -46,7 +50,7 @@ export const Post = (props) => {
             </div>
 
             <div className="Post-comments">
-                <Comments comments = {[
+                <Comments comments={[
                     {
                         "id": 1,
                         "parentId": null,

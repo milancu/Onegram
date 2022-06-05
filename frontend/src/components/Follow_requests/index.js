@@ -20,7 +20,7 @@ export const Follow_requests = () => {
                 <input id="searchInput" type="text" placeholder="Search"/>
             </form>
             {JSON.parse(localStorage.getItem('requestsData')).map(request => (
-                <Single_request image={request.sender.image} username={request.sender.username}/>
+                <Single_request image={request.sender.image} username={request.sender.username} id={request.sender.id}/>
             ))}
             <br/>
             <hr/>

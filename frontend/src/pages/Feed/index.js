@@ -41,10 +41,21 @@ export const Feed = () => {
                         }
                     }).then(r => {
                     userData = r.data.data.my;
-                    followingUsers = r.data.data.following;
+                    // followingUsers = r.data.data.following;
                     localStorage.setItem('userData', JSON.stringify(userData));
+                    // localStorage.setItem('followingUsers', JSON.stringify(followingUsers));
+                })
+
+                axios.post(Constants.USER_GRAPHQL_API,
+                    {
+                        query: Constants.GET_USER_FOLLOWING
+                    }, {
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem('token')
+                        }
+                    }).then(r => {
+                    followingUsers = r.data.data.following;
                     localStorage.setItem('followingUsers', JSON.stringify(followingUsers));
-                    // console.log(followingUsers);
                 })
 
                 axios.post(Constants.POST_GRAPHQL_API,
@@ -57,7 +68,6 @@ export const Feed = () => {
                     }).then(r => {
                     followingPosts = r.data.data.followingsPosts;
                     localStorage.setItem('followingPosts', JSON.stringify(followingPosts));
-                    // console.log(followingPosts);
                 })
             } catch (e) {
                 console.log(e)
@@ -98,6 +108,7 @@ export const Feed = () => {
                               authorImage={post.authorImage}
                               description={post.description}
                               imagePaths={post.imagePaths}
+                              authorId={post.authorId}
                         />
                     ))}
 
