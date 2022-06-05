@@ -121,6 +121,9 @@ export const GET_USER_POSTS = `
       }
       authorId
       description
+      likes{
+        authorId
+        }
    }
 }
 `;

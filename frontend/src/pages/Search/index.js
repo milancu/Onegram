@@ -1,6 +1,6 @@
 // src/pages/Search/index.js
 
-import React, { useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../App.css';
 import './search.css'
 import Header from "../../components/Header";
@@ -29,56 +29,50 @@ export const Search = () => {
     let searchData;
     let usersData;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                axios.post(Constants.USER_GRAPHQL_API,
-                    {
-                        query: Constants.GET_USERS
-                    }, {
-                        headers: {
-                            "Authorization": "Bearer " + localStorage.getItem('token')
-                        }
-                    }).then(r => {
-                        // console.log(r.data)
-                    usersData = r.data.data.users;
-                    localStorage.setItem('users', JSON.stringify(usersData));
-                })
-
-                axios.post(Constants.POST_GRAPHQL_API,
-                    {
-                        query: Constants.GET_POST_FOR_SEARCH
-                    }, {
-                        headers: {
-                            "Authorization": "Bearer " + localStorage.getItem('token')
-                        }
-                    }).then(r => {
-                    searchData = r.data.data.posts;
-                    localStorage.setItem('searchData', JSON.stringify(searchData));
-                    // console.log(searchData);
-                })
-            } catch (e) {
-                console.log(e)
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USERS
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
             }
-        }
-        // fetchData().then(r => {
-        //         searchData = JSON.parse(localStorage.getItem('searchData'));
-        //         usersData = JSON.parse(localStorage.getItem('users'));
-        //         for (let i = 0; i < searchData.length; i++) {
-        //             for (let j = 0; j < usersData.length; j++) {
-        //                 if (searchData[i].authorId === usersData[j].id) {
-        //                     searchData[i].username = usersData[j].username;
-        //                     searchData[i].image = usersData[j].image;
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //         localStorage.setItem('combinedSearchData', JSON.stringify(searchData));
-        //         // console.log(JSON.parse(localStorage.getItem('combinedData')));
-        //         // console.log(followingPosts);
-        //     }
-        // );
-    }, []);
+        }).then(r => {
+        // console.log(r.data)
+        usersData = r.data.data.users;
+        localStorage.setItem('users', JSON.stringify(usersData));
+    })
+
+    axios.post(Constants.POST_GRAPHQL_API,
+        {
+            query: Constants.GET_POST_FOR_SEARCH
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        searchData = r.data.data.posts;
+        localStorage.setItem('searchData', JSON.stringify(searchData));
+        // console.log(searchData);
+    })
+
+
+    // fetchData().then(r => {
+    //         searchData = JSON.parse(localStorage.getItem('searchData'));
+    //         usersData = JSON.parse(localStorage.getItem('users'));
+    //         for (let i = 0; i < searchData.length; i++) {
+    //             for (let j = 0; j < usersData.length; j++) {
+    //                 if (searchData[i].authorId === usersData[j].id) {
+    //                     searchData[i].username = usersData[j].username;
+    //                     searchData[i].image = usersData[j].image;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         localStorage.setItem('combinedSearchData', JSON.stringify(searchData));
+    //         // console.log(JSON.parse(localStorage.getItem('combinedData')));
+    //         // console.log(followingPosts);
+    //     }
+    // );
 
 
     return (
@@ -99,7 +93,8 @@ export const Search = () => {
 
             <div className={"postImageContainer"}>
                 {JSON.parse(localStorage.getItem('searchData')).map(post => (
-                    <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} onClick={() => openModal(post)}/>
+                    <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description}
+                         onClick={() => openModal(post)}/>
                 ))}
 
                 {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}

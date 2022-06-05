@@ -7,7 +7,24 @@ import { useNavigate } from "react-router-dom";
 
 import {useState, useMemo, useEffect} from "react";
 import ModalFollowers from "../../pages/Profile_dashboard/ModalFollowers";
+import axios from "axios";
+import * as Constants from "../../gql/query";
 
+const profileData = JSON.parse(localStorage.getItem('userData'));
+// let userData;
+// if(!profileData){
+//     axios.post(Constants.USER_GRAPHQL_API,
+//         {
+//             query: Constants.GET_USER_DATA
+//         }, {
+//             headers: {
+//                 "Authorization": "Bearer " + localStorage.getItem('token')
+//             }
+//         }).then(r => {
+//         userData = r.data.data.my;
+//         localStorage.setItem('userData', JSON.stringify(userData));
+//     })
+// }
 
 export const Profile = () => {
     const profileData = JSON.parse(localStorage.getItem('userData'));
