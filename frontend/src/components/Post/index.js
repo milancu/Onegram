@@ -13,8 +13,8 @@ export const Post = (props) => {
     const description = props.description;
     const imagePaths = props.imagePaths;
 
-    console.log(authorUsername);
-    console.log(authorImage);
+    // console.log(authorUsername);
+    // console.log(authorImage);
     // console.log(JSON.parse(localStorage.getItem('followingPosts')));
 
 
