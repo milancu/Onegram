@@ -1,11 +1,16 @@
 import React from "react"
 import "./postModal.css"
 import Comments from "../Comments";
+import axios from 'axios';
+import { print } from 'graphql';
+import gql from 'graphql-tag';
+import * as Constants from "../../gql/query";
+import {POST_GRAPHQL_API} from "../../gql/query";
 
 const PostModal = ({closePostModal, post}) => {
 
     let userId = post.authorId
-    console.log(userId)
+    const postId = post.id;
     let user = {};
     let data = JSON.parse(localStorage.getItem('users'));
     for(let u of data){
@@ -15,6 +20,26 @@ const PostModal = ({closePostModal, post}) => {
         }
     }
 
+    function deletePost() {
+        const DELETE_POST = gql`
+            mutation {
+                deletePost(input: {
+                    id:postId
+                })
+            }
+        `
+        axios.post(Constants.POST_GRAPHQL_API, {
+            query: print(DELETE_POST),
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
+
+    const thisUser = JSON.parse(localStorage.getItem('userData'));
+    const canDelete = userId === thisUser.id;
 
     return (
         <div className={"post-modal-background"} >
@@ -34,6 +59,12 @@ const PostModal = ({closePostModal, post}) => {
                             <div className={"post-modal-user-caption"}>
                                 <p className={"post-modal-user-nickname"}>
                                     {user.username}
+                                    {"\n"}
+                                    { canDelete
+                                        ? <button onClick={() => deletePost()}>Delete</button>
+                                        : ""
+                                    }
+
                                 </p>
                                 <p className={"post-modal-user-text"}>
                                     {post.description}

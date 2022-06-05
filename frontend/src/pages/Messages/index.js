@@ -21,7 +21,7 @@ export const Messages = () => {
         }).then(r => {
         messagesData = r.data.data.latestMessages;
         localStorage.setItem('messagesData', JSON.stringify(messagesData));
-        console.log(messagesData);
+        // console.log(messagesData);
     })
 
     const username = 'test'
