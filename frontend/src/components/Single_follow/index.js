@@ -9,15 +9,18 @@ export const Single_follow = ({follow}) => {
         <div className={"follower-box"}>
             <div className="modal-profile-photo">
                 <div className={"modal-profile-main"}>
-                    <Link to='/profile'>
+                    <Link to={'/profile/' + follow.id}>
                         <div className={"modal-profile-user-profilepicture"}>
-                            <img src={follow.image} alt={follow.username} className="modal-profile-user-profilepicture"/>
+                            <img src={follow.image} alt={follow.username}
+                                 className="modal-profile-user-profilepicture"/>
                         </div>
                     </Link>
                 </div>
             </div>
             <div className={'center-height width-name'}>
-                {follow.username}
+                <Link to={'/profile/' + follow.id}>
+                    {follow.username}
+                </Link>
             </div>
             {/*TODO button follow, unfollow / podle reality*/}
             <div className={'center-height'}>
