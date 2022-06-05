@@ -2,8 +2,6 @@ import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import '../../components/Profile_settings_form/profile-settings-form.css'
-import axios from "axios";
-import ReactDOM from "react-dom";
 import ImageUploading from "react-images-uploading";
 import * as Constants from "../../gql/query";
 
@@ -21,7 +19,7 @@ export const Add_post = () => {
         let formData = new FormData();
         formData.append("operations", query);
         formData.append("file", images[0].file);
-        console.log(images[0].file)
+        // console.log(images[0].file)
 
         let xhr = new XMLHttpRequest();
         xhr.open('POST', Constants.POST_GRAPHQL_API, true);
@@ -48,10 +46,8 @@ export const Add_post = () => {
         <div>
             <Header/>
             <form className={"settings-form"}>
-                <label htmlFor="description">Username:</label><br/>
                 <div className={"setting-photo"}>
                     <ImageUploading
-                        multiple
                         value={images}
                         onChange={onChange}
                         dataURLKey="data_url"
