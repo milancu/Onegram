@@ -5,13 +5,12 @@ import '../../App.css';
 import './profile_dashboard.css';
 import Profile from '../../components/Profile';
 import Footer from "../../components/Footer";
-import Profile_header from "../../components/Profile_header";
 import { useState, useEffect} from "react";
 import * as Constants from '../../gql/query';
 import axios from 'axios';
-import {GET_MY_FOLLOWING} from "../../gql/query";
 import PostModal from "../../components/PostModal";
 import {useParams} from "react-router-dom";
+import Header from "../../components/Header";
 
 export const Profile_dashboard = (props) => {
 
@@ -105,7 +104,7 @@ export const Profile_dashboard = (props) => {
                 />}
             </div>
 
-            <Profile_header />
+            <Header profile={true}/>
 
 
             <Profile />
