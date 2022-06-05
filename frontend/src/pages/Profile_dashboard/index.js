@@ -36,8 +36,8 @@ export const Profile_dashboard = (props) => {
     let followers;
     let following;
 
+    console.log(params.id === String(user.id))
     if(params.id === String(user.id)){
-        console.log('updating')
         axios.post(Constants.POST_GRAPHQL_API,
             {
                 query: Constants.GET_USER_POSTS
@@ -89,6 +89,8 @@ export const Profile_dashboard = (props) => {
             followers = r.data.data.followers;
             localStorage.setItem('followers', JSON.stringify(followers));
         })
+    } else {
+
     }
 
 

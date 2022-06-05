@@ -44,7 +44,7 @@ export const Profile = () => {
     const [openFollowersModal, setOpenFollowersModal] = useState(false);
 
     return (
-        <section className="profile-description">
+        <section>
             <div className={"modal-windows"}>
                 {openFollowersModal && <FollowersModal
                     closeFollowersModal={setOpenFollowersModal}
@@ -55,44 +55,46 @@ export const Profile = () => {
                     modalState={modalState}
                 />}
             </div>
-            <div className="profile-photo">
-                <div className={"profile-main"}>
-                    <div className={"profile-user-profilepicture"}>
-                        <img src={profilepicture} alt={nickname} className="profile-user-profilepicture"/>
+            <div className="profile-description">
+                <div className="profile-photo">
+                    <div className={"profile-main"}>
+                        <div className={"profile-user-profilepicture"}>
+                            <img src={profilepicture} alt={nickname} className="profile-user-profilepicture"/>
+                        </div>
+                        <h3>{nickname}</h3>
                     </div>
-                    <h3>{nickname}</h3>
                 </div>
-            </div>
-            <div className="profile-info">
-                <div className="Profile-bio"><p>{description}</p></div>
-                <div className="Profile-web">
-                    {/*TODO nefunguje*/}
-                    <a href={'/profile'}>
-                        <p id={"webLinkUrl"}>{webLinkUrl}</p>
-                    </a>
-                </div>
+                <div className="profile-info">
+                    <div className="Profile-bio"><p>{description}</p></div>
+                    <div className="Profile-web">
+                        {/*TODO nefunguje*/}
+                        <a href={'/profile'}>
+                            <p id={"webLinkUrl"}>{webLinkUrl}</p>
+                        </a>
+                    </div>
 
-            </div>
-            <div className="profile-stats">
-                <div className={"statsContainer"}>
-                    <p>Posts</p>
-                    <p>{postsNumber}</p>
                 </div>
+                <div className="profile-stats">
+                    <div className={"statsContainer"}>
+                        <p>Posts</p>
+                        <p>{postsNumber}</p>
+                    </div>
 
-                <div className={"statsContainer follows"} onClick={() => {
-                    setOpenFollowingModal(true);
-                    setModalState("followers")
-                }}>
-                    <a id={"followers-link"}>Followers</a>
-                    <p>{followers}</p>
-                </div>
+                    <div className={"statsContainer"} onClick={() => {
+                        setOpenFollowingModal(true);
+                        setModalState("followers")
+                    }}>
+                        <p id={"followers-link"}>Followers</p>
+                        <p>{followers}</p>
+                    </div>
 
-                <div className={"statsContainer follows"} onClick={() => {
-                    setOpenFollowersModal(true);
-                    setModalState("following")
-                }}>
-                    <a id={"follows-link"}>Follows</a>
-                    <p>{follows}</p>
+                    <div className={"statsContainer"} onClick={() => {
+                        setOpenFollowersModal(true);
+                        setModalState("following")
+                    }}>
+                        <p id={"follows-link"}>Follows</p>
+                        <p>{follows}</p>
+                    </div>
                 </div>
             </div>
         </section>

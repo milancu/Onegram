@@ -19,7 +19,6 @@ export const Post = (props) => {
     // console.log(authorImage);
     // console.log(JSON.parse(localStorage.getItem('followingPosts')));
 
-
     return (
         <article className="Post">
             <Link to={'/profile/'+authorId}>
