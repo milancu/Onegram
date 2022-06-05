@@ -4,9 +4,27 @@ import React from "react";
 import "./Header.css";
 import logo from '../../images/logo.png'
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import * as Constants from "../../gql/query";
+
+const profileData = JSON.parse(localStorage.getItem('userData'));
+// let userData;
+// if(!profileData){
+//     axios.post(Constants.USER_GRAPHQL_API,
+//         {
+//             query: Constants.GET_USER_DATA
+//         }, {
+//             headers: {
+//                 "Authorization": "Bearer " + localStorage.getItem('token')
+//             }
+//         }).then(r => {
+//         userData = r.data.data.my;
+//         localStorage.setItem('userData', JSON.stringify(userData));
+//     })
+// }
 
 export const Header = () => {
-    const profileData = JSON.parse(localStorage.getItem('userData'));
+
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;

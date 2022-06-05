@@ -84,34 +84,36 @@ export const Feed = () => {
     }, []);
 
     // console.log(JSON.parse(localStorage.getItem('followingPosts')));
+    if(localStorage.getItem('combinedData')){
+        return (
+            <div className="App">
 
-    return (
-        <div className="App">
+                <Header/>
+                <br/>
+                <br/>
 
-            <Header/>
-            <br/>
-            <br/>
-
-            <section className="App-main">
-                {JSON.parse(localStorage.getItem('combinedData')).map(post => (
+                <section className="App-main">
+                    {JSON.parse(localStorage.getItem('combinedData')).map(post => (
                         <Post authorUsername={post.authorUsername}
                               authorImage={post.authorImage}
                               description={post.description}
                               imagePaths={post.imagePaths}
                         />
-                ))}
+                    ))}
 
-                {/*{JSON.parse(localStorage.getItem('followingPosts')).map(post => (*/}
-                {/*    <Post nickname={nickname}*/}
-                {/*          profilepicture={profilepicture}*/}
-                {/*          caption={post.description}*/}
-                {/*          image={post.imagePaths}*/}
-                {/*    />))*/}
-                {/*}*/}
-            </section>
-            <Footer/>
-        </div>
-    )
+                    {/*{JSON.parse(localStorage.getItem('followingPosts')).map(post => (*/}
+                    {/*    <Post nickname={nickname}*/}
+                    {/*          profilepicture={profilepicture}*/}
+                    {/*          caption={post.description}*/}
+                    {/*          image={post.imagePaths}*/}
+                    {/*    />))*/}
+                    {/*}*/}
+                </section>
+                <Footer/>
+            </div>
+        )
+    }
+
 }
 
 export default Feed;
