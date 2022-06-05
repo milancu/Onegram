@@ -2,10 +2,7 @@ import React from "react"
 import "./postModal.css"
 import Comments from "../Comments";
 import axios from 'axios';
-import { print } from 'graphql';
-import gql from 'graphql-tag';
 import * as Constants from "../../gql/query";
-import {POST_GRAPHQL_API} from "../../gql/query";
 
 const PostModal = ({closePostModal, post}) => {
 
@@ -21,15 +18,14 @@ const PostModal = ({closePostModal, post}) => {
     }
 
     function deletePost() {
-        const DELETE_POST = gql`
-            mutation {
-                deletePost(input: {
-                    id:postId
-                })
-            }
-        `
+        const DELETE_POST = `mutation {
+        deletePost(input: {
+             id:"`+ postId + `"
+        })}`
+        console.log(DELETE_POST)
         axios.post(Constants.POST_GRAPHQL_API, {
-            query: print(DELETE_POST),
+            query: DELETE_POST},
+        {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
