@@ -34,6 +34,8 @@ const PostModal = ({closePostModal, post}) => {
             })
             .then(res => console.log(res))
             .catch(err => console.log(err))
+        closePostModal();
+        window.location.reload(true);
     }
 
     const thisUser = JSON.parse(localStorage.getItem('userData'));
@@ -51,13 +53,13 @@ const PostModal = ({closePostModal, post}) => {
                             <button onClick={() => closePostModal()}> X</button>
                         </div>
                         <div className={"post-modal-user"}>
-                            <Link to={'/profile'}>
+                            <Link to={'/profile/'+userId}>
                                 <div className={"post-modal-user-image"}>
                                     <img src={user.image} alt={user.username}/>
                                 </div>
                             </Link>
                             <div className={"post-modal-user-caption"}>
-                                <Link to={'/profile'}>
+                                <Link to={'/profile/'+userId}>
                                     <p className={"post-modal-user-nickname"}>
                                         {user.username}
                                         {"\n"}

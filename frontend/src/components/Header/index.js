@@ -27,6 +27,7 @@ export const Header = () => {
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;
+    const user = JSON.parse(localStorage.getItem('userData'))
 
     return (
             <nav>
@@ -38,7 +39,7 @@ export const Header = () => {
                         <a className="title">Onegram</a>
                     </Link>
                     <div className="Post-user-profilepicture profile-image" >
-                        <Link to={'/profile'}>
+                        <Link to={'/profile/'+user.id}>
                             <img src={profilepicture} alt={nickname} />
                         </Link>
                     </div>

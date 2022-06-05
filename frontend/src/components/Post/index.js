@@ -13,6 +13,7 @@ export const Post = (props) => {
     const authorImage = props.authorImage;
     const description = props.description;
     const imagePaths = props.imagePaths;
+    const authorId = props.authorId;
 
     // console.log(authorUsername);
     // console.log(authorImage);
@@ -21,7 +22,7 @@ export const Post = (props) => {
 
     return (
         <article className="Post">
-            <Link to={'/profile'}>
+            <Link to={'/profile/'+authorId}>
                 <div className="Post-user">
 
                     <div className="Post-user-profilepicture">
