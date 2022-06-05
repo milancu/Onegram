@@ -9,7 +9,6 @@ import axios from "axios";
 import * as Constants from "../../gql/query";
 import FollowersModal from "../FollowersModal";
 
-const profileData = JSON.parse(localStorage.getItem('userData'));
 // let userData;
 // if(!profileData){
 //     axios.post(Constants.USER_GRAPHQL_API,
@@ -25,11 +24,21 @@ const profileData = JSON.parse(localStorage.getItem('userData'));
 //     })
 // }
 
-export const Profile = () => {
-    const profileData = JSON.parse(localStorage.getItem('userData'));
+let profilePosts;
+let profileData;
+
+export const Profile = (props) => {
+
+    if(props.currentUser){
+        profileData = JSON.parse(localStorage.getItem('userData'));
+        profilePosts = JSON.parse(localStorage.getItem('userPosts'));
+    } else {
+        profileData = JSON.parse(localStorage.getItem('targetUserData'));
+        profilePosts = JSON.parse(localStorage.getItem('targetUserPosts'));
+
+    }
     const followersData = JSON.parse(localStorage.getItem('followers'));
     const followingData = JSON.parse(localStorage.getItem('following'));
-    const profilePosts = JSON.parse(localStorage.getItem('userPosts'));
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;

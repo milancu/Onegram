@@ -11,6 +11,7 @@ import axios from 'axios';
 import PostModal from "../../components/PostModal";
 import {useParams} from "react-router-dom";
 import Header from "../../components/Header";
+import {GET_TARGET_DATA, GET_TARGET_USER_POSTS} from "../../gql/query";
 
 export const Profile_dashboard = (props) => {
 
@@ -34,9 +35,40 @@ export const Profile_dashboard = (props) => {
     let userPosts;
     let followers;
     let following;
+    let postList;
 
-    console.log(params.id === String(user.id))
-    if(params.id === String(user.id)){
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_FOLLOWING,
+            variables: {
+                userId: params.id //TODO pokud by byl rpoblem s formatem
+            }
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        following = r.data.data.following;
+        localStorage.setItem('following', JSON.stringify(following));
+    })
+
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_FOLLOWERS,
+            variables: {
+                userId: params.id //TODO pokud by byl rpoblem s formatem
+            }
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        followers = r.data.data.followers;
+        localStorage.setItem('followers', JSON.stringify(followers));
+    })
+
+    let currentUser = params.id === String(user.id);
+    if(currentUser){
         axios.post(Constants.POST_GRAPHQL_API,
             {
                 query: Constants.GET_USER_POSTS
@@ -58,39 +90,46 @@ export const Profile_dashboard = (props) => {
                 }
             }).then(r => {
             userData = r.data.data.my;
-            // followers = r.data.data.followers;
-            // following = r.data.data.following;
             localStorage.setItem('userData', JSON.stringify(userData));
-            // localStorage.setItem('followers', JSON.stringify(followers));
-            // localStorage.setItem('following', JSON.stringify(following));
         })
-
-        axios.post(Constants.USER_GRAPHQL_API,
-            {
-                query: Constants.GET_USER_FOLLOWING
-            }, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem('token')
-                }
-            }).then(r => {
-            following = r.data.data.following;
-            localStorage.setItem('following', JSON.stringify(following));
-        })
-
-        axios.post(Constants.USER_GRAPHQL_API,
-            {
-                query: Constants.GET_USER_FOLLOWERS
-            }, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem('token')
-                }
-            }).then(r => {
-            followers = r.data.data.followers;
-            localStorage.setItem('followers', JSON.stringify(followers));
-        })
+        postList = JSON.parse(localStorage.getItem('userPosts'));
     } else {
-
+        let targetUserData;
+        let targetUserPosts;
+        
+        axios.post(Constants.POST_GRAPHQL_API,
+            {
+                query: Constants.GET_TARGET_USER_POSTS,
+                variables: {
+                    author: params.id //TODO pokud by byl rpoblem s formatem
+                }
+            }, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                }
+            }).then(r => {
+            targetUserPosts = r.data.data.userPosts;
+            localStorage.setItem('targetUserPosts', JSON.stringify(targetUserPosts));
+        })
+        axios.post(Constants.USER_GRAPHQL_API,
+            {
+                query: Constants.GET_TARGET_DATA,
+                variables: {
+                    userId: params.id
+                }
+            }, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                }
+            }).then(r => {
+                // console.log(r.data);
+            targetUserData = r.data.data.user;
+            localStorage.setItem('targetUserData', JSON.stringify(targetUserData));
+        })
+        postList = JSON.parse(localStorage.getItem('targetUserPosts'));
     }
+
+
 
 
     return (
@@ -107,10 +146,10 @@ export const Profile_dashboard = (props) => {
             <Header profile={true}/>
 
 
-            <Profile />
+            <Profile currentUser={currentUser}/>
 
             <div className={"postImageContainer"}>
-                {JSON.parse(localStorage.getItem('userPosts')).map(post => (
+                {postList.map(post => (
                     <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} onClick={() => openModal(post)}/>
                 ))}
                 {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}

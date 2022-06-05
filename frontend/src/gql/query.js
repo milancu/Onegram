@@ -15,26 +15,6 @@ export const GET_USER_DATA = `
     }
 `;
 
-export const GET_USER_FOLLOWING = `
-    {
-        following(userId: 1){
-            id
-            image
-            username
-        }
-    }
-`;
-
-export const GET_USER_FOLLOWERS = `
-    {
-        followers(userId: 1){
-            id
-            image
-            username
-         }
-    }
-`;
-
 export const GET_USERS = `
 query{
     users{
@@ -136,4 +116,63 @@ export const GET_USER_POSTS = `
         }
    }
 }
+`;
+
+export const GET_TARGET_USER_POSTS = `
+   query userPosts($author: Int!)
+   {   
+   userPosts(author: $author) {
+      id
+      imagePaths
+      comments {
+         id
+         content
+         authorId
+         subComments {
+            id
+            content
+            authorId
+         }
+      }
+      authorId
+      description
+      likes{
+        authorId
+        }
+   }
+}
+`;
+
+export const GET_USER_FOLLOWING = `
+    query following($userId: Int!){{
+        following(userId: $userId){
+            id
+            image
+            username
+        }
+    }
+`;
+
+export const GET_USER_FOLLOWERS = `
+    query followers($userId: Int!){
+        followers(userId: $userId){
+            id
+            image
+            username
+         }
+    }
+`;
+
+export const GET_TARGET_DATA = `
+    query user($userId: Int!){
+        user(userId: $userId){
+            id
+            username
+            email
+            bio
+            link
+            image
+            isPublic
+        }
+    }
 `;
