@@ -6,7 +6,6 @@ import './profile_dashboard.css';
 import Profile from '../../components/Profile';
 import Footer from "../../components/Footer";
 import Profile_header from "../../components/Profile_header";
-import ModalFollowing from "./ModalFollowing.js";
 import { useState, useEffect} from "react";
 import * as Constants from '../../gql/query';
 import axios from 'axios';

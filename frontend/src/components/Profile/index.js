@@ -2,13 +2,12 @@
 
 import React from "react";
 import "./profile.css";
-import ModalFollowing from "../../pages/Profile_dashboard/ModalFollowing.js";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import {useState, useMemo, useEffect} from "react";
-import ModalFollowers from "../../pages/Profile_dashboard/ModalFollowers";
 import axios from "axios";
 import * as Constants from "../../gql/query";
+import FollowersModal from "../FollowersModal";
 
 const profileData = JSON.parse(localStorage.getItem('userData'));
 // let userData;
@@ -40,14 +39,21 @@ export const Profile = () => {
     const followers = followersData.length;
     const postsNumber = profilePosts.length;
 
-    const[openFollowersModal, setOpenFollowingModal] = useState(false);
-    const[openFollowsModal, setOpenFollowsModal] = useState(false);
+    const [modalState, setModalState] = useState(null);
+    const [openFollowingModal, setOpenFollowingModal] = useState(false);
+    const [openFollowersModal, setOpenFollowersModal] = useState(false);
 
     return (
         <section className="profile-description">
             <div className={"modal-windows"}>
-                {openFollowsModal && <ModalFollowing close={setOpenFollowsModal}/>}
-                {openFollowersModal && <ModalFollowers close={setOpenFollowingModal}/>}
+                {openFollowersModal && <FollowersModal
+                    closeFollowersModal={setOpenFollowersModal}
+                    modalState={modalState}
+                />}
+                {openFollowingModal && <FollowersModal
+                    closeFollowersModal={setOpenFollowingModal}
+                    modalState={modalState}
+                />}
             </div>
             <div className="profile-photo">
                 <div className={"profile-main"}>
@@ -73,14 +79,20 @@ export const Profile = () => {
                     <p>{postsNumber}</p>
                 </div>
 
-                <div className={"statsContainer"} >
+                <div className={"statsContainer follows"} onClick={() => {
+                    setOpenFollowingModal(true);
+                    setModalState("followers")
+                }}>
                     <a id={"followers-link"}>Followers</a>
-                    <p onClick={() => {setOpenFollowingModal(true)}}>{followers}</p>
+                    <p>{followers}</p>
                 </div>
 
-                <div className={"statsContainer"} >
+                <div className={"statsContainer follows"} onClick={() => {
+                    setOpenFollowersModal(true);
+                    setModalState("following")
+                }}>
                     <a id={"follows-link"}>Follows</a>
-                    <p onClick={() => {setOpenFollowsModal(true)}}>{follows}</p>
+                    <p>{follows}</p>
                 </div>
             </div>
         </section>

@@ -1,0 +1,41 @@
+.followers-modal-background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(64, 64, 64, 90%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.followers-modal-container {
+    width: 30%;
+    height: 70%;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    padding: 5px;
+}
+
+.followers-modal-close-button {
+    height: 10%;
+}
+
+.followers-modal-close-button button {
+    float: right;
+    margin: 5px 5px 0 0;
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.followers-modal-follows {
+    height: 90%;
+    width: 95%;
+    margin: auto;
+    clear: both;
+    overflow: auto;
+}
