@@ -64,3 +64,8 @@
 .follows :hover {
     cursor: pointer;
 }
+
+.center-button{
+    display: flex;
+    justify-content: center;
+}
