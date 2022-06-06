@@ -11,3 +11,8 @@ export const CREATE_POST = `
         }
     }
 `;
+
+export const CREATE_COMMENT = `
+    mutation {
+        createComment(
+`;
