@@ -33,6 +33,9 @@ export const Header = (props) => {
     const profilepicture = profileData.image;
     const user = JSON.parse(localStorage.getItem('userData'))
 
+    const params = useParams();
+    let pesrsonNavigate = props.profile && String(profileData.id) === params.id;
+
     return (
         <nav className={"profile-header header-line"}>
             <Link to={'/'}>
@@ -41,7 +44,7 @@ export const Header = (props) => {
             <Link to={'/search'}>
                 <a className="title">Onegram</a>
             </Link>
-            {props.profile
+            {pesrsonNavigate
                 ? <div className={"other-options"}>
                     {/*// TODO add new post*/}
                     <Link to={'/add'}>
