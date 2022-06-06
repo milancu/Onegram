@@ -3,26 +3,10 @@
 import React from "react";
 import "./profile.css";
 import {useParams} from "react-router-dom";
-
 import {useState} from "react";
 import axios from "axios";
 import * as Constants from "../../gql/query";
 import FollowersModal from "../FollowersModal";
-
-// let userData;
-// if(!profileData){
-//     axios.post(Constants.USER_GRAPHQL_API,
-//         {
-//             query: Constants.GET_USER_DATA
-//         }, {
-//             headers: {
-//                 "Authorization": "Bearer " + localStorage.getItem('token')
-//             }
-//         }).then(r => {
-//         userData = r.data.data.my;
-//         localStorage.setItem('userData', JSON.stringify(userData));
-//     })
-// }
 
 let profilePosts;
 let profileData;
@@ -88,8 +72,6 @@ export const Profile = (props) => {
             break;
         }
     }
-    console.log('/////////////////////////////')
-    console.log(followButton);
 
     let currentUser = params.id === String(user.id);
     let followersData;
@@ -145,7 +127,7 @@ export const Profile = (props) => {
                 <div className="profile-info">
                     <div className="Profile-bio"><p>{description}</p></div>
                     <div className="Profile-web">
-                        {/*TODO nefunguje*/}
+                        {/*TODO oprav*/}
                         <a href={'/profile'}>
                             <p id={"webLinkUrl"}>{webLinkUrl}</p>
                         </a>

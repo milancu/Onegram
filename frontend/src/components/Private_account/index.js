@@ -2,10 +2,7 @@ import React from "react";
 import lock from "../../images/lock.png";
 import './private.css';
 
-export const Private_account = (props) => {
-
-    console.log('hello')
-
+export const Private_account = () => {
     return (
         <div className={"private-account"}>
             <img className={"lock"} src={lock} alt={"private profile"} />

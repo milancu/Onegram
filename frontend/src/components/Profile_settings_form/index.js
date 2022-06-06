@@ -5,8 +5,6 @@ import axios from "axios";
 import * as Constants from "../../gql/query";
 import ImageUploading from "react-images-uploading";
 
-import logo from "../../images/logo.png";
-
 export const Profile_settings_form = () => {
 
     let data = JSON.parse(localStorage.getItem('userData'));
@@ -18,9 +16,6 @@ export const Profile_settings_form = () => {
     function SaveChanges() {
         let formData = new FormData();
 
-        // let description = document.getElementById('description').value;
-        // const query = `{"query":"mutation {\\n\\tcreatePost(input:{\\n\\t\\tdescription:\\"` + description + `\\"\\n\\t}){\\n\\t\\tid\\n\\t}\\n}"}`;
-        console.log(images[0])
         if (images[0]) {
             const query = `{"query":"mutation{\\n\\tsetProfilePhoto\\n}"}`
             formData.append("operations", query);
@@ -37,7 +32,6 @@ export const Profile_settings_form = () => {
         editLink(input:{
              link:"` + potencialNewLink + `"
         })}`
-            console.log(CHANGE_LINK)
             axios.post(Constants.USER_GRAPHQL_API, {
                     query: CHANGE_LINK
                 },
@@ -57,7 +51,6 @@ export const Profile_settings_form = () => {
         editUsername(input:{
              bio:"` + potencialNewUsername + `"
         })}`
-            console.log(CHANGE_USERNAME)
             axios.post(Constants.USER_GRAPHQL_API, {
                     query: CHANGE_USERNAME
                 },
@@ -76,7 +69,6 @@ export const Profile_settings_form = () => {
         editBio(input:{
              bio:"` + potencialNewBio + `"
         })}`
-            console.log(CHANGE_BIO)
             axios.post(Constants.USER_GRAPHQL_API, {
                     query: CHANGE_BIO
                 },
@@ -92,19 +84,15 @@ export const Profile_settings_form = () => {
 
     const [images, setImages] = React.useState([]);
     const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
-        // console.log(imageList, addUpdateIndex);
         setImages(imageList);
     };
 
-// TODO asynchronne
+// TODO asynchronne + nastaveni private uctu
     if (isPublic) {
         let switchPublic = document.querySelector('#isPublicInput');
-        // console.log(switchPublic)
         if (switchPublic) {
             switchPublic.checked = true
         }
-        // switchPublic.checked = true
     }
 
     let requestsData;
@@ -117,10 +105,8 @@ export const Profile_settings_form = () => {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         }).then(r => {
-        // console.log(r)
         requestsData = r.data.data.followRequests;
         localStorage.setItem('requestsData', JSON.stringify(requestsData));
-        // console.log(requestsData);
     })
 
     return (
@@ -128,8 +114,7 @@ export const Profile_settings_form = () => {
             <label htmlFor="username">Username:</label><br/>
             <input type="text" id="username" name="username" defaultValue={username}/><br/>
             <label htmlFor="bio">Bio:</label><br/>
-            <textarea id="bio" name="bio" rows="8" cols="50" maxlength={255}>
-                {bio}
+            <textarea id="bio" name="bio" rows="8" cols="50" maxLength={255} defaultValue={bio}>
             </textarea><br/>
             <label htmlFor="link">Link:</label><br/>
             <input type="text" id="link" name="link" defaultValue={link}/><br/>
@@ -150,7 +135,6 @@ export const Profile_settings_form = () => {
                               isDragging,
                               dragProps
                           }) => (
-                            // write your building UI
                             <div className="upload__image-wrapper">
                                 <button
                                     style={isDragging ? {color: "blue"} : null}

@@ -1,12 +1,10 @@
 import React from "react"
 import "./followersModal.css"
 import Single_follow from "../Single_follow";
-import {useEffect} from 'react';
 
-const FollowersModal = ({type, closeFollowersModal, modalState}) => {
+const FollowersModal = ({closeFollowersModal, modalState}) => {
 
     const followingData = JSON.parse(localStorage.getItem('following'));
-    // console.log(followingData)
     let displayData = JSON.parse(localStorage.getItem(modalState));
 
     for (let i = 0; i < displayData.length; i++) {
@@ -18,10 +16,7 @@ const FollowersModal = ({type, closeFollowersModal, modalState}) => {
             }
         }
     }
-
-
     localStorage.setItem("displayData", JSON.stringify(displayData));
-    // console.log(JSON.parse(localStorage.getItem("displayData")));
 
     return (
         <div className={"followers-modal-background"}>

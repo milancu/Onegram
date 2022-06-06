@@ -1,4 +1,3 @@
-export * from '../components/ErrorBoundary'
 export * from '../components/Follow_requests'
 export * from './Message_detail'
 export * from './Messages'

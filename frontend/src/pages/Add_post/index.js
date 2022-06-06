@@ -6,9 +6,6 @@ import ImageUploading from "react-images-uploading";
 import * as Constants from "../../gql/query";
 
 
-
-
-
 export const Add_post = () => {
 
     function addNewPost() {
@@ -19,7 +16,6 @@ export const Add_post = () => {
         let formData = new FormData();
         formData.append("operations", query);
         formData.append("file", images[0].file);
-        // console.log(images[0].file)
 
         let xhr = new XMLHttpRequest();
         xhr.open('POST', Constants.POST_GRAPHQL_API, true);
@@ -34,13 +30,8 @@ export const Add_post = () => {
 
     const [images, setImages] = React.useState([]);
     const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
-        // console.log(imageList, addUpdateIndex);
         setImages(imageList);
     };
-
-    // console.log(images[0]);
-
 
     return (
         <div>
@@ -58,7 +49,6 @@ export const Add_post = () => {
                               isDragging,
                               dragProps
                           }) => (
-                            // write your building UI
                             <div className="upload__image-wrapper">
                                 <button
                                     style={isDragging ? {color: "blue"} : null}
@@ -82,10 +72,6 @@ export const Add_post = () => {
             </form>
             <Footer/>
         </div>
-
-
-
-        //    TODO save button
     );
 }
 

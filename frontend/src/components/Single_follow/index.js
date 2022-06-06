@@ -3,9 +3,6 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import * as Constants from "../../gql/query";
 
-const testname = "Buri"
-const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
-
 export const Single_follow = ({follow}) => {
 
     function unfollowUser() {
@@ -65,7 +62,6 @@ export const Single_follow = ({follow}) => {
                     {follow.username}
                 </Link>
             </div>
-            {/*TODO button follow, unfollow / podle reality*/}
             <div className={'center-height'}>
                 {follow.followed ? <button className={'follow-button'} onClick={unfollowUser}>
                         Unfollow
