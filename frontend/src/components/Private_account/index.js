@@ -4,6 +4,7 @@ import './private.css';
 
 export const Private_account = (props) => {
 
+    console.log('hello')
 
     return (
         <div className={"private-account"}>
