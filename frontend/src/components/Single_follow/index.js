@@ -5,6 +5,7 @@ const testname = "Buri"
 const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
 
 export const Single_follow = ({follow}) => {
+
     return (
         <div className={"follower-box"}>
             <div className="modal-profile-photo">
@@ -28,7 +29,6 @@ export const Single_follow = ({follow}) => {
                     Follow
                 </button>
             </div>
-
         </div>
     );
 }

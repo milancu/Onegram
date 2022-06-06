@@ -126,7 +126,7 @@ export const Profile_dashboard = (props) => {
             let requestingUser = JSON.parse(localStorage.getItem('userData')).id;
             // console.log(requestingUser)
             if (targetUserData.isPublic) {
-                console.log(targetUserData.username + " is public")
+                // console.log(targetUserData.username + " is public")
                 localStorage.setItem("acces","true");
             } else {
                 const followControl = JSON.parse(localStorage.getItem('targetFollowers'));
