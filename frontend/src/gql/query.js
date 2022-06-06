@@ -144,7 +144,7 @@ export const GET_TARGET_USER_POSTS = `
 `;
 
 export const GET_USER_FOLLOWING = `
-    query following($userId: Int!){{
+    query following($userId: Int!){
         following(userId: $userId){
             id
             image

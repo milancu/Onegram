@@ -2,7 +2,7 @@
 
 import React from "react";
 import "./profile.css";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import {useState, useMemo, useEffect} from "react";
 import axios from "axios";
@@ -37,8 +37,19 @@ export const Profile = (props) => {
         profilePosts = JSON.parse(localStorage.getItem('targetUserPosts'));
 
     }
-    const followersData = JSON.parse(localStorage.getItem('followers'));
-    const followingData = JSON.parse(localStorage.getItem('following'));
+
+    const params = useParams();
+    const user = JSON.parse(localStorage.getItem('userData'))
+    let currentUser = params.id === String(user.id);
+    let followersData;
+    let followingData;
+    if(currentUser){
+        followersData = JSON.parse(localStorage.getItem('followers'));
+        followingData = JSON.parse(localStorage.getItem('following'));
+    } else {
+        followersData = JSON.parse(localStorage.getItem('targetFollowers'));
+        followingData = JSON.parse(localStorage.getItem('targetFollowing'));
+    }
 
     const nickname = profileData.username;
     const profilepicture = profileData.image;

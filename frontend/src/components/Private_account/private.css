@@ -1,0 +1,12 @@
+.private-account{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lock{
+    display: flex;
+    align-self: center;
+    width: 400px;
+    height: 400px;
+}
