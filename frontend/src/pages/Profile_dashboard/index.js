@@ -1,17 +1,17 @@
 // src/pages/Profile_dashboard/index.js
 
-import React, {Component} from 'react';
+import React from 'react';
 import '../../App.css';
 import './profile_dashboard.css';
 import Profile from '../../components/Profile';
 import Footer from "../../components/Footer";
-import { useState, useEffect} from "react";
+import {useState} from "react";
 import * as Constants from '../../gql/query';
 import axios from 'axios';
 import PostModal from "../../components/PostModal";
+import Private_account from "../../components/Private_account";
 import {useParams} from "react-router-dom";
 import Header from "../../components/Header";
-import {GET_TARGET_DATA, GET_TARGET_USER_POSTS} from "../../gql/query";
 
 export const Profile_dashboard = (props) => {
 
@@ -145,8 +145,9 @@ export const Profile_dashboard = (props) => {
 
             <Header profile={true}/>
 
-
             <Profile currentUser={currentUser}/>
+
+            <Private_account />
 
             <div className={"postImageContainer"}>
                 {postList.map(post => (

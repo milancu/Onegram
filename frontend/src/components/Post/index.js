@@ -1,8 +1,7 @@
 // src/components/Post/index.js
 
-import React, {Component, useEffect, useRef} from "react";
+import React from "react";
 import "./Post.css";
-import logo from "../../images/logo.png";
 import LikeButton from "../LikeButton";
 import Comments from "../Comments";
 import {Link} from "react-router-dom";
