@@ -1,7 +1,6 @@
 // src.pages/index.js
 
-import React, {Component, useRef} from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import '../../App.css';
 import {
     Post,
@@ -10,9 +9,6 @@ import {
 } from "../../pages";
 import axios from "axios";
 import * as Constants from "../../gql/query";
-import {GET_MY_FOLLOWING} from "../../gql/query";
-import {Link} from "react-router-dom";
-import Single_message from "../../components/Single_message";
 
 const testImage = "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg"
 

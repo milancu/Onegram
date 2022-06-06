@@ -131,13 +131,15 @@ export const Profile_dashboard = (props) => {
             } else {
                 const followControl = JSON.parse(localStorage.getItem('targetFollowers'));
 
+                let help = false
                 followControl.forEach(f => {
                     if (f.id === requestingUser) {
                         localStorage.setItem("acces", "true");
+                        help = true;
                     }
                 })
 
-                if(!localStorage.getItem("acces")){
+                if(!help){
                     localStorage.setItem("acces", "")
                 }
                 // console.log(localStorage.getItem("acces", "true"))
@@ -145,6 +147,8 @@ export const Profile_dashboard = (props) => {
             localStorage.setItem('targetUserData', JSON.stringify(targetUserData));
 
         })
+        let acces = localStorage.getItem("acces")
+        console.log(acces)
         if(localStorage.getItem("acces")){
             axios.post(Constants.POST_GRAPHQL_API,
                 {
@@ -165,6 +169,7 @@ export const Profile_dashboard = (props) => {
     }
 
     let acces = localStorage.getItem("acces")
+
 
     return (
         <div className="App">

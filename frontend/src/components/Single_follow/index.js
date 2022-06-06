@@ -25,9 +25,14 @@ export const Single_follow = ({follow}) => {
             </div>
             {/*TODO button follow, unfollow / podle reality*/}
             <div className={'center-height'}>
-                <button className={'follow-button'}>
-                    Follow
-                </button>
+                {follow.followed ? <button className={'follow-button'}>
+                        Unfollow
+                    </button> :
+                    <button className={'follow-button'}>
+                        Follow
+                    </button>
+                }
+
             </div>
         </div>
     );
