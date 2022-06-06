@@ -57,10 +57,10 @@ const Comments = (props) => {
             <hr />
             <CommentForm submitLabel="Comment" handleSubmit={addComment}/>
             <div className="comments_container">
-                {rootComments.map(rootComment => (
-                    <Comment key={rootComment.id}
-                             comment={rootComment}
-                             replies={getReplies(rootComment.id)}
+                {postComments.map(postComment => (
+                    <Comment key={postComment.id}
+                             comment={postComment}
+                             replies={postComment.subComments}
                              deleteComment={deleteComment}
                              activeComment={activeComment}
                              setActiveComment={setActiveComment}

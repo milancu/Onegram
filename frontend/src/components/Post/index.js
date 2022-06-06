@@ -13,6 +13,7 @@ export const Post = (props) => {
     const description = props.description;
     const imagePaths = props.imagePaths;
     const authorId = props.authorId;
+    const comments = props.comments;
 
     // console.log(authorUsername);
     // console.log(authorImage);
@@ -49,25 +50,26 @@ export const Post = (props) => {
             </div>
 
             <div className="Post-comments">
-                <Comments comments={[
-                    {
-                        "id": 1,
-                        "parentId": null,
-                        "content": "hi",
-                        "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-                        "username": "John D. Veloper",
-                        "likeAmount": 5
-                    },
-                    {
-                        "id": 2,
-                        "parentId": 1,
-                        "content": "reply",
-                        "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-                        "username": "John D. Veloper",
-                        "likeAmount": 3
-                    }
-                ]}
-                />
+                {/*<Comments comments={[*/}
+                {/*    {*/}
+                {/*        "id": 1,*/}
+                {/*        "parentId": null,*/}
+                {/*        "content": "hi",*/}
+                {/*        "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",*/}
+                {/*        "username": "John D. Veloper",*/}
+                {/*        "likeAmount": 5*/}
+                {/*    },*/}
+                {/*    {*/}
+                {/*        "id": 2,*/}
+                {/*        "parentId": 1,*/}
+                {/*        "content": "reply",*/}
+                {/*        "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",*/}
+                {/*        "username": "John D. Veloper",*/}
+                {/*        "likeAmount": 3*/}
+                {/*    }*/}
+                {/*]}*/}
+                {/*/>*/}
+                {<Comments comments={comments}/>}
             </div>
         </article>
     );
