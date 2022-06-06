@@ -10,6 +10,7 @@ export const Private_account = (props) => {
             <img className={"lock"} src={lock} alt={"private profile"} />
             <h2>This account is private</h2>
             <h4>Follow this account to see their photos</h4>
+            <br/>
         </div>
     );
 }

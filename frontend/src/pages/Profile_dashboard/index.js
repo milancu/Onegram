@@ -37,6 +37,8 @@ export const Profile_dashboard = (props) => {
     let following;
     let postList;
 
+    let currentUser = params.id === String(user.id);
+
     axios.post(Constants.USER_GRAPHQL_API,
         {
             query: Constants.GET_USER_FOLLOWING,
@@ -48,8 +50,14 @@ export const Profile_dashboard = (props) => {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         }).then(r => {
+        // console.log(r.data)
         following = r.data.data.following;
-        localStorage.setItem('following', JSON.stringify(following));
+        if(currentUser){
+            localStorage.setItem('following', JSON.stringify(following));
+        } else {
+            localStorage.setItem('targetFollowing', JSON.stringify(following));
+        }
+
     })
 
     axios.post(Constants.USER_GRAPHQL_API,
@@ -64,11 +72,15 @@ export const Profile_dashboard = (props) => {
             }
         }).then(r => {
         followers = r.data.data.followers;
-        localStorage.setItem('followers', JSON.stringify(followers));
+        if(currentUser){
+            localStorage.setItem('followers', JSON.stringify(followers));
+        } else {
+            localStorage.setItem('targetFollowers', JSON.stringify(followers));
+        }
+
     })
 
-    let currentUser = params.id === String(user.id);
-    if(currentUser){
+    if (currentUser) {
         axios.post(Constants.POST_GRAPHQL_API,
             {
                 query: Constants.GET_USER_POSTS
@@ -93,24 +105,11 @@ export const Profile_dashboard = (props) => {
             localStorage.setItem('userData', JSON.stringify(userData));
         })
         postList = JSON.parse(localStorage.getItem('userPosts'));
+        localStorage.setItem("acces", "true");
     } else {
         let targetUserData;
         let targetUserPosts;
-        
-        axios.post(Constants.POST_GRAPHQL_API,
-            {
-                query: Constants.GET_TARGET_USER_POSTS,
-                variables: {
-                    author: params.id //TODO pokud by byl rpoblem s formatem
-                }
-            }, {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem('token')
-                }
-            }).then(r => {
-            targetUserPosts = r.data.data.userPosts;
-            localStorage.setItem('targetUserPosts', JSON.stringify(targetUserPosts));
-        })
+
         axios.post(Constants.USER_GRAPHQL_API,
             {
                 query: Constants.GET_TARGET_DATA,
@@ -122,15 +121,50 @@ export const Profile_dashboard = (props) => {
                     "Authorization": "Bearer " + localStorage.getItem('token')
                 }
             }).then(r => {
-                // console.log(r.data);
             targetUserData = r.data.data.user;
+
+            let requestingUser = JSON.parse(localStorage.getItem('userData')).id;
+            // console.log(requestingUser)
+            if (targetUserData.isPublic) {
+                console.log(targetUserData.username + " is public")
+                localStorage.setItem("acces","true");
+            } else {
+                const followControl = JSON.parse(localStorage.getItem('targetFollowers'));
+
+                followControl.forEach(f => {
+                    if (f.id === requestingUser) {
+                        localStorage.setItem("acces", "true");
+                    }
+                })
+
+                if(!localStorage.getItem("acces")){
+                    localStorage.setItem("acces", "")
+                }
+                // console.log(localStorage.getItem("acces", "true"))
+            }
             localStorage.setItem('targetUserData', JSON.stringify(targetUserData));
+
         })
-        postList = JSON.parse(localStorage.getItem('targetUserPosts'));
+        if(localStorage.getItem("acces")){
+            axios.post(Constants.POST_GRAPHQL_API,
+                {
+                    query: Constants.GET_TARGET_USER_POSTS,
+                    variables: {
+                        author: params.id //TODO pokud by byl rpoblem s formatem
+                    }
+                }, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                }).then(r => {
+                targetUserPosts = r.data.data.userPosts;
+                localStorage.setItem('targetUserPosts', JSON.stringify(targetUserPosts));
+            })
+            postList = JSON.parse(localStorage.getItem('targetUserPosts'));
+        }
     }
 
-
-
+    let acces = localStorage.getItem("acces")
 
     return (
         <div className="App">
@@ -147,15 +181,18 @@ export const Profile_dashboard = (props) => {
 
             <Profile currentUser={currentUser}/>
 
-            <Private_account />
+            {acces ?
+                <div className={"postImageContainer"}>
+                    {postList.map(post => (
+                        <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description}
+                             onClick={() => openModal(post)}/>
+                    ))}
+                    {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
+                </div> :
+                <Private_account/>
+            }
 
-            <div className={"postImageContainer"}>
-                {postList.map(post => (
-                    <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description} onClick={() => openModal(post)}/>
-                ))}
-                {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
-            </div>
-            <Footer />
+            <Footer/>
         </div>
     )
 }
