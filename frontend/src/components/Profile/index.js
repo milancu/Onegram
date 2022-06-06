@@ -2,9 +2,9 @@
 
 import React from "react";
 import "./profile.css";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
-import {useState, useMemo, useEffect} from "react";
+import {useState} from "react";
 import axios from "axios";
 import * as Constants from "../../gql/query";
 import FollowersModal from "../FollowersModal";
@@ -29,24 +29,75 @@ let profileData;
 
 export const Profile = (props) => {
 
-    if(props.currentUser){
+    if (props.currentUser) {
         profileData = JSON.parse(localStorage.getItem('userData'));
         profilePosts = JSON.parse(localStorage.getItem('userPosts'));
     } else {
         profileData = JSON.parse(localStorage.getItem('targetUserData'));
         profilePosts = JSON.parse(localStorage.getItem('targetUserPosts'));
+    }
 
+    function unfollowUser() {
+        const UNFOLLOW_USER = `
+        mutation UNFOLLOW_USER{
+            unFollowUser(input:{
+                userId:` + params.id + `
+            })
+        }
+        `;
+        axios.post(Constants.USER_GRAPHQL_API, {
+                query: UNFOLLOW_USER
+            },
+            {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                }
+            })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
+
+    function followUser() {
+        const FOLLOW_USER = `
+        mutation FOLLOW_USER{
+            followUser(input:{
+                userId:` + params.id + `
+            })
+        }
+        `;
+        axios.post(Constants.USER_GRAPHQL_API, {
+                query: FOLLOW_USER
+            },
+            {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                }
+            })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
     }
 
     const params = useParams();
     const user = JSON.parse(localStorage.getItem('userData'))
+    let showButton = !(String(user.id) === params.id);
+    const followsButtonControl = JSON.parse(localStorage.getItem('following'));
+    let followButton = false;
+    for (let i = 0; i < followsButtonControl.length; i++) {
+        if (String(followsButtonControl[i].id) === params.id) {
+            followButton = true;
+            break;
+        }
+    }
+    console.log('/////////////////////////////')
+    console.log(followButton);
+
     let currentUser = params.id === String(user.id);
     let followersData;
     let followingData;
     let modalFollowerState;
     let modalFollowingState;
 
-    if(currentUser){
+    if (currentUser) {
         followersData = JSON.parse(localStorage.getItem('followers'));
         followingData = JSON.parse(localStorage.getItem('following'));
         modalFollowerState = "followers";
@@ -100,6 +151,20 @@ export const Profile = (props) => {
                         </a>
                     </div>
 
+                    {showButton ? followButton ?
+                            <div className={"center-button"}>
+                                <button id={'submit'} className={"accept-button"} type={"button"} onClick={unfollowUser}>
+                                    Unfollow
+                                </button>
+                            </div> :
+                            <div className={"center-button"}>
+                                <button id={'submit'} className={"accept-button"} type={"button"} onClick={followUser}>
+                                    Follow
+                                </button>
+                            </div>
+                        : ""
+                    }
+
                 </div>
                 <div className="profile-stats">
                     <div className={"statsContainer"}>
@@ -123,6 +188,7 @@ export const Profile = (props) => {
                         <p>{follows}</p>
                     </div>
                 </div>
+
             </div>
         </section>
     )
