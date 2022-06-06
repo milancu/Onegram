@@ -27,6 +27,7 @@ query{
 export const GET_MY_FOLLOW_REQUESTS = `
     {
   followRequests{
+    id
     createdAtDate
     createdAtTime
     sender{
