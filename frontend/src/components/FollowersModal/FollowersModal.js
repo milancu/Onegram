@@ -2,7 +2,7 @@ import React from "react"
 import "./followersModal.css"
 import Single_follow from "../Single_follow";
 
-const FollowersModal = ({closeFollowersModal, modalState}) => {
+const FollowersModal = ({type, closeFollowersModal, modalState}) => {
 
     return (
         <div className={"followers-modal-background"} >

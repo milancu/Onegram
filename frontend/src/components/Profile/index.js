@@ -43,12 +43,19 @@ export const Profile = (props) => {
     let currentUser = params.id === String(user.id);
     let followersData;
     let followingData;
+    let modalFollowerState;
+    let modalFollowingState;
+
     if(currentUser){
         followersData = JSON.parse(localStorage.getItem('followers'));
         followingData = JSON.parse(localStorage.getItem('following'));
+        modalFollowerState = "followers";
+        modalFollowingState = "following";
     } else {
         followersData = JSON.parse(localStorage.getItem('targetFollowers'));
         followingData = JSON.parse(localStorage.getItem('targetFollowing'));
+        modalFollowerState = "targetFollowers";
+        modalFollowingState = "targetFollowing";
     }
 
     const nickname = profileData.username;
@@ -102,7 +109,7 @@ export const Profile = (props) => {
 
                     <div className={"statsContainer"} onClick={() => {
                         setOpenFollowingModal(true);
-                        setModalState("followers")
+                        setModalState(modalFollowerState)
                     }}>
                         <p id={"followers-link"}>Followers</p>
                         <p>{followers}</p>
@@ -110,7 +117,7 @@ export const Profile = (props) => {
 
                     <div className={"statsContainer"} onClick={() => {
                         setOpenFollowersModal(true);
-                        setModalState("following")
+                        setModalState(modalFollowingState)
                     }}>
                         <p id={"follows-link"}>Follows</p>
                         <p>{follows}</p>
