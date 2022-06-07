@@ -8,9 +8,8 @@ import {Profile_dashboard,
     Message_detail, Add_post} from "./pages";
 import {Route, Routes} from "react-router-dom";
 
-// import {UserRoutes} from "./routes/UserRoutes.js";
-
 export const App = () => {
+
     return (
         <div>
             <Routes>

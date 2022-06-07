@@ -41,6 +41,10 @@ Aplikaci jsme vyvinuli s použitím mikroservisní architektury.
 
 User mikroservisu jsme s Postgre nasadili na Heroku. Zbytek včetně FE není nasazený. Po přihlášení lze z URL vytáhnout JWT token a provolat API User mikroservisy. [Odkaz na Heroku](http://nss-onegram.herokuapp.com/).
 
+Obrázek popisuje způsob, jakým bychom deploynuli appku celou.
+
+![](./deployment_diagram.png)
+
 # Co jsme zkusili použít ale nedotáhli do konce, protože se nám to nepovedlo
 
 Původně jsme chtěli jako vstupní bod pro aplikaci použít API Gateway pattern. To se nám ale nakonec nepodařilo a nedodělali jsme to. Chtěli jsme pro to použít Spring Cloud Gateway.

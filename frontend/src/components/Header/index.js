@@ -4,28 +4,10 @@ import React from "react";
 import "./Header.css";
 import logo from '../../images/logo.png'
 import {Link} from "react-router-dom";
-import axios from "axios";
-import * as Constants from "../../gql/query";
 import addIcon from "../../images/add.png";
 import messagesIcon from "../../images/messages.png";
 import settingsIcon from "../../images/settings.png";
 import {useParams} from "react-router-dom";
-
-const profileData = JSON.parse(localStorage.getItem('userData'));
-// let userData;
-// if(!profileData){
-//     axios.post(Constants.USER_GRAPHQL_API,
-//         {
-//             query: Constants.GET_USER_DATA
-//         }, {
-//             headers: {
-//                 "Authorization": "Bearer " + localStorage.getItem('token')
-//             }
-//         }).then(r => {
-//         userData = r.data.data.my;
-//         localStorage.setItem('userData', JSON.stringify(userData));
-//     })
-// }
 
 export const Header = (props) => {
     const profileData = JSON.parse(localStorage.getItem('userData'));
@@ -33,15 +15,18 @@ export const Header = (props) => {
     const profilepicture = profileData.image;
     const user = JSON.parse(localStorage.getItem('userData'))
 
+    const params = useParams();
+    let pesrsonNavigate = props.profile && String(profileData.id) === params.id;
+
     return (
         <nav className={"profile-header header-line"}>
             <Link to={'/'}>
                 <img className="logo" src={logo} alt="Logo"/>
             </Link>
             <Link to={'/search'}>
-                <a className="title">Onegram</a>
+                <p className="title">Onegram</p>
             </Link>
-            {props.profile
+            {pesrsonNavigate
                 ? <div className={"other-options"}>
                     {/*// TODO add new post*/}
                     <Link to={'/add'}>
@@ -58,9 +43,7 @@ export const Header = (props) => {
                         <img src={profilepicture} alt={nickname} />
                     </Link>
                 </div>
-
             }
-
         </nav>
     );
 }

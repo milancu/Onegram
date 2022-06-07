@@ -13,7 +13,7 @@ import Private_account from "../../components/Private_account";
 import {useParams} from "react-router-dom";
 import Header from "../../components/Header";
 
-export const Profile_dashboard = (props) => {
+export const Profile_dashboard = () => {
 
     const params = useParams();
     const user = JSON.parse(localStorage.getItem('userData'))
@@ -43,14 +43,13 @@ export const Profile_dashboard = (props) => {
         {
             query: Constants.GET_USER_FOLLOWING,
             variables: {
-                userId: params.id //TODO pokud by byl rpoblem s formatem
+                userId: params.id
             }
         }, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem('token')
             }
         }).then(r => {
-        // console.log(r.data)
         following = r.data.data.following;
         if(currentUser){
             localStorage.setItem('following', JSON.stringify(following));
@@ -124,23 +123,22 @@ export const Profile_dashboard = (props) => {
             targetUserData = r.data.data.user;
 
             let requestingUser = JSON.parse(localStorage.getItem('userData')).id;
-            // console.log(requestingUser)
             if (targetUserData.isPublic) {
-                console.log(targetUserData.username + " is public")
                 localStorage.setItem("acces","true");
             } else {
                 const followControl = JSON.parse(localStorage.getItem('targetFollowers'));
 
+                let help = false
                 followControl.forEach(f => {
                     if (f.id === requestingUser) {
                         localStorage.setItem("acces", "true");
+                        help = true;
                     }
                 })
 
-                if(!localStorage.getItem("acces")){
+                if(!help){
                     localStorage.setItem("acces", "")
                 }
-                // console.log(localStorage.getItem("acces", "true"))
             }
             localStorage.setItem('targetUserData', JSON.stringify(targetUserData));
 
@@ -166,6 +164,7 @@ export const Profile_dashboard = (props) => {
 
     let acces = localStorage.getItem("acces")
 
+
     return (
         <div className="App">
 
@@ -187,7 +186,6 @@ export const Profile_dashboard = (props) => {
                         <img className={"profileDashboardPhoto"} src={post.imagePaths} alt={post.description}
                              onClick={() => openModal(post)}/>
                     ))}
-                    {/*<img className={"profileDashboardPhoto"} src={testImage} alt={"randomPic"} />*/}
                 </div> :
                 <Private_account/>
             }

@@ -2,10 +2,8 @@
 
 import React from "react";
 import "./Footer.css";
-import {Link, useNavigate} from "react-router-dom";
-import logo from "../../images/logo.png";
 
-export const Footer = (props) => {
+export const Footer = () => {
     return (
         <nav>
             <div className={"links"}>

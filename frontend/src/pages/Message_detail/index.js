@@ -3,6 +3,7 @@ import '../../App.css';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
+// STATIC - nakonec jsme neresili
 export const Message_detail = () => {
     return (
         <div className="App">
