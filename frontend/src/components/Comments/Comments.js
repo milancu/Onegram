@@ -1,32 +1,32 @@
 import {useEffect, useState} from "react";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
-import React, { Component }  from 'react';
+import axios from "axios";
+import * as Constants from "../../gql/query";
+import React from 'react';
 
 const Comments = (props) => {
     const [postComments, setPostComments] = useState([])
     const [activeComment, setActiveComment] = useState(null)
 
-    const rootComments = postComments.filter((postComment) => postComment.parentId === null)
-    const getReplies = commentId => {
-        return postComments.filter((postComment) => postComment.parentId === commentId)
-    }
-    const addComment = (text, parentId) => {
-        createComment(text, parentId).then(comment => {
-            setPostComments([comment, ...postComments])
+    function createComment(text) {
+        const CREATE_COMMENT = `
+        mutation CREATE_COMMENT{
+            createComment(input:{
+                postId:` + props.postId + `,
+                content:`+ text + `
+            })
+        }`;
+        axios.post(Constants.POST_GRAPHQL_API, {
+            query: CREATE_COMMENT
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
         })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
         setActiveComment(null)
-    } //TODO rewrite to work with backend
-
-    const createComment = async (text, parentId = null) => {
-        return {
-            id: Math.random().toString(36).substring(2, 9),
-            content: text,
-            parentId: parentId,
-            userImage: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            username: "John D. Veloper",
-            likeAmount: 0
-        }
     }
 
     const deleteComment = (commentId) => {
@@ -38,24 +38,14 @@ const Comments = (props) => {
         }
     }
 
-    const updateComment = async (text, commentId) => {
-        const updatedPostComments = postComments.map(postComment => {
-            if (postComment.id === commentId) {
-                return {...postComment, content: text}
-            }
-            return postComment
-        })
-        setPostComments(updatedPostComments)
-        setActiveComment(null);
-    }
-
     useEffect(() => {
         setPostComments(props.comments)
     }, [])
+
     return (
         <div className="comments">
             <hr />
-            <CommentForm submitLabel="Comment" handleSubmit={addComment}/>
+            <CommentForm submitLabel="Comment" handleSubmit={createComment}/>
             <div className="comments_container">
                 {postComments.map(postComment => (
                     <Comment key={postComment.id}
@@ -64,8 +54,7 @@ const Comments = (props) => {
                              deleteComment={deleteComment}
                              activeComment={activeComment}
                              setActiveComment={setActiveComment}
-                             addComment={addComment}
-                             updateComment={updateComment}
+                             addComment={createComment}
                     />
                 ))}
             </div>

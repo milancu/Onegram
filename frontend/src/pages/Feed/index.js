@@ -95,6 +95,8 @@ export const Feed = () => {
                               imagePaths={post.imagePaths}
                               authorId={post.authorId}
                               comments={post.comments}
+                              postId={post.id}
+                              key={post.id}
                         />
                     ))}
                 </section>

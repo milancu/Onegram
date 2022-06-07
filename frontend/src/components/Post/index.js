@@ -14,6 +14,8 @@ export const Post = (props) => {
     const imagePaths = props.imagePaths;
     const authorId = props.authorId;
     const comments = props.comments;
+    const id = props.postId;
+    console.log(id)
 
     return (
         <article className="Post">
@@ -65,7 +67,7 @@ export const Post = (props) => {
                 {/*    }*/}
                 {/*]}*/}
                 {/*/>*/}
-                {<Comments comments={comments}/>}
+                {<Comments comments={comments} postId={id}/>}
             </div>
         </article>
     );
