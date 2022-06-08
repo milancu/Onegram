@@ -7,8 +7,8 @@ type User{
     email:String!
     createdAtDate:Date!
     createdAtTime:LocalTime!
-    bio:String!
-    link:String!
+    bio:String
+    link:String
     image:String!
     isPublic:Boolean!
 }
