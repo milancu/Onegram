@@ -4,12 +4,13 @@ import React, {Component, useEffect, useState} from 'react';
 import axios from "axios";
 import * as Constants from '../../gql/query';
 
-const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, mainCommentId, hasParent}) => {
+const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, mainCommentId, hasParent, replyPermission, postAuthorId}) => {
 
     const [authorInfo, setAuthorInfo] = useState([])
+    const currentUserId = parseInt(localStorage.getItem('userId'))
 
-    const canReply = comment.parentId == null; //Boolean (logged in)
-    const canDelete = true; // author == current user
+    const canReply = replyPermission;
+    const canDelete = comment.authorId === currentUserId || postAuthorId === currentUserId
 
     const isReplying = activeComment && activeComment.type === "replying" && activeComment.id === comment.id
     const isEditing = activeComment && activeComment.type === "editing" && activeComment.id === comment.id
@@ -74,6 +75,8 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                                 updateComment={updateComment}
                                 mainCommentId={comment.id}
                                 hasParent={true}
+                                replyPermission={false}
+                                postAuthorId={postAuthorId}
                             />
                         ))}
                     </div>

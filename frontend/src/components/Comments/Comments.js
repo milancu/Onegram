@@ -118,6 +118,8 @@ const Comments = (props) => {
                              setActiveComment={setActiveComment}
                              addComment={createComment}
                              hasParent={false}
+                             replyPermission={true}
+                             postAuthorId={props.postAuthorId}
                     />
                 ))}
             </div>

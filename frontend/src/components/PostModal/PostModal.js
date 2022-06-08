@@ -79,7 +79,7 @@ const PostModal = ({closePostModal, post}) => {
                         </div>
                     </div>
                     <div className={"post-modal-comments"}>
-                        <Comments comments={post.comments} postId={post.id}
+                        <Comments comments={comments} postId={postId} postAuthorId={userId}
                         />
                     </div>
                 </div>
