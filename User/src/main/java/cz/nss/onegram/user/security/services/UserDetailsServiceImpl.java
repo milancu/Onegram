@@ -23,4 +23,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return UserDetailsImpl.build(user);
     }
+
+    @Transactional
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User with email " + email + " not found.");
+        }
+        return UserDetailsImpl.build(user);
+    }
 }
