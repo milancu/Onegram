@@ -97,6 +97,7 @@ export const Feed = () => {
                               comments={post.comments}
                               postId={post.id}
                               key={post.id}
+                              likes={post.likes}
                         />
                     ))}
                 </section>

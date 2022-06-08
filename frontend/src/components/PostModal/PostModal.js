@@ -4,6 +4,7 @@ import Comments from "../Comments";
 import axios from 'axios';
 import * as Constants from "../../gql/query";
 import {Link} from "react-router-dom";
+import LikeButton from "../LikeButton";
 
 const PostModal = ({closePostModal, post}) => {
 
@@ -77,10 +78,14 @@ const PostModal = ({closePostModal, post}) => {
 
                             </div>
                         </div>
+
                     </div>
                     <div className={"post-modal-comments"}>
                         <Comments comments={comments} postId={postId} postAuthorId={userId}
                         />
+                    </div>
+                    <div className={"post-modal-like-button"}>
+                        <LikeButton likes={post.likes} postId={postId}/>
                     </div>
                 </div>
 

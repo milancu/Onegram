@@ -55,6 +55,19 @@ export const GET_POST_FOR_SEARCH = `
       authorId
       description
       imagePaths
+      comments {
+         id
+         content
+         authorId
+         subComments {
+            id
+            content
+            authorId
+         }
+      }
+      likes {
+        authorId
+      }
    }
 }`
 
@@ -75,7 +88,7 @@ export const GET_LATEST_MESSAGE = `
     }
 `;
 
-export const GET_FOLLOWING_POSTS = `{
+export const    GET_FOLLOWING_POSTS = `{
     followingsPosts{
       id
       imagePaths
@@ -91,6 +104,9 @@ export const GET_FOLLOWING_POSTS = `{
       }
       authorId
       description
+      likes {
+        authorId
+      }
    }
 }
 `;
