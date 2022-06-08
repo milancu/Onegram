@@ -82,7 +82,7 @@
 
 .post-modal-comments {
     overflow: auto;
-    height: 79%;
+    height: 66%;
 }
 
 .post-modal-user-caption p {
@@ -98,4 +98,8 @@
     font-size: 0.9rem;
     height: 70%;
     overflow: auto;
+}
+
+.post-modal-like-button {
+    margin-left: 5px;
 }
