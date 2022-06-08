@@ -1,6 +1,7 @@
 export * from '../components/Follow_requests'
 export * from './Message_detail'
 export * from './Messages'
+export * from './Login'
 export * from './Profile_dashboard'
 export * from './Feed'
 export * from './Search'
