@@ -85,7 +85,7 @@ export const Profile_dashboard = () => {
             {
                 query: Constants.GET_TARGET_USER_POSTS,
                 variables: {
-                    author: params.id //TODO pokud by byl rpoblem s formatem
+                    author: params.id
                 }
             }, {
                 headers: {

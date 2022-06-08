@@ -8,15 +8,32 @@ import addIcon from "../../images/add.png";
 import messagesIcon from "../../images/messages.png";
 import settingsIcon from "../../images/settings.png";
 import {useParams} from "react-router-dom";
+import axios from "axios";
+import * as Constants from "../../gql/query";
 
 export const Header = (props) => {
-    const profileData = JSON.parse(localStorage.getItem('userData'));
-    const nickname = profileData.username;
-    const profilepicture = profileData.image;
+
+    let userData;
+    axios.post(Constants.USER_GRAPHQL_API,
+        {
+            query: Constants.GET_USER_DATA
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(r => {
+        userData = r.data.data.my;
+        localStorage.setItem('userId', JSON.stringify(userData.id));
+        localStorage.setItem('userData', JSON.stringify(userData));
+    })
+
     const user = JSON.parse(localStorage.getItem('userData'))
+    const nickname = user.username;
+    const profilepicture = user.image;
+
 
     const params = useParams();
-    let pesrsonNavigate = props.profile && String(profileData.id) === params.id;
+    let pesrsonNavigate = props.profile && String(user.id) === params.id;
 
     return (
         <nav className={"profile-header header-line"}>
