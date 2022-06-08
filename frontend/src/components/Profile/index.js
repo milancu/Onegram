@@ -127,10 +127,7 @@ export const Profile = (props) => {
                 <div className="profile-info">
                     <div className="Profile-bio"><p>{description}</p></div>
                     <div className="Profile-web">
-                        {/*TODO oprav*/}
-                        <a href={'/profile'}>
-                            <p id={"webLinkUrl"}>{webLinkUrl}</p>
-                        </a>
+                        <a href={webLinkUrl} id={"webLinkUrl"}>{webLinkUrl}</a>
                     </div>
 
                     {showButton ? followButton ?
