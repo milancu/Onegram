@@ -1,6 +1,6 @@
 // src/pages/Profile_dashboard/index.js
 
-import React from 'react';
+import React, {useEffect} from "react";
 import '../../App.css';
 import './profile_dashboard.css';
 import Profile from '../../components/Profile';
@@ -85,7 +85,7 @@ export const Profile_dashboard = () => {
             {
                 query: Constants.GET_TARGET_USER_POSTS,
                 variables: {
-                    author: params.id //TODO pokud by byl rpoblem s formatem
+                    author: params.id
                 }
             }, {
                 headers: {
@@ -167,7 +167,6 @@ export const Profile_dashboard = () => {
     }
 
     let acces = localStorage.getItem("acces")
-
 
     return (
         <div className="App">

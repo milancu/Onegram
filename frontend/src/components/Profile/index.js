@@ -74,10 +74,13 @@ export const Profile = (props) => {
     }
 
     let currentUser = params.id === String(user.id);
+    // let [followersData, setfollowersData] = useState([])
     let followersData;
     let followingData;
     let modalFollowerState;
     let modalFollowingState;
+
+
 
     if (currentUser) {
         followersData = JSON.parse(localStorage.getItem('followers'));

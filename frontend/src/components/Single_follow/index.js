@@ -48,8 +48,9 @@ export const Single_follow = ({follow}) => {
     return (
         <div className={"follower-box"}>
             <div className="modal-profile-photo">
-                <div className={"modal-profile-main"}>
-                    <Link to={'/profile/' + follow.id}>
+                <div className={"modal-profile-main"} onClick={() => {
+                    window.location.reload()}} >
+                    <Link to={'/profile/' + follow.id} >
                         <div className={"modal-profile-user-profilepicture"}>
                             <img src={follow.image} alt={follow.username}
                                  className="modal-profile-user-profilepicture"/>
@@ -57,16 +58,17 @@ export const Single_follow = ({follow}) => {
                     </Link>
                 </div>
             </div>
-            <div className={'center-height width-name'}>
-                <Link to={'/profile/' + follow.id}>
+            <div className={'center-height width-name'} onClick={() => {
+                window.location.reload()}}>
+                <Link to={'/profile/' + follow.id} >
                     {follow.username}
                 </Link>
             </div>
             <div className={'center-height'}>
-                {follow.followed ? <button className={'follow-button'} onClick={unfollowUser}>
+                {follow.followed ? <button id={"unfollow-button"} className={'follow-button'} onClick={unfollowUser}>
                         Unfollow
                     </button> :
-                    <button className={'follow-button'} onClick={followUser}>
+                    <button id={"follow-button"} className={'follow-button'} onClick={followUser}>
                         Follow
                     </button>
                 }

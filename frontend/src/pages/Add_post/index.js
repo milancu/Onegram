@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import '../../components/Profile_settings_form/profile-settings-form.css'
 import ImageUploading from "react-images-uploading";
 import * as Constants from "../../gql/query";
+import {Link} from "react-router-dom";
 
 
 export const Add_post = () => {
@@ -32,6 +33,8 @@ export const Add_post = () => {
     const onChange = (imageList, addUpdateIndex) => {
         setImages(imageList);
     };
+
+    const user = JSON.parse(localStorage.getItem('userData'))
 
     return (
         <div>
@@ -68,7 +71,9 @@ export const Add_post = () => {
                     </ImageUploading>
                 </div>
                 <input type="text" id="description" name="description" placeholder={"describe your post"}/>
-                <button id={'submit'} className={"accept-button"} type={"button"}>Upload</button>
+                <Link to={'/profile/' + user.id}>
+                    <button id={'submit'} className={"accept-button"} type={"button"}>Upload</button>
+                </Link>
             </form>
             <Footer/>
         </div>

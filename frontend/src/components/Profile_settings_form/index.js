@@ -1,17 +1,21 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './profile-settings-form.css'
 import './profile-settings-form.css'
 import axios from "axios";
 import * as Constants from "../../gql/query";
 import ImageUploading from "react-images-uploading";
+import {Link} from "react-router-dom";
 
 export const Profile_settings_form = () => {
+
+    
 
     let data = JSON.parse(localStorage.getItem('userData'));
     let username = data.username;
     let bio = data.bio;
     let link = data.link;
     let isPublic = data.isPublic;
+    const user = JSON.parse(localStorage.getItem('userData'))
 
     function SaveChanges() {
         let formData = new FormData();
@@ -44,12 +48,11 @@ export const Profile_settings_form = () => {
                 .catch(err => console.log(err))
         }
 
-        // TODO - otestovat
         let potencialNewUsername = document.getElementById('username').value;
         if (potencialNewUsername !== username) {
             const CHANGE_USERNAME = `mutation{
         editUsername(input:{
-             bio:"` + potencialNewUsername + `"
+             username:"` + potencialNewUsername + `"
         })}`
             axios.post(Constants.USER_GRAPHQL_API, {
                     query: CHANGE_USERNAME
@@ -189,8 +192,10 @@ export const Profile_settings_form = () => {
                 </label>
             </div>
             <br/>
-            <button id={'submit'} className={"accept-button"} type={"button"} onClick={SaveChanges}>Save changes
-            </button>
+            <Link to={'/profile/'+user.id}>
+                <button id={'submit'} className={"accept-button"} type={"button"} onClick={SaveChanges}>Save changes
+                </button>
+            </Link>
 
         </form>
 
