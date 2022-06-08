@@ -88,11 +88,8 @@ public class UserServiceImpl implements UserService {
         if (authentication == null) {
             return null;
         } else {
-            String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            if (!email.contains("@")) { //Pouze pro testing
-                return userRepository.findByEmail(email.concat("@fel.cvut.cz"));
-            }
-            return userRepository.findByEmail(email);
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            return userRepository.findByUsername(username);
         }
     }
 
