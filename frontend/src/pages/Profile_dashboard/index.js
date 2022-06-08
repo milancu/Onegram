@@ -12,6 +12,7 @@ import PostModal from "../../components/PostModal";
 import Private_account from "../../components/Private_account";
 import {useParams} from "react-router-dom";
 import Header from "../../components/Header";
+import {GET_TARGET_USER_POSTS} from "../../gql/query";
 
 export const Profile_dashboard = () => {
 
@@ -51,7 +52,7 @@ export const Profile_dashboard = () => {
             }
         }).then(r => {
         following = r.data.data.following;
-        if(currentUser){
+        if (currentUser) {
             localStorage.setItem('following', JSON.stringify(following));
         } else {
             localStorage.setItem('targetFollowing', JSON.stringify(following));
@@ -71,7 +72,7 @@ export const Profile_dashboard = () => {
             }
         }).then(r => {
         followers = r.data.data.followers;
-        if(currentUser){
+        if (currentUser) {
             localStorage.setItem('followers', JSON.stringify(followers));
         } else {
             localStorage.setItem('targetFollowers', JSON.stringify(followers));
@@ -82,7 +83,10 @@ export const Profile_dashboard = () => {
     if (currentUser) {
         axios.post(Constants.POST_GRAPHQL_API,
             {
-                query: Constants.GET_USER_POSTS
+                query: Constants.GET_TARGET_USER_POSTS,
+                variables: {
+                    author: params.id //TODO pokud by byl rpoblem s formatem
+                }
             }, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem('token')
@@ -124,7 +128,7 @@ export const Profile_dashboard = () => {
 
             let requestingUser = JSON.parse(localStorage.getItem('userData')).id;
             if (targetUserData.isPublic) {
-                localStorage.setItem("acces","true");
+                localStorage.setItem("acces", "true");
             } else {
                 const followControl = JSON.parse(localStorage.getItem('targetFollowers'));
 
@@ -136,14 +140,14 @@ export const Profile_dashboard = () => {
                     }
                 })
 
-                if(!help){
+                if (!help) {
                     localStorage.setItem("acces", "")
                 }
             }
             localStorage.setItem('targetUserData', JSON.stringify(targetUserData));
 
         })
-        if(localStorage.getItem("acces")){
+        if (localStorage.getItem("acces")) {
             axios.post(Constants.POST_GRAPHQL_API,
                 {
                     query: Constants.GET_TARGET_USER_POSTS,

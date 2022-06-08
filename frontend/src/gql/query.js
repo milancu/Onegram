@@ -96,8 +96,9 @@ export const GET_FOLLOWING_POSTS = `{
 `;
 
 export const GET_USER_POSTS = `
+   query userPosts($author: Int!)
    {   
-   userPosts(author: 1) {
+   userPosts(author: $author) {
       id
       imagePaths
       comments {
