@@ -15,6 +15,7 @@ export const Post = (props) => {
     const authorId = props.authorId;
     const comments = props.comments;
     const id = props.postId;
+    const likes = props.likes
 
     return (
         <article className="Post">
@@ -42,7 +43,7 @@ export const Post = (props) => {
                     <strong>{authorUsername}:&#160;</strong>{description}
                 </div>
                 <div className="Post-reactions">
-                    <LikeButton/>
+                    <LikeButton likes={likes} postId={id}/>
                 </div>
             </div>
 

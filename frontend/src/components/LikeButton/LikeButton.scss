@@ -151,6 +151,10 @@ $primary: #54a0ff;
   }
 }
 
+.post-modal-like-button p {
+  float: left;
+}
+
 @keyframes hop {
   0% {
     transform: rotate(8deg) translateY(-2px);
