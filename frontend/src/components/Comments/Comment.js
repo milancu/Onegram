@@ -4,7 +4,7 @@ import React, {Component, useEffect, useState} from 'react';
 import axios from "axios";
 import * as Constants from '../../gql/query';
 
-const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment,}) => {
+const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, mainCommentId}) => {
 
     const [authorInfo, setAuthorInfo] = useState([])
 
@@ -58,7 +58,7 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                     </div>
                 </div>
                 {isReplying && (
-                    <CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text)}/>
+                    <CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, comment.id)}/>
                 )}
                 {replies.length > 0 && (
                     <div className="replies">
@@ -72,6 +72,7 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                                 setActiveComment={setActiveComment}
                                 addComment={addComment}
                                 updateComment={updateComment}
+                                mainCommentId={comment.id}
                             />
                         ))}
                     </div>

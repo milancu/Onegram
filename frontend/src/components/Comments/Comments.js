@@ -9,24 +9,53 @@ const Comments = (props) => {
     const [postComments, setPostComments] = useState([])
     const [activeComment, setActiveComment] = useState(null)
 
-    function createComment(text) {
+    function createComment(text, mainCommentId) {
+        console.log(mainCommentId)
         const CREATE_COMMENT = `
         mutation CREATE_COMMENT{
             createComment(input:{
-                postId:` + props.postId + `,
-                content:`+ text + `
-            })
-        }`;
-        axios.post(Constants.POST_GRAPHQL_API, {
-            query: CREATE_COMMENT
-        }, {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem('token')
+                postId:"` + props.postId + `",
+                content:"` + text + `"
+            }){
+                id
             }
-        })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-        setActiveComment(null)
+        }
+        `;
+        const CREATE_SUB_COMMENT = `
+        mutation CREATE_SUB_COMMENT{
+            createSubcomment(input:{
+                postId:"` + props.postId + `",
+                mainCommentId:"` + mainCommentId + `",
+                content:"` + text + `"
+            }){
+                id
+            }
+        }
+        `;
+
+        if (mainCommentId === null) {
+            axios.post(Constants.POST_GRAPHQL_API, {
+                    query: CREATE_COMMENT
+                },
+                {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        } else {
+            axios.post(Constants.POST_GRAPHQL_API, {
+                    query: CREATE_SUB_COMMENT
+                },
+                {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        }
     }
 
     const deleteComment = (commentId) => {
@@ -44,7 +73,7 @@ const Comments = (props) => {
 
     return (
         <div className="comments">
-            <hr />
+            <hr/>
             <CommentForm submitLabel="Comment" handleSubmit={createComment}/>
             <div className="comments_container">
                 {postComments.map(postComment => (

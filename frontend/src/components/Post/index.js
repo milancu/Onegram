@@ -15,7 +15,6 @@ export const Post = (props) => {
     const authorId = props.authorId;
     const comments = props.comments;
     const id = props.postId;
-    console.log(id)
 
     return (
         <article className="Post">
