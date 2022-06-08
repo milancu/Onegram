@@ -89,12 +89,14 @@ export const Feed = () => {
 
                 <section className="App-main">
                     {JSON.parse(localStorage.getItem('combinedData')).map(post => (
-                        <Post
-                            authorUsername={post.authorUsername}
-                            authorImage={post.authorImage}
-                            description={post.description}
-                            imagePaths={post.imagePaths}
-                            authorId={post.authorId}
+                        <Post authorUsername={post.authorUsername}
+                              authorImage={post.authorImage}
+                              description={post.description}
+                              imagePaths={post.imagePaths}
+                              authorId={post.authorId}
+                              comments={post.comments}
+                              postId={post.id}
+                              key={post.id}
                         />
                     ))}
                 </section>

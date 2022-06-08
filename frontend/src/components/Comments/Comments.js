@@ -1,71 +1,123 @@
 import {useEffect, useState} from "react";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
-import React, { Component }  from 'react';
+import axios from "axios";
+import * as Constants from "../../gql/query";
+import React from 'react';
 
 const Comments = (props) => {
     const [postComments, setPostComments] = useState([])
     const [activeComment, setActiveComment] = useState(null)
 
-    const rootComments = postComments.filter((postComment) => postComment.parentId === null)
-    const getReplies = commentId => {
-        return postComments.filter((postComment) => postComment.parentId === commentId)
-    }
-    const addComment = (text, parentId) => {
-        createComment(text, parentId).then(comment => {
-            setPostComments([comment, ...postComments])
-        })
-        setActiveComment(null)
-    } //TODO rewrite to work with backend
-
-    const createComment = async (text, parentId = null) => {
-        return {
-            id: Math.random().toString(36).substring(2, 9),
-            content: text,
-            parentId: parentId,
-            userImage: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-            username: "John D. Veloper",
-            likeAmount: 0
-        }
-    }
-
-    const deleteComment = (commentId) => {
-        if (window.confirm("Are you sure you want to delete this comment?")) {
-            const updatedPostComments = postComments.filter(
-                (postComment) => postComment.id !== commentId
-            )
-            setPostComments(updatedPostComments)
-        }
-    }
-
-    const updateComment = async (text, commentId) => {
-        const updatedPostComments = postComments.map(postComment => {
-            if (postComment.id === commentId) {
-                return {...postComment, content: text}
+    function createComment(text, mainCommentId) {
+        const CREATE_COMMENT = `
+        mutation CREATE_COMMENT{
+            createComment(input:{
+                postId:"` + props.postId + `",
+                content:"` + text + `"
+            }){
+                id
             }
-            return postComment
-        })
-        setPostComments(updatedPostComments)
-        setActiveComment(null);
+        }
+        `;
+        const CREATE_SUB_COMMENT = `
+        mutation CREATE_SUB_COMMENT{
+            createSubcomment(input:{
+                postId:"` + props.postId + `",
+                mainCommentId:"` + mainCommentId + `",
+                content:"` + text + `"
+            }){
+                id
+            }
+        }
+        `;
+
+        if (mainCommentId === null) {
+            axios.post(Constants.POST_GRAPHQL_API, {
+                    query: CREATE_COMMENT
+                },
+                {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        } else {
+            axios.post(Constants.POST_GRAPHQL_API, {
+                    query: CREATE_SUB_COMMENT
+                },
+                {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        }
+    }
+
+    function deleteComment(commentId, hasParent) {
+        const DELETE_COMMENT = `
+        mutation DELETE_COMMENT{
+            deleteComment(input:{
+                postId:"` + props.postId + `",
+                id:"` + commentId + `"
+            })
+        }
+        `;
+        const DELETE_SUBCOMMENT = `
+        mutation DELETE_SUBCOMMENT{
+            deleteSubcomment(input:{
+                postId:"` + props.postId + `",
+                subcommentId:"` + commentId + `"
+            })
+        }
+        `;
+
+        if (window.confirm("Are you sure you want to delete this comment?")) {
+            if (hasParent) {
+                axios.post(Constants.POST_GRAPHQL_API, {
+                    query: DELETE_SUBCOMMENT
+                }, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            } else {
+                axios.post(Constants.POST_GRAPHQL_API, {
+                    query: DELETE_COMMENT
+                }, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            }
+        }
     }
 
     useEffect(() => {
         setPostComments(props.comments)
     }, [])
+
     return (
         <div className="comments">
-            <hr />
-            <CommentForm submitLabel="Comment" handleSubmit={addComment}/>
+            <hr/>
+            <CommentForm submitLabel="Comment" handleSubmit={createComment}/>
             <div className="comments_container">
-                {rootComments.map(rootComment => (
-                    <Comment key={rootComment.id}
-                             comment={rootComment}
-                             replies={getReplies(rootComment.id)}
+                {postComments.map(postComment => (
+                    <Comment key={postComment.id}
+                             comment={postComment}
+                             replies={postComment.subComments}
                              deleteComment={deleteComment}
                              activeComment={activeComment}
                              setActiveComment={setActiveComment}
-                             addComment={addComment}
-                             updateComment={updateComment}
+                             addComment={createComment}
+                             hasParent={false}
                     />
                 ))}
             </div>
