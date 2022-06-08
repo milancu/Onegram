@@ -9,6 +9,7 @@ const PostModal = ({closePostModal, post}) => {
 
     let userId = post.authorId
     const postId = post.id;
+    const comments = post.comments
     let user = {};
     let data = JSON.parse(localStorage.getItem('users'));
     for (let u of data) {
@@ -78,24 +79,7 @@ const PostModal = ({closePostModal, post}) => {
                         </div>
                     </div>
                     <div className={"post-modal-comments"}>
-                        <Comments comments={[
-                            {
-                                "id": 1,
-                                "parentId": null,
-                                "content": "hi",
-                                "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-                                "username": "John D. Veloper",
-                                "likeAmount": 5
-                            },
-                            {
-                                "id": "2",
-                                "parentId": 1,
-                                "content": "hi",
-                                "userImage": "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-                                "username": "John D. Veloper",
-                                "likeAmount": 3
-                            }
-                        ]}
+                        <Comments comments={post.comments} postId={post.id}
                         />
                     </div>
                 </div>

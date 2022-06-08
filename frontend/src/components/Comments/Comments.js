@@ -10,7 +10,6 @@ const Comments = (props) => {
     const [activeComment, setActiveComment] = useState(null)
 
     function createComment(text, mainCommentId) {
-        console.log(mainCommentId)
         const CREATE_COMMENT = `
         mutation CREATE_COMMENT{
             createComment(input:{
@@ -58,12 +57,46 @@ const Comments = (props) => {
         }
     }
 
-    const deleteComment = (commentId) => {
+    function deleteComment(commentId, hasParent) {
+        const DELETE_COMMENT = `
+        mutation DELETE_COMMENT{
+            deleteComment(input:{
+                postId:"` + props.postId + `",
+                id:"` + commentId + `"
+            })
+        }
+        `;
+        const DELETE_SUBCOMMENT = `
+        mutation DELETE_SUBCOMMENT{
+            deleteSubcomment(input:{
+                postId:"` + props.postId + `",
+                subcommentId:"` + commentId + `"
+            })
+        }
+        `;
+
         if (window.confirm("Are you sure you want to delete this comment?")) {
-            const updatedPostComments = postComments.filter(
-                (postComment) => postComment.id !== commentId
-            )
-            setPostComments(updatedPostComments)
+            if (hasParent) {
+                axios.post(Constants.POST_GRAPHQL_API, {
+                    query: DELETE_SUBCOMMENT
+                }, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            } else {
+                axios.post(Constants.POST_GRAPHQL_API, {
+                    query: DELETE_COMMENT
+                }, {
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    }
+                })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            }
         }
     }
 
@@ -84,6 +117,7 @@ const Comments = (props) => {
                              activeComment={activeComment}
                              setActiveComment={setActiveComment}
                              addComment={createComment}
+                             hasParent={false}
                     />
                 ))}
             </div>

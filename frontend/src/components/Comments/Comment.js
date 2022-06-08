@@ -4,7 +4,7 @@ import React, {Component, useEffect, useState} from 'react';
 import axios from "axios";
 import * as Constants from '../../gql/query';
 
-const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, mainCommentId}) => {
+const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, mainCommentId, hasParent}) => {
 
     const [authorInfo, setAuthorInfo] = useState([])
 
@@ -54,7 +54,7 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                             type: "replying"
                         })}>Reply</div>}
                         {canDelete &&
-                            <div className="comment-action" onClick={() => deleteComment(comment.id)}>Delete</div>}
+                            <div className="comment-action" onClick={() => deleteComment(comment.id, hasParent)}>Delete</div>}
                     </div>
                 </div>
                 {isReplying && (
@@ -73,6 +73,7 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                                 addComment={addComment}
                                 updateComment={updateComment}
                                 mainCommentId={comment.id}
+                                hasParent={true}
                             />
                         ))}
                     </div>
