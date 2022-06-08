@@ -1,23 +1,46 @@
 import "./Comment.css"
 import CommentForm from "./CommentForm";
-import React, { Component }  from 'react';
+import React, {Component, useEffect, useState} from 'react';
+import axios from "axios";
+import * as Constants from '../../gql/query';
 
-const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, parentId=null}) => {
-    const canReply = comment.parentId == null; //Boolean (logged in)
-    const canEdit = true; // author == current user
-    const canDelete = true; // author == current user
+const Comment = ({comment, replies, addComment, updateComment, deleteComment, activeComment, setActiveComment, mainCommentId, hasParent, replyPermission, postAuthorId}) => {
+
+    const [authorInfo, setAuthorInfo] = useState([])
+    const currentUserId = parseInt(localStorage.getItem('userId'))
+
+    const canReply = replyPermission;
+    const canDelete = comment.authorId === currentUserId || postAuthorId === currentUserId
+
     const isReplying = activeComment && activeComment.type === "replying" && activeComment.id === comment.id
     const isEditing = activeComment && activeComment.type === "editing" && activeComment.id === comment.id
-    const replyId = parentId ? parentId : comment.id;
+
+    useEffect(() => {
+        axios.post(Constants.USER_GRAPHQL_API,
+            {
+                query: Constants.GET_COMMENT_USER_DATA,
+                variables: {
+                    userId: comment.authorId
+                }
+            }, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                }
+            }).then(r => {
+                setAuthorInfo(r.data.data.user)
+            }
+        )
+    })
+
     return (
         <div className="comment">
             <div className="comment-image-container">
-                <img src={comment.userImage} alt="user"/>
+                <img src={authorInfo.image} alt={authorInfo.username}/>
             </div>
             <div className="comment-right-part">
                 <div className="comment-content">
                     <div className="comment-author">
-                        {comment.username}
+                        {authorInfo.username}
                     </div>
                     {!isEditing && <div className="comment-text">{comment.content}</div>}
                     {isEditing && (
@@ -32,11 +55,11 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                             type: "replying"
                         })}>Reply</div>}
                         {canDelete &&
-                            <div className="comment-action" onClick={() => deleteComment(comment.id)}>Delete</div>}
+                            <div className="comment-action" onClick={() => deleteComment(comment.id, hasParent)}>Delete</div>}
                     </div>
                 </div>
                 {isReplying && (
-                    <CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, replyId)}/>
+                    <CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, comment.id)}/>
                 )}
                 {replies.length > 0 && (
                     <div className="replies">
@@ -50,7 +73,10 @@ const Comment = ({comment, replies, addComment, updateComment, deleteComment, ac
                                 setActiveComment={setActiveComment}
                                 addComment={addComment}
                                 updateComment={updateComment}
-                                parentId={comment.id}
+                                mainCommentId={comment.id}
+                                hasParent={true}
+                                replyPermission={false}
+                                postAuthorId={postAuthorId}
                             />
                         ))}
                     </div>

@@ -178,3 +178,13 @@ export const GET_TARGET_DATA = `
         }
     }
 `;
+
+export const GET_COMMENT_USER_DATA = `
+    query user($userId: Int!){
+        user(userId: $userId){
+            id
+            username
+            image
+        }
+    }
+`;

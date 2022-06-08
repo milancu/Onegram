@@ -11,3 +11,14 @@ export const CREATE_POST = `
         }
     }
 `;
+
+export const CREATE_POST = `
+    mutation { 
+        createPost(input:{   
+            description:"testDescription"    
+        })
+        {   
+            id   
+        }
+    }
+`;

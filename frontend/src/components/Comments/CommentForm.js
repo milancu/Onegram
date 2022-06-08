@@ -7,7 +7,7 @@ const CommentForm = ({handleSubmit, submitLabel, hasCancelButton = false, initia
     const isTextAreaDisabled = text.length === 0;
     const onSubmit = event => {
         event.preventDefault()
-        handleSubmit(text)
+        handleSubmit(text, null)
         setText("")
     }
     return (
