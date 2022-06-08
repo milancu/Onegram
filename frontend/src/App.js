@@ -18,6 +18,7 @@ export const App = () => {
             {!localStorage.getItem('token') ?
                 <Login></Login> :
                 <Routes>
+                    <Route exact path="/oauth2/redirect/" element={<Profile_dashboard/>}/>
                     <Route exact path="/profile/:id" element={<Profile_dashboard/>}/>
                     <Route exact path="/settings" element={<Settings/>}/>
                     <Route exact path="/search" element={<Search/>}/>
