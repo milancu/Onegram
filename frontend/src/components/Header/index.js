@@ -28,7 +28,6 @@ export const Header = (props) => {
             </Link>
             {pesrsonNavigate
                 ? <div className={"other-options"}>
-                    {/*// TODO add new post*/}
                     <Link to={'/add'}>
                         <img className={"options"} src={addIcon} alt={"add new picture icon"} />
                     </Link>
