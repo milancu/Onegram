@@ -64,7 +64,7 @@ export const Profile_dashboard = () => {
         {
             query: Constants.GET_USER_FOLLOWERS,
             variables: {
-                userId: params.id //TODO pokud by byl rpoblem s formatem
+                userId: params.id
             }
         }, {
             headers: {
@@ -152,7 +152,7 @@ export const Profile_dashboard = () => {
                 {
                     query: Constants.GET_TARGET_USER_POSTS,
                     variables: {
-                        author: params.id //TODO pokud by byl rpoblem s formatem
+                        author: params.id
                     }
                 }, {
                     headers: {

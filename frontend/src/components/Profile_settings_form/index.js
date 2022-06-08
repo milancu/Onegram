@@ -80,20 +80,45 @@ export const Profile_settings_form = () => {
                 .then(res => console.log(res))
                 .catch(err => console.log(err))
         }
+
+        let visibility = document.getElementById("isPublicInput");
+        if(visibility.checked !== isPublic){
+            if(visibility.checked){
+                const MAKE_PROFILE_PUBLIC = `mutation MAKE_PROFILE_PUBLIC{
+	makeProfilePublic
+}`
+                axios.post(Constants.USER_GRAPHQL_API, {
+                        query: MAKE_PROFILE_PUBLIC
+                    },
+                    {
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem('token')
+                        }
+                    })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            } else {
+                const MAKE_PROFILE_PRIVATE = `mutation MAKE_PROFILE_PRIVATE{
+    makeProfilePrivate
+}`
+                axios.post(Constants.USER_GRAPHQL_API, {
+                        query: MAKE_PROFILE_PRIVATE
+                    },
+                    {
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem('token')
+                        }
+                    })
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            }
+        }
     }
 
     const [images, setImages] = React.useState([]);
     const onChange = (imageList, addUpdateIndex) => {
         setImages(imageList);
     };
-
-// TODO asynchronne + nastaveni private uctu
-    if (isPublic) {
-        let switchPublic = document.querySelector('#isPublicInput');
-        if (switchPublic) {
-            switchPublic.checked = true
-        }
-    }
 
     let requestsData;
 
@@ -158,7 +183,8 @@ export const Profile_settings_form = () => {
             <div className={'is-public'}>
                 Public profile:
                 <label className="switch">
-                    <input id='isPublicInput' type="checkbox"/>
+                    {isPublic ? <input id='isPublicInput' type="checkbox" defaultChecked={"checked"}/> :
+                        <input id='isPublicInput' type="checkbox" />}
                     <span className="slider round"/>
                 </label>
             </div>
